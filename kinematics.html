@@ -1243,7 +1243,31 @@ function drawVectors(
 
 }
 
-</script>
+const whyButton =
+    document.getElementById("whyButton");
+
+const whyContent =
+    document.getElementById("whyContent");
+
+whyButton.addEventListener("click", function () {
+
+    if (whyContent.style.display === "block") {
+
+        whyContent.style.display = "none";
+
+        whyButton.textContent =
+            "🧠 WHY? — Maximum Height";
+
+    } else {
+
+        whyContent.style.display = "block";
+
+        whyButton.textContent =
+            "🔽 Hide Explanation";
+
+    }
+
+});</script>
 
 </body>
 
