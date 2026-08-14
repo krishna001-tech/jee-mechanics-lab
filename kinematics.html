@@ -987,6 +987,15 @@ maxStatic.toFixed(2)+" N";
 
 drawIncline(angle,mass);
 
+ictx.fillStyle="#111";
+ictx.font="bold 15px Arial";
+ictx.fillText("Forces:",650,45);
+ictx.fillText("mg = "+weight.toFixed(1)+" N",650,70);
+ictx.fillText("mg sinθ = "+parallel.toFixed(1)+" N",650,95);
+ictx.fillText("mg cosθ = "+perpendicular.toFixed(1)+" N",650,120);
+ictx.fillText("Friction = "+friction.toFixed(1)+" N",650,145);
+ictx.fillText("Normal = "+normal.toFixed(1)+" N",650,170);
+
 }
 
 
