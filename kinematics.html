@@ -1,587 +1,2318 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Projectile Motion Lab</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0b1020;
-      color: white;
-    }
-
-    .header {
-      padding: 20px;
-      text-align: center;
-    }
-
-    .header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    .header p {
-      color: #aab3c5;
-      margin-top: 8px;
-    }
-
-    .lab {
-      width: 95%;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    canvas {
-      width: 100%;
-      background: #eef6ff;
-      border-radius: 15px;
-      display: block;
-    }
-
-    /* Questions section styles */
-    .jee-questions {
-      margin-top: 20px;
-      background: #0f1724;
-      padding: 18px;
-      border-radius: 12px;
-    }
-
-    .jee-questions h2 {
-      margin: 0 0 12px 0;
-      color: #ffd54f;
-    }
-
-    .jee-questions details {
-      background: #0b1220;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-
-    .jee-questions summary {
-      cursor: pointer;
-      font-weight: 600;
-      color: #cfe8ff;
-    }
-
-    .jee-questions p.answer {
-      margin: 8px 0 0 0;
-      color: #c5ccda;
-      line-height: 1.5;
-    }
-  </style>
-</head>
-
-<body>
-
-  <div class="header">
-    <h1>🚀 Projectile Motion Lab</h1>
-    <p>Explore projectile motion interactively</p>
-  </div>
-
-  <div class="lab">
-
-    <canvas id="canvas" width="900" height="500"></canvas>
-
-<div class="controls">
-
-  <label>
-    Initial Velocity
-    <input id="velocity" type="range"
-           min="5" max="50" value="25">
-    <span id="velocityValue">25 m/s</span>
-  </label>
-
-  <label>
-    Angle
-    <input id="angle" type="range"
-           min="10" max="80" value="45">
-    <span id="angleValue">45°</span>
-  </label>
-
-  <label>
-    Height
-    <input id="height" type="range"
-           min="0" max="20" value="0">
-    <span id="heightValue">0 m</span>
-  </label>
-
-  <button id="launchButton">🚀 Launch</button>
-  <button id="resetButton">↻ Reset</button>
-
-</div>
-
-<div class="stats">
-
-  <div class="stat">
-    <span>Time of Flight</span>
-    <strong id="timeValue">0.00 s</strong>
-  </div>
-
-  <div class="stat">
-    <span>Maximum Height</span>
-    <strong id="maxHeightValue">0.00 m</strong>
-  </div>
-
-  <div class="stat">
-    <span>Range</span>
-    <strong id="rangeValue">0.00 m</strong>
-  </div>
-
-  <div class="stat">
-    <span>Vx (horizontal)</span>
-    <strong id="vxValue">0.00 m/s</strong>
-  </div>
-
-  <div class="stat">
-    <span>Vy (vertical)</span>
-    <strong id="vyValue">0.00 m/s</strong>
-  </div>
-
-  <div class="stat">
-    <span>Speed</span>
-    <strong id="speedValue">0.00 m/s</strong>
-  </div>
-
-</div>
-
-<div class="learn">
-  <h2>Learn More</h2>
-
-  <p>
-    Projectile motion is the motion of an object launched into the air
-    under the influence of gravity.
-  </p>
-
-  <p>
-    The horizontal and vertical motions can be studied independently.
-  </p>
-</div>
-
-<!-- JEE questions section -->
-<div class="jee-questions" id="jeeQuestions">
-  <h2>JEE Mains & Advanced — Sample Questions</h2>
-
-  <h3 style="color:#aab3c5; margin-top:0;">JEE Main (conceptual / short)</h3>
-
-  <details>
-    <summary>1. A ball is projected at 30 m/s at 60° above the horizontal. Ignore air resistance. What is the horizontal range?</summary>
-    <p class="answer">Range = (v^2 sin 2θ)/g. Here v=30, θ=60°, sin120°=sin60°=√3/2. Range = (900 * √3/2) / 9.8 ≈ (900*0.866)/9.8 ≈ 779.4 / 9.8 ≈ 79.53 m.</p>
-  </details>
-
-  <details>
-    <summary>2. A projectile is launched from a height h above ground. How does initial height affect time of flight?</summary>
-    <p class="answer">Increasing initial height increases time of flight. Solve y(t)=h+v_y t - (1/2) g t^2 = 0 for positive root. Time grows with √h for fixed v_y.</p>
-  </details>
-
-  <details>
-    <summary>3. For a fixed speed, at what two angles will a projectile have the same range?</summary>
-    <p class="answer">If θ gives a range R, then (90°−θ) gives the same range because sin(2θ)=sin(180°−2θ).</p>
-  </details>
-
-  <h3 style="color:#aab3c5; margin-top:8px;">JEE Advanced (challenging)</h3>
-
-  <details>
-    <summary>1. A particle is projected from point A on a plane inclined at angle α with speed u at angle β above the incline. Find the range along the incline.</summary>
-    <p class="answer">Resolve components along and perpendicular to plane and use motion equations with g component g cosα along normal and g sinα along plane. Range formula (along incline) = [2 u^2 cosβ sin(β−α)] / [g cos^2 α]. (Derivation omitted — use coordinate rotation.)</p>
-  </details>
-
-  <details>
-    <summary>2. A projectile of speed v is launched from ground at angle θ. A target at distance R and height H must be hit. Derive condition relating v, θ, R, H.</summary>
-    <p class="answer">Use parametric equations x=v cosθ t, y=v sinθ t - 1/2 g t^2. Solve for t=R/(v cosθ) and substitute to get H = R tanθ - (g R^2)/(2 v^2 cos^2 θ). Rearranged gives condition for θ existence.</p>
-  </details>
-
-  <details>
-    <summary>3. A projectile passes through two points at the same level separated by distance d. Show that the highest point is at midpoint horizontally.</summary>
-    <p class="answer">Symmetry of parabolic trajectory: horizontal motion uniform, vertical symmetric about apex. For equal heights, times t1 and t2 satisfy t1+t2 = time of flight; midpoint in time corresponds to midpoint in x.</p>
-  </details>
-
-  <p style="color:#c5ccda; margin-top:12px;">Want more JEE-style questions or full worked solutions added to this page (separate collapsible answer sheets)? Reply with "add more" or "include solutions" and I will add them.</p>
-</div>
+<title>JEE Mechanics Lab</title>
 
 <style>
-  .controls {
-    margin-top: 20px;
-    padding: 20px;
-    background: #151c31;
-    border-radius: 15px;
-    display: grid;
-    gap: 15px;
-  }label {
-    display: grid;
-    grid-template-columns: 140px 1fr 80px;
-    align-items: center;
-    gap: 10px;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1020;
+  color: white;
+}
+
+header {
+  text-align: center;
+  padding: 25px 15px 15px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 30px;
+}
+
+header p {
+  color: #aeb8cc;
+  margin: 8px 0 20px;
+}
+
+/* MODE BUTTONS */
+
+.mode-switch {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.mode-button {
+  border: none;
+  border-radius: 12px;
+  padding: 13px 22px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #202941;
+  color: white;
+}
+
+.mode-button.active {
+  background: #287cff;
+}
+
+/* MAIN */
+
+.container {
+  width: 94%;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.mode {
+  display: none;
+}
+
+.mode.active {
+  display: block;
+}
+
+/* SIMULATION */
+
+.simulation {
+  background: #151c31;
+  border-radius: 18px;
+  padding: 15px;
+}
+
+canvas {
+  width: 100%;
+  display: block;
+  background: #eef6ff;
+  border-radius: 12px;
+}
+
+/* CONTROLS */
+
+.controls {
+  background: #151c31;
+  border-radius: 18px;
+  padding: 22px;
+  margin-top: 18px;
+}
+
+.control {
+  margin-bottom: 22px;
+}
+
+.control-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.control-top span:last-child {
+  font-weight: bold;
+}
+
+input[type="range"] {
+  width: 100%;
+  cursor: pointer;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* TOGGLE */
+
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #202941;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.switch {
+  position: relative;
+  width: 54px;
+  height: 28px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #555;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  left: 3px;
+  top: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.switch input:checked + .slider {
+  background: #287cff;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* ACTION BUTTONS */
+
+.action-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.action-button {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #287cff;
+  color: white;
+}
+
+.reset-button {
+  background: #30394f;
+}
+
+/* STATUS */
+
+.status {
+  padding: 14px;
+  border-radius: 10px;
+  background: #202941;
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* STAT CARDS */
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #202941;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+}
+
+.card span {
+  display: block;
+  color: #aeb8cc;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.card strong {
+  font-size: 20px;
+}
+
+/* LEARN */
+
+.learn {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  background: #151c31;
+  padding: 24px;
+  border-radius: 18px;
+}
+
+.learn h2 {
+  margin-top: 0;
+}
+
+.learn p {
+  color: #c5ccda;
+  line-height: 1.7;
+}
+
+/* FORMULAS */
+
+.formulas {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  background: #151c31;
+  padding: 22px;
+  border-radius: 18px;
+}
+
+.formula {
+  background: #202941;
+  padding: 14px;
+  border-radius: 10px;
+  margin: 8px 0;
+}
+
+/* QUESTIONS */
+
+.question-box {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  background: #151c31;
+  padding: 22px;
+  border-radius: 18px;
+}
+
+.question {
+  background: #202941;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* MOBILE */
+
+@media(max-width: 700px) {
+
+  header h1 {
+    font-size: 24px;
   }
 
-  input[type="range"] {
+  .values {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mode-button {
     width: 100%;
   }
 
-  button {
-    padding: 12px 18px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
-  }
+}
 
-  #launchButton {
-    background: #4f8cff;
-    color: white;
-  }
-
-  #resetButton {
-    background: #30394f;
-    color: white;
-  }
-
-  .stats {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-
-  .stat {
-    background: #151c31;
-    padding: 18px;
-    border-radius: 12px;
-    text-align: center;
-  }
-
-  .stat span {
-    display: block;
-    color: #aab3c5;
-    margin-bottom: 8px;
-  }
-
-  .stat strong {
-    font-size: 20px;
-  }
-
-  .learn {
-    margin: 25px 0;
-    padding: 25px;
-    background: #151c31;
-    border-radius: 15px;
-  }
-
-  .learn h2 {
-    margin-top: 0;
-  }
-
-  .learn p {
-    color: #c5ccda;
-    line-height: 1.6;
-  }
-
-  @media (max-width: 600px) {
-    label {
-      grid-template-columns: 1fr;
-    }
-    .stats {
-      grid-template-columns: 1fr;
-    }
-  }
 </style>
-<script>
+</head>
 
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
 
-const velocitySlider = document.getElementById("velocity");
-const angleSlider = document.getElementById("angle");
-const heightSlider = document.getElementById("height");
+<body>
 
-const velocityValue = document.getElementById("velocityValue");
-const angleValue = document.getElementById("angleValue");
-const heightValue = document.getElementById("heightValue");
 
-const launchButton = document.getElementById("launchButton");
-const resetButton = document.getElementById("resetButton");
+<header>
 
-const timeValue = document.getElementById("timeValue");
-const maxHeightValue = document.getElementById("maxHeightValue");
-const rangeValue = document.getElementById("rangeValue");
-const vxValue = document.getElementById("vxValue");
-const vyValue = document.getElementById("vyValue");
-const speedValue = document.getElementById("speedValue");
+<h1>⚙️ JEE Mechanics Lab</h1>
 
-const g = 9.8;
+<p>Interactive simulations for JEE Physics</p>
 
-let v0 = 25;
-let angle = 45;
-let h0 = 0;
+<div class="mode-switch">
 
-let projectileX = 0;
-let projectileY = 0;
-let time = 0;
+<button
+class="mode-button active"
+id="projectileModeButton"
+onclick="showMode('projectile')">
 
-let running = false;
+🚀 Projectile Motion
 
-function updateValues() {
+</button>
 
-  v0 = Number(velocitySlider.value);
-  angle = Number(angleSlider.value);
-  h0 = Number(heightSlider.value);
+<button
+class="mode-button"
+id="inclinedModeButton"
+onclick="showMode('inclined')">
 
-  velocityValue.textContent = v0 + " m/s";
-  angleValue.textContent = angle + "°";
-  heightValue.textContent = h0 + " m";
-}
+⚙️ Inclined Plane
 
-velocitySlider.addEventListener("input", updateValues);
-angleSlider.addEventListener("input", updateValues);
-heightSlider.addEventListener("input", updateValues);
-
-updateValues();
-function calculatePhysics() {
-
-  const theta = angle * Math.PI / 180;
-
-  const vx = v0 * Math.cos(theta);
-  const vy = v0 * Math.sin(theta);
-
-  const discriminant =
-    vy * vy + 2 * g * h0;
-
-  const flightTime =
-    (vy + Math.sqrt(discriminant)) / g;
-
-  const maxHeight =
-    h0 + (vy * vy) / (2 * g);
-
-  const range =
-    vx * flightTime;
-
-  timeValue.textContent =
-    flightTime.toFixed(2) + " s";
-
-  maxHeightValue.textContent =
-    maxHeight.toFixed(2) + " m";
-
-  rangeValue.textContent =
-    range.toFixed(2) + " m";
-
-  vxValue.textContent = vx.toFixed(2) + " m/s";
-}
-
-calculatePhysics();
-
-velocitySlider.addEventListener("input", calculatePhysics);
-angleSlider.addEventListener("input", calculatePhysics);
-heightSlider.addEventListener("input", calculatePhysics);
-
-function drawArrow(fromX, fromY, toX, toY, color) {
-  const headLength = 8;
-  const dx = toX - fromX;
-  const dy = toY - fromY;
-  const angle = Math.atan2(dy, dx);
-
-  ctx.strokeStyle = color;
-  ctx.fillStyle = color;
-  ctx.lineWidth = 2;
-
-  ctx.beginPath();
-  ctx.moveTo(fromX, fromY);
-  ctx.lineTo(toX, toY);
-  ctx.stroke();
-
-  ctx.beginPath();
-  ctx.moveTo(toX, toY);
-  ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
-  ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
-  ctx.closePath();
-  ctx.fill();
-}
-
-function drawScene() {ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-// Sky
-  ctx.fillStyle = "#eef6ff";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  // Ground
-  ctx.fillStyle = "#555";
-  ctx.fillRect(0, 440, canvas.width, 10);
-
-  // Starting platform
-  ctx.fillStyle = "#333";
-  ctx.fillRect(40, 390, 100, 50);
-
-  // Projectile position
-  const theta = angle * Math.PI / 180;
-
-  const vx = v0 * Math.cos(theta);
-  const vy = v0 * Math.sin(theta);
-
-  projectileX = vx * time;
-
-  const realY =
-    h0 +
-    vy * time -
-    0.5 * g * time * time;
-
-  // instantaneous vertical component
-  const vyInstant = vy - g * time;
-
-  // instantaneous speed
-  const speed = Math.sqrt(vx * vx + vyInstant * vyInstant);
-
-  // Update live component displays
-  vyValue.textContent = vyInstant.toFixed(2) + " m/s";
-  speedValue.textContent = speed.toFixed(2) + " m/s";
-
-  // Scale physics metres to pixels
-  const scale = 8;
-
-  const screenX = 90 + projectileX * scale;
-  const screenY = 390 - realY * scale;
-
-  // Trajectory
-  ctx.beginPath();
-
-  for (let t = 0; t <= time; t += 0.03) {
-
-    const px = vx * t;
-    const py =
-      h0 +
-      vy * t -
-      0.5 * g * t * t;
-
-    const sx = 90 + px * scale;
-    const sy = 390 - py * scale;
-
-    if (t === 0) {
-      ctx.moveTo(sx, sy);
-    } else {
-      ctx.lineTo(sx, sy);
-    }
-  }
-
-  ctx.strokeStyle = "#e53935";
-  ctx.lineWidth = 3;
-  ctx.stroke();
-
-  // Projectile
-  ctx.beginPath();
-  ctx.arc(screenX, screenY, 9, 0, Math.PI * 2);
-
-  ctx.fillStyle = "#1565c0";
-  ctx.fill();
-
-  // Draw velocity vector and components (scaled for visibility)
-  const vecScale = 10; // pixels per m/s
-
-  const vxScreen = vx * vecScale;
-  const vyScreen = vyInstant * vecScale;
-
-  // Velocity vector (green)
-  drawArrow(screenX, screenY, screenX + vxScreen, screenY - vyScreen, "#2e7d32");
-
-  // Horizontal component (orange)
-  drawArrow(screenX, screenY, screenX + vxScreen, screenY, "#ff9800");
-
-  // Vertical component (yellow)
-  drawArrow(screenX, screenY, screenX, screenY - vyScreen, "#fbc02d");
-
-  // Labels near projectile
-  ctx.fillStyle = "#111";
-  ctx.font = "14px Arial";
-  ctx.fillText("Vx=" + vx.toFixed(2) + " m/s", screenX + vxScreen + 8, screenY);
-  ctx.fillText("Vy=" + vyInstant.toFixed(2) + " m/s", screenX + 4, screenY - vyScreen - 8);
-  ctx.fillText("|v|=" + speed.toFixed(2) + " m/s", screenX + vxScreen/2, screenY - vyScreen/2 - 6);
-
-  // Launch angle
-  ctx.fillStyle = "#111";
-  ctx.font = "16px Arial";
-  ctx.fillText(
-    "θ = " + angle + "°",
-    45,
-    375
-  );
-}
-
-drawScene();
-let lastTime = 0;
-
-function animate(currentTime) {
-
-  if (!running) return;
-
-  const delta =
-    (currentTime - lastTime) / 1000;
-
-  lastTime = currentTime;
-
-  time += delta;
-
-  const theta = angle * Math.PI / 180;
-
-  const vy = v0 * Math.sin(theta);
-
-  const flightTime =
-    (vy + Math.sqrt(
-      vy * vy + 2 * g * h0
-    )) / g;
-
-  if (time >= flightTime) {
-    time = flightTime;
-    running = false;
-    launchButton.textContent = "🚀 Launch";
-  }
-
-  drawScene();
-
-  requestAnimationFrame(animate);
-}
-
-launchButton.addEventListener("click", function() {
-
-  if (!running) {
-
-    time = 0;
-    running = true;
-
-    launchButton.textContent = "⏸ Pause";
-
-    lastTime = performance.now();
-
-    requestAnimationFrame(animate);
-
-  } else {
-
-    running = false;
-
-    launchButton.textContent = "🚀 Launch";
-  }
-});
-
-resetButton.addEventListener("click", function() {
-
-  running = false;
-  time = 0;
-
-  launchButton.textContent = "🚀 Launch";
-
-  // reset live values
-  vyValue.textContent = "0.00 m/s";
-  speedValue.textContent = "0.00 m/s";
-
-  drawScene();
-});</script>
+</button>
 
 </div>
 
+</header>
+
+
+<div class="container">
+
+
+<!-- =====================================================
+     PROJECTILE MOTION
+===================================================== -->
+
+
+<section
+id="projectileMode"
+class="mode active">
+
+
+<div class="simulation">
+
+<canvas
+id="projectileCanvas"
+width="1000"
+height="520">
+</canvas>
+
+</div>
+
+
+<div class="controls">
+
+
+<div class="control">
+
+<div class="control-top">
+
+<span>Initial Velocity</span>
+
+<span id="pVelocityValue">
+25 m/s
+</span>
+
+</div>
+
+<input
+id="pVelocity"
+type="range"
+min="5"
+max="50"
+value="25">
+
+</div>
+
+
+<div class="control">
+
+<div class="control-top">
+
+<span>Launch Angle θ</span>
+
+<span id="pAngleValue">
+45°
+</span>
+
+</div>
+
+<input
+id="pAngle"
+type="range"
+min="5"
+max="85"
+value="45">
+
+</div>
+
+
+<div class="control">
+
+<div class="control-top">
+
+<span>Initial Height</span>
+
+<span id="pHeightValue">
+0 m
+</span>
+
+</div>
+
+<input
+id="pHeight"
+type="range"
+min="0"
+max="20"
+value="0">
+
+</div>
+
+
+<div class="action-row">
+
+<button
+class="action-button"
+id="launchButton"
+onclick="launchProjectile()">
+
+🚀 Launch
+
+</button>
+
+<button
+class="action-button reset-button"
+onclick="resetProjectile()">
+
+↻ Reset
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="values">
+
+<div class="card">
+
+<span>Time of Flight</span>
+
+<strong id="pTime">
+0.00 s
+</strong>
+
+</div>
+
+<div class="card">
+
+<span>Maximum Height</span>
+
+<strong id="pMaxHeight">
+0.00 m
+</strong>
+
+</div>
+
+<div class="card">
+
+<span>Range</span>
+
+<strong id="pRange">
+0.00 m
+</strong>
+
+</div>
+
+<div class="card">
+
+<span>Horizontal Velocity Vx</span>
+
+<strong id="pVx">
+0.00 m/s
+</strong>
+
+</div>
+
+<div class="card">
+
+<span>Initial Vertical Velocity Vy</span>
+
+<strong id="pVy">
+0.00 m/s
+</strong>
+
+</div>
+
+<div class="card">
+
+<span>Speed</span>
+
+<strong id="pSpeed">
+25.00 m/s
+</strong>
+
+</div>
+
+</div>
+
+
+<div class="learn">
+
+<h2>📖 Learn More</h2>
+
+<p>
+Projectile motion is the two-dimensional motion of an object
+launched into the air under the influence of gravity.
+</p>
+
+<p>
+The horizontal and vertical motions can be treated independently.
+Horizontal acceleration is zero while vertical acceleration is
+equal to g downward.
+</p>
+
+<p>
+The initial velocity can be resolved into two components:
+<b>Vx = V₀ cos θ</b> and
+<b>Vy = V₀ sin θ</b>.
+</p>
+
+</div>
+
+
+<div class="formulas">
+
+<h2>📚 Important Formulae</h2>
+
+<div class="formula">
+Time of flight:
+<b>T = [u sinθ + √((u sinθ)² + 2gh)] / g</b>
+</div>
+
+<div class="formula">
+Maximum height:
+<b>H = h + (u² sin²θ)/(2g)</b>
+</div>
+
+<div class="formula">
+Horizontal range:
+<b>R = u cosθ × T</b>
+</div>
+
+</div>
+
+
+<div class="question-box">
+
+<h2>🎯 JEE Practice</h2>
+
+<div class="question">
+
+<b>JEE Main:</b><br>
+A projectile is launched with initial velocity u at an angle θ.
+Use the simulation to investigate how changing θ affects its range.
+
+</div>
+
+<div class="question">
+
+<b>JEE Advanced:</b><br>
+For a projectile launched from a height h, investigate the
+relationship between maximum height, time of flight and horizontal
+range.
+
+</div>
+
+</div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     INCLINED PLANE
+===================================================== -->
+
+
+<section
+id="inclinedMode"
+class="mode">
+
+
+<div class="simulation">
+
+<canvas
+id="inclinedCanvas"
+width="1000"
+height="520">
+</canvas>
+
+</div>
+
+
+<div class="controls">
+
+
+<div class="toggle-row">
+
+<span>
+🔥 Enable Friction
+</span>
+
+<label class="switch">
+
+<input
+id="frictionToggle"
+type="checkbox"
+onchange="calculateInclined()">
+
+<span class="slider"></span>
+
+</label>
+
+</div>
+
+
+<div class="control">
+
+<div class="control-top">
+
+<span>
+Inclination Angle θ
+</span>
+
+<span id="iAngleValue">
+30°
+</span>
+
+</div>
+
+<input
+id="iAngle"
+type="range"
+min="0"
+max="60"
+value="30"
+oninput="calculateInclined()">
+
+</div>
+
+
+<div class="control">
+
+<div class="control-top">
+
+<span>
+Mass
+</span>
+
+<span id="iMassValue">
+5 kg
+</span>
+
+</div>
+
+<input
+id="iMass"
+type="range"
+min="1"
+max="20"
+step="0.5"
+value="5"
+oninput="calculateInclined()">
+
+</div>
+
+
+<div
+id="frictionControls">
+
+
+<div class="control">
+
+<div class="control-top">
+
+<span>
+Static Friction μₛ
+</span>
+
+<span id="staticValue">
+0.50
+</span>
+
+</div>
+
+<input
+id="staticFriction"
+type="range"
+min="0"
+max="1"
+step="0.01"
+value="0.50"
+oninput="calculateInclined()">
+
+</div>
+
+
+<div class="control">
+
+<div class="control-top">
+
+<span>
+Kinetic Friction μₖ
+</span>
+
+<span id="kineticValue">
+0.30
+</span>
+
+</div>
+
+<input
+id="kineticFriction"
+type="range"
+min="0"
+max="1"
+step="0.01"
+value="0.30"
+oninput="calculateInclined()">
+
+</div>
+
+
+</div>
+
+
+<div
+class="status"
+id="inclinedStatus">
+
+🟡 Block is at rest
+
+</div>
+
+
+</div>
+
+
+<div class="values">
+
+
+<div class="card">
+
+<span>Acceleration</span>
+
+<strong id="iAcceleration">
+0.00 m/s²
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<span>Weight mg</span>
+
+<strong id="iWeight">
+49.00 N
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<span>Normal Force</span>
+
+<strong id="iNormal">
+42.44 N
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<span>Parallel Component</span>
+
+<strong id="iParallel">
+24.50 N
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<span>Perpendicular Component</span>
+
+<strong id="iPerpendicular">
+42.44 N
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<span>Friction Force</span>
+
+<strong id="iFriction">
+24.50 N
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<span>Net Force</span>
+
+<strong id="iNetForce">
+0.00 N
+</strong>
+
+</div>
+
+
+<div class="card">
+
+<span>Maximum Static Friction</span>
+
+<strong id="iFrictionLimit">
+21.22 N
+</strong>
+
+</div>
+
+
+</div>
+
+
+<div class="learn">
+
+<h2>📖 Learn More</h2>
+
+<p>
+An inclined plane is a surface making an angle θ with the horizontal.
+The weight of the block acts vertically downward.
+</p>
+
+<p>
+The weight can be resolved into two components:
+<b>mg sinθ</b> along the plane and
+<b>mg cosθ</b> perpendicular to the plane.
+</p>
+
+<p>
+Static friction prevents motion until the component of gravity
+along the plane exceeds the maximum available static friction.
+</p>
+
+<p>
+Once the block starts moving, kinetic friction acts opposite to
+the direction of motion.
+</p>
+
+</div>
+
+
+<div class="formulas">
+
+<h2>📚 Important Formulae</h2>
+
+<div class="formula">
+Weight:
+<b>W = mg</b>
+</div>
+
+<div class="formula">
+Normal force:
+<b>N = mg cosθ</b>
+</div>
+
+<div class="formula">
+Parallel component:
+<b>W∥ = mg sinθ</b>
+</div>
+
+<div class="formula">
+Maximum static friction:
+<b>fₛ(max) = μₛN</b>
+</div>
+
+<div class="formula">
+Kinetic friction:
+<b>fₖ = μₖN</b>
+</div>
+
+<div class="formula">
+Acceleration while sliding:
+<b>a = g(sinθ − μₖcosθ)</b>
+</div>
+
+<div class="formula">
+Angle of repose:
+<b>tanθ = μₛ</b>
+</div>
+
+</div>
+
+
+<div class="question-box">
+
+<h2>🎯 JEE Practice</h2>
+
+<div class="question">
+
+<b>JEE Main:</b><br>
+Increase θ slowly while friction is enabled. Find the angle at
+which the block just begins to slide.
+
+</div>
+
+<div class="question">
+
+<b>JEE Advanced:</b><br>
+Investigate how changing μₛ and μₖ affects the transition from
+static to kinetic friction and the subsequent acceleration.
+
+</div>
+
+</div>
+
+
+</section>
+
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   MODE SWITCHING
+========================================================= */
+
+
+function showMode(mode) {
+
+
+const projectile =
+document.getElementById(
+  "projectileMode"
+);
+
+const inclined =
+document.getElementById(
+  "inclinedMode"
+);
+
+const projectileButton =
+document.getElementById(
+  "projectileModeButton"
+);
+
+const inclinedButton =
+document.getElementById(
+  "inclinedModeButton"
+);
+
+
+if (mode === "projectile") {
+
+  projectile.classList.add(
+    "active"
+  );
+
+  inclined.classList.remove(
+    "active"
+  );
+
+  projectileButton.classList.add(
+    "active"
+  );
+
+  inclinedButton.classList.remove(
+    "active"
+  );
+
+  drawProjectile();
+
+}
+
+else {
+
+  inclined.classList.add(
+    "active"
+  );
+
+  projectile.classList.remove(
+    "active"
+  );
+
+  projectileButton.classList.remove(
+    "active"
+  );
+
+  inclinedButton.classList.add(
+    "active"
+  );
+
+  calculateInclined();
+
+}
+
+}
+
+
+/* =========================================================
+   PROJECTILE MOTION
+========================================================= */
+
+
+const pCanvas =
+document.getElementById(
+  "projectileCanvas"
+);
+
+const pCtx =
+pCanvas.getContext(
+  "2d"
+);
+
+
+const pVelocity =
+document.getElementById(
+  "pVelocity"
+);
+
+const pAngle =
+document.getElementById(
+  "pAngle"
+);
+
+const pHeight =
+document.getElementById(
+  "pHeight"
+);
+
+
+let projectileRunning =
+false;
+
+let projectileTime =
+0;
+
+let projectileLastTime =
+0;
+
+
+function calculateProjectile() {
+
+
+const u =
+Number(
+  pVelocity.value
+);
+
+const theta =
+Number(
+  pAngle.value
+);
+
+const h =
+Number(
+  pHeight.value
+);
+
+const radians =
+theta *
+Math.PI /
+180;
+
+
+const vx =
+u *
+Math.cos(
+  radians
+);
+
+const vy =
+u *
+Math.sin(
+  radians
+);
+
+
+const flightTime =
+(
+  vy +
+  Math.sqrt(
+    vy * vy +
+    2 * 9.8 * h
+  )
+) / 9.8;
+
+
+const maxHeight =
+h +
+(
+  vy * vy
+) /
+(
+  2 * 9.8
+);
+
+
+const range =
+vx *
+flightTime;
+
+
+document.getElementById(
+  "pVelocityValue"
+).textContent =
+u.toFixed(0) +
+" m/s";
+
+
+document.getElementById(
+  "pAngleValue"
+).textContent =
+theta +
+"°";
+
+
+document.getElementById(
+  "pHeightValue"
+).textContent =
+h +
+" m";
+
+
+document.getElementById(
+  "pTime"
+).textContent =
+flightTime.toFixed(2) +
+" s";
+
+
+document.getElementById(
+  "pMaxHeight"
+).textContent =
+maxHeight.toFixed(2) +
+" m";
+
+
+document.getElementById(
+  "pRange"
+).textContent =
+range.toFixed(2) +
+" m";
+
+
+document.getElementById(
+  "pVx"
+).textContent =
+vx.toFixed(2) +
+" m/s";
+
+
+document.getElementById(
+  "pVy"
+).textContent =
+vy.toFixed(2) +
+" m/s";
+
+
+document.getElementById(
+  "pSpeed"
+).textContent =
+u.toFixed(2) +
+" m/s";
+
+
+drawProjectile();
+
+}
+
+
+function drawProjectile() {
+
+
+const u =
+Number(
+  pVelocity.value
+);
+
+const theta =
+Number(
+  pAngle.value
+);
+
+const h =
+Number(
+  pHeight.value
+);
+
+const radians =
+theta *
+Math.PI /
+180;
+
+
+const vx =
+u *
+Math.cos(
+  radians
+);
+
+const vy =
+u *
+Math.sin(
+  radians
+);
+
+
+const flightTime =
+(
+  vy +
+  Math.sqrt(
+    vy * vy +
+    2 * 9.8 * h
+  )
+) / 9.8;
+
+
+pCtx.clearRect(
+  0,
+  0,
+  pCanvas.width,
+  pCanvas.height
+);
+
+
+/* Sky */
+
+pCtx.fillStyle =
+"#eef6ff";
+
+pCtx.fillRect(
+  0,
+  0,
+  pCanvas.width,
+  pCanvas.height
+);
+
+
+/* Ground */
+
+pCtx.fillStyle =
+"#777";
+
+pCtx.fillRect(
+  40,
+  450,
+  920,
+  8
+);
+
+
+/* Launch platform */
+
+pCtx.fillStyle =
+"#444";
+
+pCtx.fillRect(
+  80,
+  390 -
+  h * 8,
+  80,
+  60 +
+  h * 8
+);
+
+
+/* Scaling */
+
+const scale = 9;
+
+const startX = 120;
+
+const groundY = 390;
+
+
+/* Trajectory */
+
+pCtx.beginPath();
+
+for (
+  let t = 0;
+  t <= flightTime;
+  t += 0.03
+) {
+
+  const x =
+    vx * t;
+
+  const y =
+    h +
+    vy * t -
+    0.5 *
+    9.8 *
+    t *
+    t;
+
+  const sx =
+    startX +
+    x * scale;
+
+  const sy =
+    groundY -
+    y * scale;
+
+  if (t === 0) {
+
+    pCtx.moveTo(
+      sx,
+      sy
+    );
+
+  }
+
+  else {
+
+    pCtx.lineTo(
+      sx,
+      sy
+    );
+
+  }
+
+}
+
+pCtx.strokeStyle =
+"#e53935";
+
+pCtx.lineWidth =
+3;
+
+pCtx.stroke();
+
+
+/* Current projectile */
+
+const currentX =
+vx *
+projectileTime;
+
+const currentY =
+h +
+vy *
+projectileTime -
+0.5 *
+9.8 *
+projectileTime *
+projectileTime;
+
+
+const ballX =
+startX +
+currentX *
+scale;
+
+const ballY =
+groundY -
+currentY *
+scale;
+
+
+pCtx.beginPath();
+
+pCtx.arc(
+  ballX,
+  ballY,
+  10,
+  0,
+  Math.PI * 2
+);
+
+pCtx.fillStyle =
+"#1565c0";
+
+pCtx.fill();
+
+
+/* Angle */
+
+pCtx.fillStyle =
+"#111";
+
+pCtx.font =
+"bold 17px Arial";
+
+pCtx.fillText(
+  "θ = " +
+  theta +
+  "°",
+  75,
+  375 -
+  h * 8
+);
+
+}
+
+
+function launchProjectile() {
+
+
+if (
+  projectileRunning
+) {
+
+  projectileRunning =
+    false;
+
+  document.getElementById(
+    "launchButton"
+  ).textContent =
+    "🚀 Launch";
+
+  return;
+
+}
+
+
+projectileTime =
+0;
+
+projectileRunning =
+true;
+
+document.getElementById(
+  "launchButton"
+).textContent =
+"⏸ Pause";
+
+projectileLastTime =
+performance.now();
+
+requestAnimationFrame(
+  projectileAnimation
+);
+
+}
+
+
+function projectileAnimation(
+  currentTime
+) {
+
+
+if (
+  !projectileRunning
+) return;
+
+
+const dt =
+(
+  currentTime -
+  projectileLastTime
+) /
+1000;
+
+
+projectileLastTime =
+currentTime;
+
+
+projectileTime +=
+dt;
+
+
+const u =
+Number(
+  pVelocity.value
+);
+
+const theta =
+Number(
+  pAngle.value
+);
+
+const h =
+Number(
+  pHeight.value
+);
+
+const radians =
+theta *
+Math.PI /
+180;
+
+
+const vy =
+u *
+Math.sin(
+  radians
+);
+
+
+const flightTime =
+(
+  vy +
+  Math.sqrt(
+    vy * vy +
+    2 * 9.8 * h
+  )
+) / 9.8;
+
+
+if (
+  projectileTime >=
+  flightTime
+) {
+
+  projectileTime =
+  flightTime;
+
+  projectileRunning =
+  false;
+
+  document.getElementById(
+    "launchButton"
+  ).textContent =
+  "🚀 Launch";
+
+}
+
+
+drawProjectile();
+
+
+if (
+  projectileRunning
+) {
+
+  requestAnimationFrame(
+    projectileAnimation
+  );
+
+}
+
+}
+
+
+function resetProjectile() {
+
+  projectileRunning =
+    false;
+
+  projectileTime =
+    0;
+
+  document.getElementById(
+    "launchButton"
+  ).textContent =
+  "🚀 Launch";
+
+  drawProjectile();
+
+}
+
+
+/* Projectile live sliders */
+
+pVelocity.addEventListener(
+  "input",
+  calculateProjectile
+);
+
+pAngle.addEventListener(
+  "input",
+  calculateProjectile
+);
+
+pHeight.addEventListener(
+  "input",
+  calculateProjectile
+);
+
+
+/* =========================================================
+   INCLINED PLANE + FRICTION
+========================================================= */
+
+
+const iCanvas =
+document.getElementById(
+  "inclinedCanvas"
+);
+
+const iCtx =
+iCanvas.getContext(
+  "2d"
+);
+
+
+function calculateInclined() {
+
+
+const theta =
+Number(
+  document.getElementById(
+    "iAngle"
+  ).value
+);
+
+
+const mass =
+Number(
+  document.getElementById(
+    "iMass"
+  ).value
+);
+
+
+const muS =
+Number(
+  document.getElementById(
+    "staticFriction"
+  ).value
+);
+
+
+const muK =
+Number(
+  document.getElementById(
+    "kineticFriction"
+  ).value
+);
+
+
+const frictionEnabled =
+document.getElementById(
+  "frictionToggle"
+).checked;
+
+
+const radians =
+theta *
+Math.PI /
+180;
+
+
+const weight =
+mass *
+9.8;
+
+
+const normal =
+weight *
+Math.cos(
+  radians
+);
+
+
+const parallel =
+weight *
+Math.sin(
+  radians
+);
+
+
+const maximumStatic =
+muS *
+normal;
+
+
+let friction = 0;
+
+let netForce = 0;
+
+let acceleration = 0;
+
+
+if (
+  !frictionEnabled
+) {
+
+  friction =
+    0;
+
+  netForce =
+    parallel;
+
+  acceleration =
+    9.8 *
+    Math.sin(
+      radians
+    );
+
+  document.getElementById(
+    "inclinedStatus"
+  ).textContent =
+  "🟢 Friction OFF — Frictionless surface";
+
+}
+
+
+else if (
+  parallel <=
+  maximumStatic
+) {
+
+  friction =
+    parallel;
+
+  netForce =
+    0;
+
+  acceleration =
+    0;
+
+  document.getElementById(
+    "inclinedStatus"
+  ).textContent =
+  "🟡 Static friction holds the block — Block is at rest";
+
+}
+
+
+else {
+
+  friction =
+    muK *
+    normal;
+
+  netForce =
+    parallel -
+    friction;
+
+  acceleration =
+    netForce /
+    mass;
+
+
+  if (
+    acceleration < 0
+  ) {
+
+    acceleration =
+      0;
+
+    netForce =
+      0;
+
+  }
+
+
+  document.getElementById(
+    "inclinedStatus"
+  ).textContent =
+  "🔴 Block is sliding — Kinetic friction active";
+
+}
+
+
+/* Display values */
+
+document.getElementById(
+  "iAngleValue"
+).textContent =
+theta +
+"°";
+
+
+document.getElementById(
+  "iMassValue"
+).textContent =
+mass +
+" kg";
+
+
+document.getElementById(
+  "staticValue"
+).textContent =
+muS.toFixed(2);
+
+
+document.getElementById(
+  "kineticValue"
+).textContent =
+muK.toFixed(2);
+
+
+document.getElementById(
+  "iAcceleration"
+).textContent =
+acceleration.toFixed(2) +
+" m/s²";
+
+
+document.getElementById(
+  "iWeight"
+).textContent =
+weight.toFixed(2) +
+" N";
+
+
+document.getElementById(
+  "iNormal"
+).textContent =
+normal.toFixed(2) +
+" N";
+
+
+document.getElementById(
+  "iParallel"
+).textContent =
+parallel.toFixed(2) +
+" N";
+
+
+document.getElementById(
+  "iPerpendicular"
+).textContent =
+normal.toFixed(2) +
+" N";
+
+
+document.getElementById(
+  "iFriction"
+).textContent =
+friction.toFixed(2) +
+" N";
+
+
+document.getElementById(
+  "iNetForce"
+).textContent =
+netForce.toFixed(2) +
+" N";
+
+
+document.getElementById(
+  "iFrictionLimit"
+).textContent =
+maximumStatic.toFixed(2) +
+" N";
+
+
+drawInclined(
+  theta,
+  mass,
+  weight,
+  parallel,
+  normal,
+  friction,
+  frictionEnabled
+);
+
+}
+
+
+function drawInclined(
+  theta,
+  mass,
+  weight,
+  parallel,
+  normal,
+  friction,
+  frictionEnabled
+) {
+
+
+iCtx.clearRect(
+  0,
+  0,
+  iCanvas.width,
+  iCanvas.height
+);
+
+
+const radians =
+theta *
+Math.PI /
+180;
+
+
+/* Sky */
+
+iCtx.fillStyle =
+"#eef6ff";
+
+iCtx.fillRect(
+  0,
+  0,
+  iCanvas.width,
+  iCanvas.height
+);
+
+
+/* Plane */
+
+const startX =
+170;
+
+const startY =
+410;
+
+const length =
+650;
+
+
+const endX =
+startX +
+length *
+Math.cos(
+  radians
+);
+
+const endY =
+startY -
+length *
+Math.sin(
+  radians
+);
+
+
+iCtx.strokeStyle =
+"#444";
+
+iCtx.lineWidth =
+14;
+
+iCtx.beginPath();
+
+iCtx.moveTo(
+  startX,
+  startY
+);
+
+iCtx.lineTo(
+  endX,
+  endY
+);
+
+iCtx.stroke();
+
+
+/* Ground */
+
+iCtx.strokeStyle =
+"#777";
+
+iCtx.lineWidth =
+4;
+
+iCtx.beginPath();
+
+iCtx.moveTo(
+  60,
+  startY
+);
+
+iCtx.lineTo(
+  920,
+  startY
+);
+
+iCtx.stroke();
+
+
+/* Block */
+
+const distance =
+300;
+
+
+const bx =
+startX +
+distance *
+Math.cos(
+  radians
+);
+
+const by =
+startY -
+distance *
+Math.sin(
+  radians
+);
+
+
+const size =
+55;
+
+
+iCtx.save();
+
+iCtx.translate(
+  bx,
+  by
+);
+
+iCtx.rotate(
+  -radians
+);
+
+iCtx.fillStyle =
+"#1976d2";
+
+iCtx.fillRect(
+  -size / 2,
+  -size / 2,
+  size,
+  size
+);
+
+iCtx.restore();
+
+
+/* Label */
+
+iCtx.fillStyle =
+"#111";
+
+iCtx.font =
+"bold 17px Arial";
+
+iCtx.fillText(
+  "m = " +
+  mass +
+  " kg",
+  bx - 40,
+  by - 48
+);
+
+
+/* Arrow function */
+
+function arrow(
+  x1,
+  y1,
+  x2,
+  y2,
+  label,
+  frictionArrow
+) {
+
+
+iCtx.strokeStyle =
+frictionArrow
+  ? "#f57c00"
+  : "#d32f2f";
+
+iCtx.fillStyle =
+frictionArrow
+  ? "#f57c00"
+  : "#d32f2f";
+
+iCtx.lineWidth =
+4;
+
+
+iCtx.beginPath();
+
+iCtx.moveTo(
+  x1,
+  y1
+);
+
+iCtx.lineTo(
+  x2,
+  y2
+);
+
+iCtx.stroke();
+
+
+const a =
+Math.atan2(
+  y2 - y1,
+  x2 - x1
+);
+
+
+iCtx.beginPath();
+
+iCtx.moveTo(
+  x2,
+  y2
+);
+
+iCtx.lineTo(
+  x2 -
+  13 *
+  Math.cos(
+    a - 0.5
+  ),
+  y2 -
+  13 *
+  Math.sin(
+    a - 0.5
+  )
+);
+
+iCtx.lineTo(
+  x2 -
+  13 *
+  Math.cos(
+    a + 0.5
+  ),
+  y2 -
+  13 *
+  Math.sin(
+    a + 0.5
+  )
+);
+
+iCtx.closePath();
+
+iCtx.fill();
+
+
+iCtx.font =
+"bold 14px Arial";
+
+iCtx.fillText(
+  label,
+  x2 + 8,
+  y2
+);
+
+}
+
+
+/* Weight */
+
+arrow(
+  bx,
+  by,
+  bx,
+  by + 100,
+  "mg = " +
+  weight.toFixed(1) +
+  " N",
+  false
+);
+
+
+/* Parallel component */
+
+const parallelLength =
+100 *
+parallel /
+weight;
+
+
+arrow(
+  bx,
+  by,
+
+  bx +
+  parallelLength *
+  Math.cos(
+    radians
+  ),
+
+  by +
+  parallelLength *
+  Math.sin(
+    radians
+  ),
+
+  "mg sinθ = " +
+  parallel.toFixed(1) +
+  " N",
+
+  false
+);
+
+
+/* Friction */
+
+if (
+  frictionEnabled &&
+  friction > 0
+) {
+
+
+const frictionLength =
+100 *
+friction /
+weight;
+
+
+arrow(
+  bx,
+  by,
+
+  bx -
+  frictionLength *
+  Math.cos(
+    radians
+  ),
+
+  by -
+  frictionLength *
+  Math.sin(
+    radians
+  ),
+
+  "f = " +
+  friction.toFixed(1) +
+  " N",
+
+  true
+);
+
+}
+
+
+/* Angle */
+
+iCtx.strokeStyle =
+"#1565c0";
+
+iCtx.lineWidth =
+3;
+
+iCtx.beginPath();
+
+iCtx.arc(
+  startX,
+  startY,
+  60,
+  -radians,
+  0
+);
+
+iCtx.stroke();
+
+
+iCtx.fillStyle =
+"#1565c0";
+
+iCtx.font =
+"bold 20px Arial";
+
+iCtx.fillText(
+  "θ = " +
+  theta +
+  "°",
+  startX + 45,
+  startY - 15
+);
+
+
+/* Surface label */
+
+iCtx.fillStyle =
+frictionEnabled
+  ? "#e65100"
+  : "#1565c0";
+
+iCtx.font =
+"bold 16px Arial";
+
+iCtx.fillText(
+
+  frictionEnabled
+    ? "FRICTION ENABLED"
+    : "FRICTIONLESS SURFACE",
+
+  40,
+  40
+
+);
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+calculateProjectile();
+
+calculateInclined();
+
+</script>
+
+
 </body>
-</html>
+</html> 
