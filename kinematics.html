@@ -1,86 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kinematics | JEE Mechanics Lab</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #0b0f19;
-            color: white;
-        }
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-        header {
-            background: #111827;
-            padding: 25px 20px;
-            text-align: center;
-        }
+<title>Kinematics | JEE Mechanics Lab</title>
 
-        header h1 {
-            margin: 0;
-            font-size: 30px;
-        }
+<style>
 
-        header p {
-            color: #9ca3af;
-        }
+* {
+    box-sizing: border-box;
+}
 
-        .container {
-            max-width: 900px;
-            margin: auto;
-            padding: 25px 20px;
-        }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0f19;
+    color: white;
+}
 
-        .back {
-            display: inline-block;
-            margin-bottom: 25px;
-            color: #818cf8;
-            text-decoration: none;
-        }
+header {
+    background: #111827;
+    padding: 25px 20px;
+    text-align: center;
+}
 
-        .card {
-            background: #151c2c;
-            border: 1px solid #273249;
-            border-radius: 18px;
-            padding: 25px;
-            margin-bottom: 20px;
-        }
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
 
-        h2 {
-            margin-top: 0;
-        }
+header p {
+    color: #9ca3af;
+}
 
-        canvas {
-            width: 100%;
-            height: 300px;
-            background: #080c14;
-            border-radius: 12px;
-            margin: 15px 0;
-        }
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 25px 20px;
+}
 
-        label {
-            display: block;
-            margin-top: 18px;
-            margin-bottom: 7px;
-        }
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #818cf8;
+    text-decoration: none;
+    font-size: 17px;
+}
 
-        input[type="range"] {
-            width: 100%;
-        }
+.card {
+    background: #151c2c;
+    border: 1px solid #273249;
+    border-radius: 18px;
+    padding: 25px;
+}
 
-        .value {
-            color: #818cf8;
-            font-weight: bold;
-        }
+h2 {
+    margin-top: 0;
+}
 
-     .prediction {
+canvas {
+    width: 100%;
+    height: 320px;
+    background: #050810;
+    border-radius: 12px;
+    border: 1px solid #273249;
+    margin: 15px 0;
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+.value {
+    color: #818cf8;
+    font-weight: bold;
+}
+
+input[type="range"] {
+    width: 100%;
+}
+
+.prediction {
     margin-top: 25px;
     padding: 20px;
     background: #0d1320;
@@ -109,334 +116,683 @@
     font-size: 16px;
 }
 
-#predictionResult {
-    margin-top: 15px;
+button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 10px;
+    background: #6366f1;
+    color: white;
+    font-size: 17px;
     font-weight: bold;
-    line-height: 1.6;
-}   button {
-            width: 100%;
-            padding: 14px;
-            margin-top: 20px;
-            border: none;
-            border-radius: 10px;
-            background: #6366f1;
-            color: white;
-            font-size: 17px;
-            font-weight: bold;
-        }
+}
 
-        .results {
-            margin-top: 20px;
-            line-height: 2;
-            color: #d1d5db;
-        }
-    </style>
+button:active {
+    transform: scale(0.98);
+}
+
+.results {
+    margin-top: 25px;
+    padding: 15px;
+    background: #0d1320;
+    border-radius: 12px;
+    line-height: 2;
+}
+
+.result-value {
+    color: #22c55e;
+    font-weight: bold;
+}
+
+#predictionResult {
+    margin-top: 18px;
+    line-height: 1.7;
+    font-weight: bold;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <header>
-    <h1>🚀 Kinematics Lab</h1>
-    <p>Projectile Motion Simulator</p>
+
+<h1>🚀 Kinematics Lab</h1>
+
+<p>Projectile Motion Simulator</p>
+
 </header>
+
 
 <div class="container">
 
-    <a class="back" href="index.html">← Back to Mechanics Lab</a>
+<a class="back" href="index.html">
+← Back to Mechanics Lab
+</a>
 
-    <div class="card">
 
-        <h2>Projectile Motion</h2>
+<div class="card">
 
-        <canvas id="canvas"></canvas>
+<h2>Projectile Motion</h2>
 
-        <label>
-            Initial Velocity:
-            <span class="value" id="velocityValue">20</span> m/s
-        </label>
+<canvas id="canvas"></canvas>
 
-        <input
-            type="range"
-            id="velocity"
-            min="5"
-            max="50"
-            value="20"
-        >
 
-        <label>
-            Angle:
-            <span class="value" id="angleValue">45</span>°
-        </label>
+<label>
+Initial Velocity:
+<span class="value" id="velocityValue">20</span> m/s
+</label>
 
-        <input
-            type="range"
-            id="angle"
-            min="10"
-            max="80"
-            value="45"
-        >
+<input
+type="range"
+id="velocity"
+min="5"
+max="50"
+value="20"
+>
 
-        <label>
-            Gravity:
-            <span class="value" id="gravityValue">9.8</span> m/s²
-        </label>
 
-        <input
-            type="range"
-            id="gravity"
-            min="1"
-            max="20"
-            step="0.1"
-            value="9.8"
-        >
+<label>
+Angle:
+<span class="value" id="angleValue">45</span>°
+</label>
 
-       <div class="prediction">
+<input
+type="range"
+id="angle"
+min="10"
+max="80"
+value="45"
+>
 
-    <h3>🎯 JEE Prediction Mode</h3>
 
-    <p>
-        Before running the simulation, predict the
-        horizontal range of the projectile.
-    </p>
+<label>
+Gravity:
+<span class="value" id="gravityValue">9.8</span> m/s²
+</label>
 
-    <input
-        type="number"
-        id="predictionInput"
-        placeholder="Enter your predicted range"
-    >
+<input
+type="range"
+id="gravity"
+min="1"
+max="20"
+step="0.1"
+value="9.8"
+>
 
-    <button onclick="checkPrediction()">
-        CHECK MY ANSWER
-    </button>
 
-    <div id="predictionResult"></div>
+<!-- JEE PREDICTION MODE -->
 
-</div> <button onclick="startSimulation()">
-            ▶ START SIMULATION
-        </button>
+<div class="prediction">
 
-        <div class="results">
-            <div>Range: <span id="range">—</span> m</div>
-            <div>Maximum Height: <span id="height">—</span> m</div>
-            <div>Time of Flight: <span id="time">—</span> s</div>
-        </div>
+<h3>🎯 JEE Prediction Mode</h3>
 
-    </div>
+<p>
+Before running the simulation, predict the
+horizontal range of the projectile.
+</p>
+
+<input
+type="number"
+id="predictionInput"
+placeholder="Enter your predicted range in metres"
+>
+
+<button id="checkButton">
+CHECK MY ANSWER
+</button>
+
+<div id="predictionResult"></div>
 
 </div>
 
+
+<button id="startButton">
+▶ START SIMULATION
+</button>
+
+
+<div class="results">
+
+<div>
+Range:
+<span class="result-value" id="range">—</span> m
+</div>
+
+<div>
+Maximum Height:
+<span class="result-value" id="height">—</span> m
+</div>
+
+<div>
+Time of Flight:
+<span class="result-value" id="time">—</span> s
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
 <script>
 
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
 
-const velocity = document.getElementById("velocity");
-const angle = document.getElementById("angle");
-const gravity = document.getElementById("gravity");
+/* GET ELEMENTS */
 
-const velocityValue = document.getElementById("velocityValue");
-const angleValue = document.getElementById("angleValue");
-const gravityValue = document.getElementById("gravityValue");
+const canvas =
+document.getElementById("canvas");
 
-velocity.oninput = () => {
-    velocityValue.textContent = velocity.value;
-};
+const ctx =
+canvas.getContext("2d");
 
-angle.oninput = () => {
-    angleValue.textContent = angle.value;
-};
 
-gravity.oninput = () => {
-    gravityValue.textContent = gravity.value;
-};
+const velocity =
+document.getElementById("velocity");
 
-function startSimulation() {
+const angle =
+document.getElementById("angle");
 
-    const u = Number(velocity.value);
-    const theta = Number(angle.value) * Math.PI / 180;
-    const g = Number(gravity.value);
+const gravity =
+document.getElementById("gravity");
 
-    const timeOfFlight = (2 * u * Math.sin(theta)) / g;
 
-    const maxHeight =
-        (u * u * Math.sin(theta) * Math.sin(theta)) / (2 * g);
+const velocityValue =
+document.getElementById("velocityValue");
 
-    const range =
-        (u * u * Math.sin(2 * theta)) / g;
+const angleValue =
+document.getElementById("angleValue");
 
-    document.getElementById("range").textContent =
-        range.toFixed(2);
+const gravityValue =
+document.getElementById("gravityValue");
 
-    document.getElementById("height").textContent =
-        maxHeight.toFixed(2);
 
-    document.getElementById("time").textContent =
-        timeOfFlight.toFixed(2);
+/* SLIDER VALUES */
 
-    animate(u, theta, g, timeOfFlight, range);
-}
+velocity.addEventListener("input", function() {
 
-function animate(u, theta, g, totalTime, range) {
+    velocityValue.textContent =
+        velocity.value;
 
-    canvas.width = canvas.clientWidth;
-    canvas.height = 300;
+});
 
-    let startTime = null;
 
-    function draw(timestamp) {
+angle.addEventListener("input", function() {
 
-        if (!startTime) startTime = timestamp;
+    angleValue.textContent =
+        angle.value;
 
-        let elapsed = (timestamp - startTime) / 1000;
+});
 
-        let t = Math.min(elapsed, totalTime);
 
-        let x = u * Math.cos(theta) * t;
-        let y = u * Math.sin(theta) * t
-                - 0.5 * g * t * t;
+gravity.addEventListener("input", function() {
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    gravityValue.textContent =
+        gravity.value;
 
-        const margin = 30;
+});
 
-        const scaleX =
-            (canvas.width - 2 * margin) / range;
 
-        const maxHeight =
-            (u * u * Math.sin(theta) * Math.sin(theta)) / (2 * g);
+/* CALCULATE PHYSICS */
 
-        const scaleY =
-            (canvas.height - 50) / Math.max(maxHeight, 1);
+function calculatePhysics() {
 
-        const ground = canvas.height - 30;
-
-        
-ctx.strokeStyle = "#64748b";
-ctx.lineWidth = 2;
-
-ctx.beginPath();
-ctx.moveTo(0, ground);
-ctx.lineTo(canvas.width, ground);
-ctx.stroke();
-        const px = margin + x * scaleX;
-        const py = ground - y * scaleY;
-
-        ctx.fillStyle = "#22c55e";
-
-ctx.beginPath();
-ctx.arc(px, py, 8, 0, Math.PI * 2);
-ctx.fill();
-
-        if (t < totalTime) {
-            requestAnimationFrame(ctx.strokeStyle = "#6366f1";
-ctx.lineWidth = 3;
-
-ctx.beginPath();
-
-for (let time = 0; time <= t; time += 0.03) {
-
-    let trailX = u * Math.cos(theta) * time;
-
-    let trailY =
-        u * Math.sin(theta) * time
-        - 0.5 * g * time * time;
-
-    let trailPX = margin + trailX * scaleX;
-    let trailPY = ground - trailY * scaleY;
-
-    if (time === 0) {
-        ctx.moveTo(trailPX, trailPY);
-    } else {
-        ctx.lineTo(trailPX, trailPY);
-    }
-}
-
-ctx.stroke(););
-        }
-    }
-
-    requestAnimationFrame(draw);
-}
-
-function checkPrediction() {
-
-    const u = Number(velocity.value);
+    const u =
+        Number(velocity.value);
 
     const theta =
-        Number(angle.value) * Math.PI / 180;
+        Number(angle.value)
+        * Math.PI / 180;
 
-    const g = Number(gravity.value);
+    const g =
+        Number(gravity.value);
 
-    const prediction =
-        Number(
-            document.getElementById(
-                "predictionInput"
-            ).value
+
+    const timeOfFlight =
+        (2 * u * Math.sin(theta)) / g;
+
+
+    const maxHeight =
+        (u * u *
+        Math.sin(theta) *
+        Math.sin(theta))
+        / (2 * g);
+
+
+    const range =
+        (u * u *
+        Math.sin(2 * theta))
+        / g;
+
+
+    return {
+        u: u,
+        theta: theta,
+        g: g,
+        time: timeOfFlight,
+        height: maxHeight,
+        range: range
+    };
+
+}
+
+
+/* PREDICTION MODE */
+
+document
+.getElementById("checkButton")
+.addEventListener("click", function() {
+
+
+    const predictionField =
+        document.getElementById(
+            "predictionInput"
         );
 
-    if (!prediction) {
 
+    const result =
         document.getElementById(
             "predictionResult"
-        ).textContent =
-            "⚠️ Enter your prediction first.";
+        );
+
+
+    const prediction =
+        Number(predictionField.value);
+
+
+    /* CHECK EMPTY INPUT */
+
+    if (
+        predictionField.value.trim() === ""
+        ||
+        !Number.isFinite(prediction)
+    ) {
+
+        result.innerHTML =
+            "⚠️ Please enter your prediction first.";
+
+        result.style.color =
+            "#f59e0b";
 
         return;
+
     }
 
-    const actualRange =
-        (u * u * Math.sin(2 * theta)) / g;
+
+    const physics =
+        calculatePhysics();
+
+
+    const actual =
+        physics.range;
+
 
     const error =
-        Math.abs(prediction - actualRange)
-        / actualRange * 100;
+        Math.abs(
+            prediction - actual
+        ) / actual * 100;
 
-    let message = "";
+
+    let feedback;
+
 
     if (error <= 2) {
 
-        message =
-            "🔥 Excellent! Your prediction was very close.";
+        feedback =
+            "🔥 Excellent! Your prediction is extremely close.";
 
-    } else if (error <= 5) {
-
-        message =
-            "🟢 Very good! Your physics intuition is strong.";
-
-    } else if (error <= 10) {
-
-        message =
-            "🟡 Not bad. Try calculating before guessing.";
-
-    } else {
-
-        message =
-            "🔴 Quite far. Check the projectile-range relation.";
     }
 
-    document.getElementById(
-        "predictionResult"
-    ).innerHTML =
+    else if (error <= 5) {
 
-        message +
+        feedback =
+            "🟢 Very good! Your physics intuition is strong.";
+
+    }
+
+    else if (error <= 10) {
+
+        feedback =
+            "🟡 Not bad! Try improving your estimation.";
+
+    }
+
+    else {
+
+        feedback =
+            "🔴 Your prediction is quite far. Try using the projectile-range relation.";
+
+    }
+
+
+    result.innerHTML =
+
+        feedback +
+
         "<br><br>" +
 
         "Your prediction: " +
+
         prediction.toFixed(2) +
+
         " m" +
 
         "<br>" +
 
         "Actual range: " +
-        actualRange.toFixed(2) +
+
+        actual.toFixed(2) +
+
         " m" +
 
         "<br>" +
 
         "Error: " +
+
         error.toFixed(1) +
+
         "%";
-}</script>
+
+
+    if (error <= 5) {
+
+        result.style.color =
+            "#22c55e";
+
+    }
+
+    else if (error <= 10) {
+
+        result.style.color =
+            "#f59e0b";
+
+    }
+
+    else {
+
+        result.style.color =
+            "#ef4444";
+
+    }
+
+});
+
+
+/* START SIMULATION */
+
+document
+.getElementById("startButton")
+.addEventListener("click", function() {
+
+
+    const physics =
+        calculatePhysics();
+
+
+    document.getElementById("range")
+        .textContent =
+        physics.range.toFixed(2);
+
+
+    document.getElementById("height")
+        .textContent =
+        physics.height.toFixed(2);
+
+
+    document.getElementById("time")
+        .textContent =
+        physics.time.toFixed(2);
+
+
+    animate(physics);
+
+});
+
+
+/* ANIMATION */
+
+function animate(physics) {
+
+
+    canvas.width =
+        canvas.clientWidth;
+
+    canvas.height =
+        320;
+
+
+    let startTime = null;
+
+
+    function draw(timestamp) {
+
+
+        if (!startTime) {
+
+            startTime =
+                timestamp;
+
+        }
+
+
+        const elapsed =
+            (timestamp - startTime)
+            / 1000;
+
+
+        const t =
+            Math.min(
+                elapsed,
+                physics.time
+            );
+
+
+        const x =
+            physics.u *
+            Math.cos(physics.theta) *
+            t;
+
+
+        const y =
+            physics.u *
+            Math.sin(physics.theta) *
+            t
+            -
+            0.5 *
+            physics.g *
+            t *
+            t;
+
+
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        const margin = 35;
+
+        const ground =
+            canvas.height - 35;
+
+
+        const scaleX =
+            (canvas.width - 2 * margin)
+            / physics.range;
+
+
+        const scaleY =
+            (canvas.height - 60)
+            / Math.max(
+                physics.height,
+                1
+            );
+
+
+        /* GROUND */
+
+        ctx.strokeStyle =
+            "#64748b";
+
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            margin,
+            ground
+        );
+
+        ctx.lineTo(
+            canvas.width - margin,
+            ground
+        );
+
+        ctx.stroke();
+
+
+        /* TRAJECTORY */
+
+        ctx.strokeStyle =
+            "#6366f1";
+
+        ctx.lineWidth = 4;
+
+        ctx.beginPath();
+
+
+        for (
+            let time = 0;
+            time <= t;
+            time += 0.02
+        ) {
+
+
+            const trailX =
+                physics.u *
+                Math.cos(physics.theta) *
+                time;
+
+
+            const trailY =
+                physics.u *
+                Math.sin(physics.theta) *
+                time
+                -
+                0.5 *
+                physics.g *
+                time *
+                time;
+
+
+            const px =
+                margin +
+                trailX * scaleX;
+
+
+            const py =
+                ground -
+                trailY * scaleY;
+
+
+            if (time === 0) {
+
+                ctx.moveTo(
+                    px,
+                    py
+                );
+
+            }
+
+            else {
+
+                ctx.lineTo(
+                    px,
+                    py
+                );
+
+            }
+
+        }
+
+
+        ctx.stroke();
+
+
+        /* PROJECTILE */
+
+        const projectileX =
+            margin +
+            x * scaleX;
+
+
+        const projectileY =
+            ground -
+            y * scaleY;
+
+
+        ctx.fillStyle =
+            "#22c55e";
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            projectileX,
+            projectileY,
+            9,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        /* START POINT */
+
+        ctx.fillStyle =
+            "#f59e0b";
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            margin,
+            ground,
+            5,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+
+        if (
+            t < physics.time
+        ) {
+
+            requestAnimationFrame(
+                draw
+            );
+
+        }
+
+    }
+
+
+    requestAnimationFrame(draw);
+
+}
+
+
+</script>
 
 </body>
+
 </html>
