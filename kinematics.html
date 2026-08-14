@@ -256,11 +256,14 @@ function animate(u, theta, g, totalTime, range) {
 
         const ground = canvas.height - 30;
 
-        ctx.beginPath();
-        ctx.moveTo(0, ground);
-        ctx.lineTo(canvas.width, ground);
-        ctx.stroke();
+        
+ctx.strokeStyle = "#64748b";
+ctx.lineWidth = 2;
 
+ctx.beginPath();
+ctx.moveTo(0, ground);
+ctx.lineTo(canvas.width, ground);
+ctx.stroke();
         const px = margin + x * scaleX;
         const py = ground - y * scaleY;
 
