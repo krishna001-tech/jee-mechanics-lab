@@ -104,6 +104,21 @@
     <strong id="rangeValue">0.00 m</strong>
   </div>
 
+  <div class="stat">
+    <span>Vx (horizontal)</span>
+    <strong id="vxValue">0.00 m/s</strong>
+  </div>
+
+  <div class="stat">
+    <span>Vy (vertical)</span>
+    <strong id="vyValue">0.00 m/s</strong>
+  </div>
+
+  <div class="stat">
+    <span>Speed</span>
+    <strong id="speedValue">0.00 m/s</strong>
+  </div>
+
 </div>
 
 <div class="learn">
@@ -223,6 +238,9 @@ const resetButton = document.getElementById("resetButton");
 const timeValue = document.getElementById("timeValue");
 const maxHeightValue = document.getElementById("maxHeightValue");
 const rangeValue = document.getElementById("rangeValue");
+const vxValue = document.getElementById("vxValue");
+const vyValue = document.getElementById("vyValue");
+const speedValue = document.getElementById("speedValue");
 
 const g = 9.8;
 
@@ -279,6 +297,8 @@ function calculatePhysics() {
 
   rangeValue.textContent =
     range.toFixed(2) + " m";
+
+  vxValue.textContent = vx.toFixed(2) + " m/s";
 }
 
 calculatePhysics();
@@ -286,6 +306,30 @@ calculatePhysics();
 velocitySlider.addEventListener("input", calculatePhysics);
 angleSlider.addEventListener("input", calculatePhysics);
 heightSlider.addEventListener("input", calculatePhysics);
+
+function drawArrow(fromX, fromY, toX, toY, color) {
+  const headLength = 8;
+  const dx = toX - fromX;
+  const dy = toY - fromY;
+  const angle = Math.atan2(dy, dx);
+
+  ctx.strokeStyle = color;
+  ctx.fillStyle = color;
+  ctx.lineWidth = 2;
+
+  ctx.beginPath();
+  ctx.moveTo(fromX, fromY);
+  ctx.lineTo(toX, toY);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.moveTo(toX, toY);
+  ctx.lineTo(toX - headLength * Math.cos(angle - Math.PI / 6), toY - headLength * Math.sin(angle - Math.PI / 6));
+  ctx.lineTo(toX - headLength * Math.cos(angle + Math.PI / 6), toY - headLength * Math.sin(angle + Math.PI / 6));
+  ctx.closePath();
+  ctx.fill();
+}
+
 function drawScene() {ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 // Sky
@@ -312,6 +356,16 @@ function drawScene() {ctx.clearRect(0, 0, canvas.width, canvas.height);
     h0 +
     vy * time -
     0.5 * g * time * time;
+
+  // instantaneous vertical component
+  const vyInstant = vy - g * time;
+
+  // instantaneous speed
+  const speed = Math.sqrt(vx * vx + vyInstant * vyInstant);
+
+  // Update live component displays
+  vyValue.textContent = vyInstant.toFixed(2) + " m/s";
+  speedValue.textContent = speed.toFixed(2) + " m/s";
 
   // Scale physics metres to pixels
   const scale = 8;
@@ -351,6 +405,28 @@ function drawScene() {ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = "#1565c0";
   ctx.fill();
 
+  // Draw velocity vector and components (scaled for visibility)
+  const vecScale = 10; // pixels per m/s
+
+  const vxScreen = vx * vecScale;
+  const vyScreen = vyInstant * vecScale;
+
+  // Velocity vector (green)
+  drawArrow(screenX, screenY, screenX + vxScreen, screenY - vyScreen, "#2e7d32");
+
+  // Horizontal component (orange)
+  drawArrow(screenX, screenY, screenX + vxScreen, screenY, "#ff9800");
+
+  // Vertical component (yellow)
+  drawArrow(screenX, screenY, screenX, screenY - vyScreen, "#fbc02d");
+
+  // Labels near projectile
+  ctx.fillStyle = "#111";
+  ctx.font = "14px Arial";
+  ctx.fillText("Vx=" + vx.toFixed(2) + " m/s", screenX + vxScreen + 8, screenY);
+  ctx.fillText("Vy=" + vyInstant.toFixed(2) + " m/s", screenX + 4, screenY - vyScreen - 8);
+  ctx.fillText("|v|=" + speed.toFixed(2) + " m/s", screenX + vxScreen/2, screenY - vyScreen/2 - 6);
+
   // Launch angle
   ctx.fillStyle = "#111";
   ctx.font = "16px Arial";
@@ -388,7 +464,9 @@ function animate(currentTime) {
     time = flightTime;
     running = false;
     launchButton.textContent = "🚀 Launch";
-  }drawScene();
+  }
+
+  drawScene();
 
   requestAnimationFrame(animate);
 }
@@ -420,6 +498,10 @@ resetButton.addEventListener("click", function() {
   time = 0;
 
   launchButton.textContent = "🚀 Launch";
+
+  // reset live values
+  vyValue.textContent = "0.00 m/s";
+  speedValue.textContent = "0.00 m/s";
 
   drawScene();
 });</script>
