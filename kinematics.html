@@ -1,57 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<title>Kinematics Lab | JEE Mechanics</title>
 
-<title>Kinematics | JEE Mechanics Lab</title>
-
-.why-box {
-    margin-top: 20px;
-    padding: 15px;
-    background: #0d1320;
-    border: 1px solid #273249;
-    border-radius: 14px;
-}
-
-.why-box button {
-    margin-top: 0;
-}
-
-.why-content {
-    display: none;
-    margin-top: 18px;
-    padding: 18px;
-    background: #111827;
-    border-radius: 12px;
-    line-height: 1.7;
-}
-
-.why-content h3 {
-    color: #f59e0b;
-    margin-top: 0;
-}
-
-.equation {
-    margin: 15px 0;
-    padding: 12px;
-    text-align: center;
-    background: #0b0f19;
-    border-radius: 10px;
-    color: #a5b4fc;
-    font-size: 18px;
-}
-
-.why-tip {
-    padding: 12px;
-    background: #172033;
-    border-radius: 10px;
-}<style>
-
+<style>
 * {
     box-sizing: border-box;
 }
@@ -59,197 +14,267 @@ content="width=device-width, initial-scale=1.0">
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #0b0f19;
-    color: white;
+    background: #080b14;
+    color: #f5f7ff;
 }
 
-header {
-    background: #111827;
-    padding: 25px 20px;
+.header {
+    background: #11182a;
+    padding: 40px 20px;
     text-align: center;
 }
 
-header h1 {
+.header h1 {
     margin: 0;
-    font-size: 30px;
+    font-size: 42px;
 }
 
-header p {
-    color: #9ca3af;
+.header p {
+    color: #9da5bb;
+    font-size: 20px;
+    margin-top: 12px;
 }
 
 .container {
     max-width: 900px;
     margin: auto;
-    padding: 25px 20px;
+    padding: 30px 18px;
 }
 
 .back {
     display: inline-block;
-    margin-bottom: 20px;
-    color: #818cf8;
+    color: #8b87ff;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 20px;
+    margin-bottom: 25px;
 }
 
 .card {
-    background: #151c2c;
+    background: #151d30;
     border: 1px solid #273249;
-    border-radius: 18px;
+    border-radius: 22px;
     padding: 25px;
+    margin-bottom: 25px;
 }
 
 h2 {
+    font-size: 32px;
     margin-top: 0;
+}
+
+h3 {
+    font-size: 25px;
 }
 
 canvas {
     width: 100%;
-    height: 350px;
+    height: 420px;
+    display: block;
     background: #050810;
-    border-radius: 12px;
-    border: 1px solid #273249;
-    margin: 15px 0;
+    border-radius: 18px;
+    border: 1px solid #202a40;
+    margin: 20px 0 30px;
 }
 
-label {
+.control {
+    margin: 25px 0;
+}
+
+.control label {
     display: block;
-    margin-top: 20px;
-    margin-bottom: 8px;
+    font-size: 21px;
+    margin-bottom: 12px;
 }
 
 .value {
-    color: #818cf8;
+    color: #8580ff;
     font-weight: bold;
 }
 
 input[type="range"] {
     width: 100%;
-}
-
-.components-toggle {
-    margin-top: 22px;
-    padding: 15px;
-    background: #0d1320;
-    border-radius: 12px;
-    border: 1px solid #273249;
-}
-
-.components-toggle label {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: bold;
-}
-
-.components-toggle input {
-    width: 20px;
-    height: 20px;
-}
-
-.vector-info {
-    display: none;
-    margin-top: 15px;
-    padding: 15px;
-    background: #111827;
-    border-radius: 10px;
-    line-height: 1.8;
-}
-
-.vector-value {
-    font-weight: bold;
-}
-
-.prediction {
-    margin-top: 25px;
-    padding: 20px;
-    background: #0d1320;
-    border: 1px solid #273249;
-    border-radius: 14px;
-}
-
-.prediction h3 {
-    margin-top: 0;
-    color: #f59e0b;
-}
-
-.prediction p {
-    color: #9ca3af;
-    line-height: 1.5;
-}
-
-#predictionInput {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    border-radius: 10px;
-    border: 1px solid #374151;
-    background: #111827;
-    color: white;
-    font-size: 16px;
+    height: 8px;
+    accent-color: #7069ff;
 }
 
 button {
     width: 100%;
-    padding: 15px;
-    margin-top: 18px;
     border: none;
-    border-radius: 10px;
-    background: #6366f1;
-    color: white;
-    font-size: 17px;
+    border-radius: 15px;
+    padding: 18px;
+    font-size: 20px;
     font-weight: bold;
+    color: white;
+    background: #6861ed;
+    cursor: pointer;
+    margin-top: 15px;
 }
 
 button:active {
     transform: scale(0.98);
 }
 
-.results {
-    margin-top: 25px;
-    padding: 15px;
+.prediction {
     background: #0d1320;
+    border: 1px solid #273249;
+    border-radius: 18px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.prediction h3 {
+    color: #ffae00;
+}
+
+.prediction p {
+    color: #aeb5c8;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.prediction input {
+    width: 100%;
+    padding: 17px;
+    border-radius: 14px;
+    border: 1px solid #34405a;
+    background: #121a2a;
+    color: white;
+    font-size: 20px;
+    outline: none;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 14px;
+    background: #101827;
+    font-size: 18px;
+    line-height: 1.8;
+}
+
+.success {
+    color: #20d56a;
+}
+
+.warning {
+    color: #ffb020;
+}
+
+.components {
+    background: #0d1320;
+    border: 1px solid #273249;
+    border-radius: 18px;
+    padding: 20px;
+    margin-top: 25px;
+}
+
+.components h3 {
+    color: #ffffff;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.checkbox-row input {
+    width: 25px;
+    height: 25px;
+    accent-color: #7069ff;
+}
+
+.component-values {
+    background: #111827;
+    border-radius: 14px;
+    padding: 20px;
+    line-height: 2;
+    font-size: 18px;
+}
+
+.why {
+    margin-top: 25px;
+}
+
+.why-content {
+    display: none;
+    margin-top: 18px;
+    padding: 20px;
+    background: #111827;
+    border-radius: 15px;
+    line-height: 1.7;
+    color: #c2c8d8;
+}
+
+.formula {
+    text-align: center;
+    padding: 15px;
+    margin: 15px 0;
+    background: #0b0f19;
     border-radius: 12px;
+    color: #a5b4fc;
+    font-size: 20px;
+}
+
+.stats {
+    background: #0d1320;
+    border-radius: 18px;
+    padding: 25px;
+    margin-top: 25px;
+    font-size: 20px;
     line-height: 2;
 }
 
-.result-value {
-    color: #22c55e;
+.stats span {
+    color: #22d56a;
     font-weight: bold;
 }
 
-#predictionResult {
-    margin-top: 18px;
-    line-height: 1.7;
-    font-weight: bold;
-}
+@media (max-width: 600px) {
 
+    .header h1 {
+        font-size: 32px;
+    }
+
+    .header p {
+        font-size: 17px;
+    }
+
+    h2 {
+        font-size: 27px;
+    }
+
+    canvas {
+        height: 330px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+}
 </style>
-
 </head>
 
 <body>
 
-<header>
-
-<h1>🚀 Kinematics Lab</h1>
-
-<p>Projectile Motion Simulator</p>
-
+<header class="header">
+    <h1>🚀 Kinematics Lab</h1>
+    <p>Projectile Motion Simulator</p>
 </header>
 
-<div class="container">
+<main class="container">
 
-<a class="back" href="index.html">
-← Back to Mechanics Lab
-</a>
+<a href="../" class="back">← Back to Mechanics Lab</a>
 
-<div class="card">
+<section class="card">
 
 <h2>Projectile Motion</h2>
 
-<canvas id="canvas"></canvas>
+<canvas id="simulationCanvas"></canvas>
+
+<div class="control">
 
 <label>
 Initial Velocity:
@@ -262,7 +287,12 @@ id="velocity"
 min="5"
 max="50"
 value="20"
+step="1"
 >
+
+</div>
+
+<div class="control">
 
 <label>
 Angle:
@@ -272,10 +302,15 @@ Angle:
 <input
 type="range"
 id="angle"
-min="10"
-max="80"
+min="5"
+max="85"
 value="45"
+step="1"
 >
+
+</div>
+
+<div class="control">
 
 <label>
 Gravity:
@@ -287,118 +322,117 @@ type="range"
 id="gravity"
 min="1"
 max="20"
-step="0.1"
 value="9.8"
+step="0.1"
 >
 
+</div>
 
-<!-- VELOCITY COMPONENT TOGGLE -->
+<div class="components">
 
-<div class="components-toggle">
-
-<label>
+<div class="checkbox-row">
 
 <input
 type="checkbox"
 id="showComponents"
 >
 
-☑️ Show velocity components
-
+<label for="showComponents">
+Show velocity components
 </label>
 
-<div <div class="why-box">
-
-    <button id="whyButton">
-        🧠 WHY? — Maximum Height
-    </button>
-
-    <div id="whyContent" class="why-content">
-
-        <h3>🧠 Why is vertical velocity zero?</h3>
-
-        <p>
-            As the projectile moves upward, gravity continuously
-            decreases its vertical velocity.
-        </p>
-
-        <div class="equation">
-            v<sub>y</sub> = u sinθ − gt
-        </div>
-
-        <p>
-            At maximum height, the projectile stops moving upward
-            for an instant.
-        </p>
-
-        <div class="equation">
-            v<sub>y</sub> = 0
-        </div>
-
-        <p>Therefore:</p>
-
-        <div class="equation">
-            0 = u sinθ − gt
-        </div>
-
-        <div class="equation">
-            <strong>
-                t<sub>max</sub> =
-                u sinθ / g
-            </strong>
-        </div>
-
-        <p class="why-tip">
-            💡 Remember: At maximum height,
-            <strong>vertical velocity = 0</strong>,
-            but horizontal velocity is still present.
-        </p>
-
-    </div>
-
 </div>
-class="vector-info"
-id="vectorInfo"
+
+<div
+class="component-values"
+id="componentInfo"
+style="display:none;"
 >
 
 Horizontal velocity:
-
-<span
-class="vector-value"
-id="vxValue"
->
-—
-</span>
-m/s
+<span id="vxValue">—</span> m/s
 
 <br>
 
 Vertical velocity:
-
-<span
-class="vector-value"
-id="vyValue"
->
-—
-</span>
-m/s
+<span id="vyValue">—</span> m/s
 
 <br>
 
 Resultant velocity:
+<span id="resultantValue">—</span> m/s
 
-<span
-class="vector-value"
-id="vValue"
+</div>
+
+</div>
+
+<div class="why">
+
+<button id="whyButton">
+🧠 WHY? — Maximum Height
+</button>
+
+<div
+id="whyContent"
+class="why-content"
 >
-—
-</span>
-m/s
+
+<h3>🧠 Why does the projectile reach maximum height?</h3>
+
+<p>
+At the highest point of the projectile, its vertical velocity becomes
+zero.
+</p>
+
+<div class="formula">
+vᵧ = u sinθ − gt
+</div>
+
+<p>
+At maximum height:
+</p>
+
+<div class="formula">
+vᵧ = 0
+</div>
+
+<p>
+Therefore:
+</p>
+
+<div class="formula">
+t = u sinθ / g
+</div>
+
+<p>
+The projectile keeps moving horizontally because its horizontal velocity
+remains constant (when air resistance is ignored).
+</p>
 
 </div>
 
 </div>
 
+<button id="startButton">
+▶ START SIMULATION
+</button>
+
+<div class="stats">
+
+Range:
+<span id="rangeValue">—</span> m
+
+<br>
+
+Maximum Height:
+<span id="heightValue">—</span> m
+
+<br>
+
+Time of Flight:
+<span id="timeValue">—</span> s
+
+</div>
 
 <!-- PREDICTION MODE -->
 
@@ -407,8 +441,8 @@ m/s
 <h3>🎯 JEE Prediction Mode</h3>
 
 <p>
-Before running the simulation, predict the
-horizontal range of the projectile.
+Before running the simulation, predict the horizontal range of the
+projectile.
 </p>
 
 <input
@@ -421,598 +455,420 @@ placeholder="Enter your predicted range in metres"
 CHECK MY ANSWER
 </button>
 
-<div id="predictionResult"></div>
+<div
+id="predictionResult"
+class="result"
+style="display:none;"
+></div>
 
 </div>
 
+</section>
 
-<button id="startButton">
-▶ START SIMULATION
-</button>
-
-
-<div class="results">
-
-<div>
-Range:
-<span class="result-value" id="range">—</span> m
-</div>
-
-<div>
-Maximum Height:
-<span class="result-value" id="height">—</span> m
-</div>
-
-<div>
-Time of Flight:
-<span class="result-value" id="time">—</span> s
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+</main>
 
 <script>
 
-const canvas =
-document.getElementById("canvas");
+const canvas = document.getElementById("simulationCanvas");
+const ctx = canvas.getContext("2d");
 
-const ctx =
-canvas.getContext("2d");
+const velocitySlider = document.getElementById("velocity");
+const angleSlider = document.getElementById("angle");
+const gravitySlider = document.getElementById("gravity");
 
+const velocityValue = document.getElementById("velocityValue");
+const angleValue = document.getElementById("angleValue");
+const gravityValue = document.getElementById("gravityValue");
 
-const velocity =
-document.getElementById("velocity");
-
-const angle =
-document.getElementById("angle");
-
-const gravity =
-document.getElementById("gravity");
-
-
-const velocityValue =
-document.getElementById("velocityValue");
-
-const angleValue =
-document.getElementById("angleValue");
-
-const gravityValue =
-document.getElementById("gravityValue");
-
+const startButton = document.getElementById("startButton");
 
 const showComponents =
-document.getElementById("showComponents");
+    document.getElementById("showComponents");
 
-const vectorInfo =
-document.getElementById("vectorInfo");
+const componentInfo =
+    document.getElementById("componentInfo");
 
 const vxValue =
-document.getElementById("vxValue");
+    document.getElementById("vxValue");
 
 const vyValue =
-document.getElementById("vyValue");
+    document.getElementById("vyValue");
 
-const vValue =
-document.getElementById("vValue");
+const resultantValue =
+    document.getElementById("resultantValue");
 
+const rangeValue =
+    document.getElementById("rangeValue");
 
-/* SLIDERS */
+const heightValue =
+    document.getElementById("heightValue");
 
-velocity.addEventListener("input", function() {
+const timeValue =
+    document.getElementById("timeValue");
 
-    velocityValue.textContent =
-        velocity.value;
+const whyButton =
+    document.getElementById("whyButton");
 
-});
+const whyContent =
+    document.getElementById("whyContent");
 
+const predictionInput =
+    document.getElementById("predictionInput");
 
-angle.addEventListener("input", function() {
+const checkButton =
+    document.getElementById("checkButton");
 
-    angleValue.textContent =
-        angle.value;
-
-});
-
-
-gravity.addEventListener("input", function() {
-
-    gravityValue.textContent =
-        gravity.value;
-
-});
+const predictionResult =
+    document.getElementById("predictionResult");
 
 
-/* COMPONENT TOGGLE */
+/* -------------------------
+   CANVAS
+------------------------- */
 
-showComponents.addEventListener(
-    "change",
-    function() {
+function resizeCanvas() {
 
-        if (showComponents.checked) {
+    const rect = canvas.getBoundingClientRect();
 
-            vectorInfo.style.display =
-                "block";
+    canvas.width = rect.width;
+    canvas.height = rect.height;
 
-        } else {
+}
 
-            vectorInfo.style.display =
-                "none";
+resizeCanvas();
 
-        }
-
-    }
-);
+window.addEventListener("resize", resizeCanvas);
 
 
-/* PHYSICS */
+/* -------------------------
+   VALUES
+------------------------- */
 
-function calculatePhysics() {
+function getValues() {
 
-    const u =
-        Number(velocity.value);
+    const u = Number(velocitySlider.value);
 
-    const theta =
-        Number(angle.value)
-        * Math.PI / 180;
+    const angle =
+        Number(angleSlider.value) *
+        Math.PI / 180;
 
-    const g =
-        Number(gravity.value);
+    const g = Number(gravitySlider.value);
 
+    return { u, angle, g };
 
-    const timeOfFlight =
-        (2 * u * Math.sin(theta)) / g;
+}
 
 
-    const maxHeight =
-        (u * u *
-        Math.sin(theta) *
-        Math.sin(theta))
-        / (2 * g);
+function calculate() {
 
+    const { u, angle, g } = getValues();
+
+    const vx = u * Math.cos(angle);
+
+    const vy = u * Math.sin(angle);
+
+    const time =
+        (2 * u * Math.sin(angle)) / g;
 
     const range =
-        (u * u *
-        Math.sin(2 * theta))
-        / g;
+        (u * u * Math.sin(2 * angle)) / g;
 
+    const height =
+        (u * u * Math.sin(angle) ** 2) /
+        (2 * g);
 
     return {
-
-        u: u,
-        theta: theta,
-        g: g,
-        time: timeOfFlight,
-        height: maxHeight,
-        range: range
-
+        u,
+        angle,
+        g,
+        vx,
+        vy,
+        time,
+        range,
+        height
     };
 
 }
 
 
-/* PREDICTION */
+/* -------------------------
+   UPDATE SLIDERS
+------------------------- */
 
-document
-.getElementById("checkButton")
-.addEventListener(
-"click",
-function() {
+function updateValues() {
 
-    const field =
-        document.getElementById(
-            "predictionInput"
-        );
+    velocityValue.textContent =
+        velocitySlider.value;
 
-    const result =
-        document.getElementById(
-            "predictionResult"
-        );
+    angleValue.textContent =
+        angleSlider.value;
 
+    gravityValue.textContent =
+        Number(gravitySlider.value).toFixed(1);
 
-    const prediction =
-        Number(field.value);
+    updateComponents();
 
+    drawStatic();
 
-    if (
-        field.value.trim() === ""
-        ||
-        !Number.isFinite(prediction)
-    ) {
-
-        result.innerHTML =
-            "⚠️ Please enter your prediction first.";
-
-        result.style.color =
-            "#f59e0b";
-
-        return;
-
-    }
+}
 
 
-    const physics =
-        calculatePhysics();
+velocitySlider.addEventListener(
+    "input",
+    updateValues
+);
+
+angleSlider.addEventListener(
+    "input",
+    updateValues
+);
+
+gravitySlider.addEventListener(
+    "input",
+    updateValues
+);
 
 
-    const actual =
-        physics.range;
+/* -------------------------
+   COMPONENTS
+------------------------- */
 
+function updateComponents() {
 
-    const error =
-        Math.abs(
-            prediction - actual
-        )
-        / actual * 100;
+    const data = calculate();
 
+    if (showComponents.checked) {
 
-    let feedback;
+        componentInfo.style.display = "block";
 
+        vxValue.textContent =
+            data.vx.toFixed(2);
 
-    if (error <= 2) {
+        vyValue.textContent =
+            data.vy.toFixed(2);
 
-        feedback =
-            "🔥 Excellent! Your prediction is extremely close.";
+        resultantValue.textContent =
+            data.u.toFixed(2);
 
-    }
+    } else {
 
-    else if (error <= 5) {
-
-        feedback =
-            "🟢 Very good! Your physics intuition is strong.";
+        componentInfo.style.display = "none";
 
     }
 
-    else if (error <= 10) {
-
-        feedback =
-            "🟡 Not bad! Try improving your estimation.";
-
-    }
-
-    else {
-
-        feedback =
-            "🔴 Your prediction is quite far. Check the projectile formula.";
-
-    }
+}
 
 
-    result.innerHTML =
-
-        feedback +
-
-        "<br><br>" +
-
-        "Your prediction: " +
-
-        prediction.toFixed(2) +
-
-        " m" +
-
-        "<br>" +
-
-        "Actual range: " +
-
-        actual.toFixed(2) +
-
-        " m" +
-
-        "<br>" +
-
-        "Error: " +
-
-        error.toFixed(1) +
-
-        "%";
+showComponents.addEventListener(
+    "change",
+    updateComponents
+);
 
 
-    if (error <= 5) {
+/* -------------------------
+   DRAW PROJECTILE
+------------------------- */
 
-        result.style.color =
-            "#22c55e";
+function drawStatic() {
 
-    }
+    const data = calculate();
 
-    else if (error <= 10) {
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
-        result.style.color =
-            "#f59e0b";
+    const padding = 35;
 
-    }
+    const groundY =
+        canvas.height - padding;
 
-    else {
+    const startX = padding;
 
-        result.style.color =
-            "#ef4444";
+    const availableWidth =
+        canvas.width - padding * 2;
 
-    }
+    const maxHeight =
+        Math.max(data.height, 1);
 
-});
+    ctx.strokeStyle = "#65708a";
+    ctx.lineWidth = 2;
 
+    ctx.beginPath();
 
-/* START */
+    ctx.moveTo(
+        startX,
+        groundY
+    );
 
-document
-.getElementById("startButton")
-.addEventListener(
-"click",
-function() {
+    ctx.lineTo(
+        canvas.width - padding,
+        groundY
+    );
 
-    const physics =
-        calculatePhysics();
-
-
-    document.getElementById("range")
-        .textContent =
-        physics.range.toFixed(2);
-
-
-    document.getElementById("height")
-        .textContent =
-        physics.height.toFixed(2);
-
-
-    document.getElementById("time")
-        .textContent =
-        physics.time.toFixed(2);
+    ctx.stroke();
 
 
-    animate(physics);
+    /* trajectory */
 
-});
+    ctx.strokeStyle = "#756cff";
+    ctx.lineWidth = 5;
 
+    ctx.beginPath();
 
-/* ANIMATION */
+    for (let i = 0; i <= 100; i++) {
 
-function animate(physics) {
-
-    canvas.width =
-        canvas.clientWidth;
-
-    canvas.height =
-        350;
-
-
-    let startTime = null;
-
-
-    function draw(timestamp) {
-
-        if (!startTime) {
-
-            startTime =
-                timestamp;
-
-        }
-
-
-        const elapsed =
-            (timestamp - startTime)
-            / 1000;
-
-
-        const t =
-            Math.min(
-                elapsed,
-                physics.time
-            );
-
-
-        /* POSITION */
+        const fraction = i / 100;
 
         const x =
-            physics.u *
-            Math.cos(physics.theta) *
-            t;
-
+            data.range * fraction;
 
         const y =
-            physics.u *
-            Math.sin(physics.theta) *
-            t
-            -
-            0.5 *
-            physics.g *
-            t *
-            t;
+            x * Math.tan(data.angle) -
+            (data.g * x * x) /
+            (2 * data.u * data.u *
+            Math.cos(data.angle) ** 2);
 
+        const screenX =
+            startX +
+            fraction * availableWidth;
 
-        /* VELOCITY COMPONENTS */
+        const screenY =
+            groundY -
+            (y / maxHeight) *
+            (canvas.height - 80);
 
-        const vx =
-            physics.u *
-            Math.cos(physics.theta);
+        if (i === 0) {
 
-
-        const vy =
-            physics.u *
-            Math.sin(physics.theta)
-            -
-            physics.g * t;
-
-
-        const resultant =
-            Math.sqrt(
-                vx * vx +
-                vy * vy
+            ctx.moveTo(
+                screenX,
+                screenY
             );
 
+        } else {
 
-        /* UPDATE VALUES */
-
-        if (showComponents.checked) {
-
-            vxValue.textContent =
-                vx.toFixed(2);
-
-            vyValue.textContent =
-                vy.toFixed(2);
-
-            vValue.textContent =
-                resultant.toFixed(2);
-
-        }
-
-
-        /* CLEAR */
-
-        ctx.clearRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
-
-
-        const margin = 40;
-
-        const ground =
-            canvas.height - 45;
-
-
-        const scaleX =
-            (canvas.width - 2 * margin)
-            / physics.range;
-
-
-        const scaleY =
-            (canvas.height - 80)
-            / Math.max(
-                physics.height,
-                1
-            );
-
-
-        /* GROUND */
-
-        ctx.strokeStyle =
-            "#64748b";
-
-        ctx.lineWidth = 2;
-
-        ctx.beginPath();
-
-        ctx.moveTo(
-            margin,
-            ground
-        );
-
-        ctx.lineTo(
-            canvas.width - margin,
-            ground
-        );
-
-        ctx.stroke();
-
-
-        /* TRAJECTORY */
-
-        ctx.strokeStyle =
-            "#6366f1";
-
-        ctx.lineWidth = 4;
-
-        ctx.beginPath();
-
-
-        for (
-            let time = 0;
-            time <= t;
-            time += 0.02
-        ) {
-
-            const trailX =
-                physics.u *
-                Math.cos(physics.theta) *
-                time;
-
-
-            const trailY =
-                physics.u *
-                Math.sin(physics.theta) *
-                time
-                -
-                0.5 *
-                physics.g *
-                time *
-                time;
-
-
-            const px =
-                margin +
-                trailX * scaleX;
-
-
-            const py =
-                ground -
-                trailY * scaleY;
-
-
-            if (time === 0) {
-
-                ctx.moveTo(
-                    px,
-                    py
-                );
-
-            }
-
-            else {
-
-                ctx.lineTo(
-                    px,
-                    py
-                );
-
-            }
-
-        }
-
-
-        ctx.stroke();
-
-
-        /* PROJECTILE POSITION */
-
-        const projectileX =
-            margin +
-            x * scaleX;
-
-
-        const projectileY =
-            ground -
-            y * scaleY;
-
-
-        /* VELOCITY VECTORS */
-
-        if (showComponents.checked) {
-
-            drawVectors(
-                projectileX,
-                projectileY,
-                vx,
-                vy,
-                resultant
+            ctx.lineTo(
+                screenX,
+                screenY
             );
 
         }
 
+    }
 
-        /* PROJECTILE */
+    ctx.stroke();
 
-        ctx.fillStyle =
-            "#22c55e";
+
+    /* start point */
+
+    ctx.fillStyle = "#ff9f00";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        startX,
+        groundY,
+        9,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /* end point */
+
+    ctx.fillStyle = "#22d56a";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        canvas.width - padding,
+        groundY,
+        12,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+}
+
+
+drawStatic();
+
+
+/* -------------------------
+   SIMULATION
+------------------------- */
+
+let animationFrame = null;
+
+function startSimulation() {
+
+    if (animationFrame) {
+
+        cancelAnimationFrame(animationFrame);
+
+    }
+
+    const data = calculate();
+
+    rangeValue.textContent =
+        data.range.toFixed(2);
+
+    heightValue.textContent =
+        data.height.toFixed(2);
+
+    timeValue.textContent =
+        data.time.toFixed(2);
+
+    const startTime =
+        performance.now();
+
+    function animate(now) {
+
+        const elapsed =
+            (now - startTime) / 1000;
+
+        const t =
+            Math.min(elapsed, data.time);
+
+        const x =
+            data.vx * t;
+
+        const y =
+            data.vy * t -
+            0.5 * data.g * t * t;
+
+        drawStatic();
+
+        const padding = 35;
+
+        const groundY =
+            canvas.height - padding;
+
+        const screenX =
+            padding +
+            (x / data.range) *
+            (canvas.width - padding * 2);
+
+        const screenY =
+            groundY -
+            (y / data.height) *
+            (canvas.height - 80);
+
+        /* projectile */
+
+        ctx.fillStyle = "#ff9f00";
 
         ctx.beginPath();
 
         ctx.arc(
-            projectileX,
-            projectileY,
+            screenX,
+            screenY,
             9,
             0,
             Math.PI * 2
@@ -1021,254 +877,254 @@ function animate(physics) {
         ctx.fill();
 
 
-        /* START POINT */
+        /* velocity components */
 
-        ctx.fillStyle =
-            "#f59e0b";
+        if (showComponents.checked) {
 
-        ctx.beginPath();
+            const scale = 3;
 
-        ctx.arc(
-            margin,
-            ground,
-            5,
-            0,
-            Math.PI * 2
-        );
+            const vx =
+                data.vx;
 
-        ctx.fill();
+            const currentVy =
+                data.vy -
+                data.g * t;
 
+            ctx.lineWidth = 4;
 
-        if (
-            t < physics.time
-        ) {
+            /* horizontal */
 
-            requestAnimationFrame(
-                draw
+            ctx.strokeStyle = "#20d56a";
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                screenX,
+                screenY
             );
+
+            ctx.lineTo(
+                screenX + vx * scale,
+                screenY
+            );
+
+            ctx.stroke();
+
+
+            /* vertical */
+
+            ctx.strokeStyle = "#20bfff";
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                screenX,
+                screenY
+            );
+
+            ctx.lineTo(
+                screenX,
+                screenY - currentVy * scale
+            );
+
+            ctx.stroke();
+
+
+            /* labels */
+
+            ctx.fillStyle = "#20d56a";
+
+            ctx.font = "bold 15px Arial";
+
+            ctx.fillText(
+                "Vx",
+                screenX + vx * scale + 5,
+                screenY - 5
+            );
+
+            ctx.fillStyle = "#20bfff";
+
+            ctx.fillText(
+                "Vy",
+                screenX + 5,
+                screenY - currentVy * scale - 5
+            );
+
+        }
+
+
+        if (t < data.time) {
+
+            animationFrame =
+                requestAnimationFrame(animate);
+
+        } else {
+
+            animationFrame = null;
 
         }
 
     }
 
-
-    requestAnimationFrame(draw);
-
-}
-
-
-/* DRAW ARROW */
-
-function drawArrow(
-    startX,
-    startY,
-    endX,
-    endY,
-    color
-) {
-
-    const headLength = 10;
-
-
-    const angle =
-        Math.atan2(
-            endY - startY,
-            endX - startX
-        );
-
-
-    ctx.strokeStyle =
-        color;
-
-    ctx.fillStyle =
-        color;
-
-    ctx.lineWidth = 4;
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        startX,
-        startY
-    );
-
-    ctx.lineTo(
-        endX,
-        endY
-    );
-
-    ctx.stroke();
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        endX,
-        endY
-    );
-
-    ctx.lineTo(
-        endX -
-        headLength *
-        Math.cos(angle - Math.PI / 6),
-
-        endY -
-        headLength *
-        Math.sin(angle - Math.PI / 6)
-    );
-
-    ctx.lineTo(
-        endX -
-        headLength *
-        Math.cos(angle + Math.PI / 6),
-
-        endY -
-        headLength *
-        Math.sin(angle + Math.PI / 6)
-    );
-
-    ctx.closePath();
-
-    ctx.fill();
+    animationFrame =
+        requestAnimationFrame(animate);
 
 }
 
 
-/* DRAW VELOCITY COMPONENTS */
-
-function drawVectors(
-    x,
-    y,
-    vx,
-    vy,
-    resultant
-) {
+startButton.addEventListener(
+    "click",
+    startSimulation
+);
 
 
-    /*
-       We use a visual scale rather than
-       real metres so the arrows fit
-       nicely on the phone screen.
-    */
+/* -------------------------
+   WHY BUTTON
+------------------------- */
 
-    const scale = 3;
+whyButton.addEventListener(
+    "click",
+    function () {
 
+        if (
+            whyContent.style.display ===
+            "block"
+        ) {
 
-    /* HORIZONTAL COMPONENT */
+            whyContent.style.display =
+                "none";
 
-    const horizontalLength =
-        vx * scale;
+            whyButton.textContent =
+                "🧠 WHY? — Maximum Height";
 
+        } else {
 
-    drawArrow(
-        x,
-        y,
-        x + horizontalLength,
-        y,
-        "#22c55e"
-    );
+            whyContent.style.display =
+                "block";
 
+            whyButton.textContent =
+                "🧠 HIDE EXPLANATION";
 
-    /* VERTICAL COMPONENT */
-
-    const verticalLength =
-        vy * scale;
-
-
-    drawArrow(
-        x,
-        y,
-        x,
-        y - verticalLength,
-        "#38bdf8"
-    );
-
-
-    /* RESULTANT VECTOR */
-
-    const resultX =
-        x + vx * scale;
-
-    const resultY =
-        y - vy * scale;
-
-
-    drawArrow(
-        x,
-        y,
-        resultX,
-        resultY,
-        "#f59e0b"
-    );
-
-
-    /* LABELS */
-
-    ctx.font =
-        "bold 13px Arial";
-
-
-    ctx.fillStyle =
-        "#22c55e";
-
-
-    ctx.fillText(
-        "vx",
-        x + horizontalLength / 2,
-        y - 8
-    );
-
-
-    ctx.fillStyle =
-        "#38bdf8";
-
-
-    ctx.fillText(
-        "vy",
-        x + 8,
-        y - verticalLength / 2
-    );
-
-
-    ctx.fillStyle =
-        "#f59e0b";
-
-
-    ctx.fillText(
-        "v",
-        resultX + 5,
-        resultY
-    );
-
-}
-
-const whyButton =
-    document.getElementById("whyButton");
-
-const whyContent =
-    document.getElementById("whyContent");
-
-whyButton.addEventListener("click", function () {
-
-    if (whyContent.style.display === "block") {
-
-        whyContent.style.display = "none";
-
-        whyButton.textContent =
-            "🧠 WHY? — Maximum Height";
-
-    } else {
-
-        whyContent.style.display = "block";
-
-        whyButton.textContent =
-            "🔽 Hide Explanation";
+        }
 
     }
+);
 
-});</script>
+
+/* -------------------------
+   PREDICTION MODE
+------------------------- */
+
+checkButton.addEventListener(
+    "click",
+    function () {
+
+        const prediction =
+            Number(predictionInput.value);
+
+        if (
+            predictionInput.value.trim() ===
+            ""
+        ) {
+
+            predictionResult.style.display =
+                "block";
+
+            predictionResult.className =
+                "result warning";
+
+            predictionResult.innerHTML =
+                "⚠️ Please enter your predicted range.";
+
+            return;
+
+        }
+
+        const actual =
+            calculate().range;
+
+        const error =
+            Math.abs(
+                prediction - actual
+            ) / actual * 100;
+
+
+        predictionResult.style.display =
+            "block";
+
+
+        let message = "";
+
+        if (error <= 2) {
+
+            predictionResult.className =
+                "result success";
+
+            message =
+                "🔥 Excellent! Your prediction is extremely close.";
+
+        } else if (error <= 5) {
+
+            predictionResult.className =
+                "result success";
+
+            message =
+                "👏 Great prediction! Very close.";
+
+        } else if (error <= 10) {
+
+            predictionResult.className =
+                "result warning";
+
+            message =
+                "👍 Good attempt! Try to improve your estimation.";
+
+        } else {
+
+            predictionResult.className =
+                "result warning";
+
+            message =
+                "💡 Not quite there. Check the projectile range formula.";
+
+        }
+
+
+        predictionResult.innerHTML =
+
+            "<strong>" +
+            message +
+            "</strong>" +
+
+            "<br><br>" +
+
+            "Your prediction: " +
+            prediction.toFixed(2) +
+            " m" +
+
+            "<br>" +
+
+            "Actual range: " +
+            actual.toFixed(2) +
+            " m" +
+
+            "<br>" +
+
+            "Error: " +
+            error.toFixed(1) +
+            "%";
+
+    }
+);
+
+
+/* -------------------------
+   INITIAL SETUP
+------------------------- */
+
+updateValues();
+
+</script>
 
 </body>
-
 </html>
