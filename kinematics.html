@@ -9,54 +9,109 @@
 *{box-sizing:border-box}
 body{
 margin:0;
-font-family:Arial;
+font-family:Arial,sans-serif;
 background:#0b1020;
 color:white;
-text-align:center
 }
-h1{margin:20px 0 5px}
-p{color:#aab3c5}
-.container{width:94%;max-width:1000px;margin:auto}
-.tabs{display:flex;gap:10px;justify-content:center;margin:20px 0}
+header{text-align:center;padding:20px}
+h1{margin:0 0 8px}
+p{color:#aeb8cc}
+
+.tabs{
+display:flex;
+justify-content:center;
+gap:10px;
+margin:15px 0;
+}
 .tabs button{
-padding:12px 20px;border:0;border-radius:10px;
-background:#202941;color:white;font-size:16px
+border:0;
+padding:12px 20px;
+border-radius:10px;
+background:#202941;
+color:white;
+font-size:16px;
 }
 .tabs button.active{background:#287cff}
+
+.container{
+width:94%;
+max-width:1000px;
+margin:auto;
+}
+
 .page{display:none}
 .page.active{display:block}
+
 canvas{
-width:100%;background:#eef6ff;
-border-radius:15px;margin-bottom:15px
+width:100%;
+background:#eef6ff;
+border-radius:15px;
+display:block;
 }
+
 .panel{
-background:#151c31;padding:18px;
-border-radius:15px;margin:12px 0
+background:#151c31;
+padding:18px;
+border-radius:15px;
+margin-top:15px;
 }
-.row{margin:15px 0;text-align:left}
-.row label{display:flex;justify-content:space-between}
+
+.row{margin:16px 0}
+.row label{
+display:flex;
+justify-content:space-between;
+margin-bottom:8px;
+}
 input[type=range]{width:100%}
+
 button.action{
-padding:11px 18px;border:0;border-radius:9px;
-background:#287cff;color:white;font-size:15px
+border:0;
+padding:11px 18px;
+border-radius:9px;
+background:#287cff;
+color:white;
+font-size:15px;
+margin:5px;
 }
+
 .cards{
-display:grid;grid-template-columns:repeat(4,1fr);
-gap:10px;margin:15px 0
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+margin:15px 0;
 }
+
 .card{
-background:#202941;padding:15px;border-radius:12px
+background:#202941;
+padding:15px;
+border-radius:12px;
+text-align:center;
 }
-.card small{display:block;color:#aab3c5;margin-bottom:7px}
+
+.card small{
+display:block;
+color:#aeb8cc;
+margin-bottom:7px;
+}
+
 .card b{font-size:18px}
+
 .status{
-padding:12px;background:#202941;
-border-radius:10px;margin-top:12px
+background:#202941;
+padding:13px;
+border-radius:10px;
+margin-top:12px;
 }
+
 .learn{
-text-align:left;background:#151c31;
-padding:20px;border-radius:15px;margin:20px 0
+background:#151c31;
+padding:20px;
+border-radius:15px;
+margin:20px 0;
+text-align:left;
+line-height:1.6;
 }
+
 @media(max-width:650px){
 .cards{grid-template-columns:repeat(2,1fr)}
 .tabs button{width:45%}
@@ -66,31 +121,53 @@ padding:20px;border-radius:15px;margin:20px 0
 
 <body>
 
+<header>
+
 <h1>⚙️ JEE Mechanics Lab</h1>
+
 <p>Interactive Physics Simulations</p>
 
 <div class="tabs">
-<button id="tabP" class="active" onclick="show('p')">
-🚀 Projectile
+
+<button id="tabP"
+class="active"
+onclick="show('p')">
+🚀 Projectile Motion
 </button>
-<button id="tabI" onclick="show('i')">
+
+<button id="tabI"
+onclick="show('i')">
 ⚙️ Inclined Plane
 </button>
+
 </div>
+
+</header>
 
 <div class="container">
 
+<!-- PROJECTILE -->
+
 <section id="p" class="page active">
 
-<canvas id="pc" width="900" height="450"></canvas>
+<canvas id="pc"
+width="900"
+height="450">
+</canvas>
 
 <div class="panel">
+
 <div class="row">
 <label>
 <span>Initial Velocity</span>
 <b id="pv">25 m/s</b>
 </label>
-<input id="pvel" type="range" min="5" max="50" value="25">
+
+<input id="pvel"
+type="range"
+min="5"
+max="50"
+value="25">
 </div>
 
 <div class="row">
@@ -98,7 +175,12 @@ padding:20px;border-radius:15px;margin:20px 0
 <span>Angle θ</span>
 <b id="pa">45°</b>
 </label>
-<input id="pang" type="range" min="5" max="85" value="45">
+
+<input id="pang"
+type="range"
+min="5"
+max="85"
+value="45">
 </div>
 
 <div class="row">
@@ -106,14 +188,21 @@ padding:20px;border-radius:15px;margin:20px 0
 <span>Height</span>
 <b id="ph">0 m</b>
 </label>
-<input id="phei" type="range" min="0" max="20" value="0">
+
+<input id="phei"
+type="range"
+min="0"
+max="20"
+value="0">
 </div>
 
-<button class="action" onclick="launch()">
+<button class="action"
+onclick="launch()">
 🚀 Launch
 </button>
 
-<button class="action" onclick="resetP()">
+<button class="action"
+onclick="resetP()">
 ↻ Reset
 </button>
 
@@ -159,22 +248,27 @@ padding:20px;border-radius:15px;margin:20px 0
 
 <p>
 Projectile motion is two-dimensional motion under gravity.
-Horizontal acceleration is zero while vertical acceleration
-is g downward.
+The horizontal and vertical motions can be studied separately.
 </p>
 
 <p>
-Velocity components:
-<b>Vx = u cosθ</b> and
-<b>Vy = u sinθ</b>.
+<b>Vx = u cosθ</b><br>
+<b>Vy = u sinθ</b>
 </p>
 
 </div>
 
 </section>
+
+
+<!-- INCLINED PLANE -->
+
 <section id="i" class="page">
 
-<canvas id="ic" width="900" height="450"></canvas>
+<canvas id="ic"
+width="900"
+height="450">
+</canvas>
 
 <div class="panel">
 
@@ -183,7 +277,12 @@ Velocity components:
 <span>Angle θ</span>
 <b id="ia">30°</b>
 </label>
-<input id="iang" type="range" min="0" max="60" value="30">
+
+<input id="iang"
+type="range"
+min="0"
+max="60"
+value="30">
 </div>
 
 <div class="row">
@@ -191,7 +290,13 @@ Velocity components:
 <span>Mass</span>
 <b id="im">5 kg</b>
 </label>
-<input id="imas" type="range" min="1" max="20" step=".5" value="5">
+
+<input id="imas"
+type="range"
+min="1"
+max="20"
+step="0.5"
+value="5">
 </div>
 
 <div class="row">
@@ -199,7 +304,13 @@ Velocity components:
 <span>Static Friction μₛ</span>
 <b id="mus">0.50</b>
 </label>
-<input id="musl" type="range" min="0" max="1" step=".01" value=".50">
+
+<input id="musl"
+type="range"
+min="0"
+max="1"
+step="0.01"
+value="0.50">
 </div>
 
 <div class="row">
@@ -207,19 +318,30 @@ Velocity components:
 <span>Kinetic Friction μₖ</span>
 <b id="muk">0.30</b>
 </label>
-<input id="mukl" type="range" min="0" max="1" step=".01" value=".30">
+
+<input id="mukl"
+type="range"
+min="0"
+max="1"
+step="0.01"
+value="0.30">
 </div>
 
 <div class="row">
+
 <label>
-<span>Friction</span>
-<b id="fon">ON</b>
+<span>Friction ON</span>
+
+<input id="fric"
+type="checkbox"
+checked>
+
 </label>
 
-<input id="fric" type="checkbox" checked>
 </div>
 
-<div class="status" id="istatus">
+<div class="status"
+id="istatus">
 🟡 Block is at rest
 </div>
 
@@ -274,18 +396,17 @@ Velocity components:
 <h2>📖 Learn More</h2>
 
 <p>
-On an inclined plane, the weight of the block is resolved
-into components parallel and perpendicular to the plane.
+For an inclined plane, the weight is resolved into components.
 </p>
 
 <p>
-<b>mg sinθ</b> acts down the plane and
-<b>mg cosθ</b> acts perpendicular to it.
+<b>mg sinθ</b> acts along the plane and
+<b>mg cosθ</b> acts perpendicular to the plane.
 </p>
 
 <p>
-Static friction prevents motion until its maximum value is
-exceeded. Once the block moves, kinetic friction acts.
+Static friction can hold the block at rest. Once static friction
+is exceeded, kinetic friction acts.
 </p>
 
 </div>
@@ -293,51 +414,67 @@ exceeded. Once the block moves, kinetic friction acts.
 </section>
 
 </div>
+
 <script>
 
 const g=9.8;
 
-/* ---------- SWITCH ---------- */
 
-function show(x){
+/* ===== SWITCH BETWEEN SIMULATIONS ===== */
 
-document.getElementById("p").classList.toggle("active",x=="p");
-document.getElementById("i").classList.toggle("active",x=="i");
+function show(mode){
 
-document.getElementById("tabP").classList.toggle("active",x=="p");
-document.getElementById("tabI").classList.toggle("active",x=="i");
+document.getElementById("p").classList.toggle(
+"active",mode==="p"
+);
 
-if(x=="p") drawP();
-else drawI();
+document.getElementById("i").classList.toggle(
+"active",mode==="i"
+);
+
+document.getElementById("tabP").classList.toggle(
+"active",mode==="p"
+);
+
+document.getElementById("tabI").classList.toggle(
+"active",mode==="i"
+);
+
+if(mode==="p") drawProjectile();
+else calculateInclined();
 
 }
 
 
-/* ---------- PROJECTILE ---------- */
+/* ===== PROJECTILE ===== */
 
 const pc=document.getElementById("pc");
-const px=pc.getContext("2d");
+const ctx=pc.getContext("2d");
 
 let running=false;
-let time=0;
+let t=0;
 let last=0;
 
-function projectile(){
 
-let u=+pvel.value;
-let a=+pang.value;
-let h=+phei.value;
-let r=a*Math.PI/180;
+function projectileData(){
+
+let u=Number(pvel.value);
+let angle=Number(pang.value);
+let h=Number(phei.value);
+
+let r=angle*Math.PI/180;
 
 let vx=u*Math.cos(r);
 let vy=u*Math.sin(r);
 
 let T=(vy+Math.sqrt(vy*vy+2*g*h))/g;
-let H=h+vy*vy/(2*g);
+
+let H=h+(vy*vy)/(2*g);
+
 let R=vx*T;
 
 pv.textContent=u+" m/s";
-pa.textContent=a+"°";
+pa.textContent=angle+"°";
 ph.textContent=h+" m";
 
 pt.textContent=T.toFixed(2)+" s";
@@ -347,83 +484,111 @@ pvx.textContent=vx.toFixed(2)+" m/s";
 pvy.textContent=vy.toFixed(2)+" m/s";
 ps.textContent=u.toFixed(2)+" m/s";
 
-drawP();
+drawProjectile();
+
 }
 
-function drawP(){
 
-let u=+pvel.value;
-let a=+pang.value;
-let h=+phei.value;
-let r=a*Math.PI/180;
+function drawProjectile(){
+
+let u=Number(pvel.value);
+let angle=Number(pang.value);
+let h=Number(phei.value);
+
+let r=angle*Math.PI/180;
 
 let vx=u*Math.cos(r);
 let vy=u*Math.sin(r);
 
 let T=(vy+Math.sqrt(vy*vy+2*g*h))/g;
 
-px.clearRect(0,0,900,450);
+ctx.clearRect(0,0,900,450);
 
-px.fillStyle="#eef6ff";
-px.fillRect(0,0,900,450);
+ctx.fillStyle="#eef6ff";
+ctx.fillRect(0,0,900,450);
 
-px.fillStyle="#777";
-px.fillRect(30,400,840,6);
+
+/* ground */
+
+ctx.fillStyle="#777";
+ctx.fillRect(30,400,840,7);
+
+
+/* trajectory */
 
 let scale=7;
-let sx=100;
-let gy=400;
+let startX=90;
+let ground=400;
 
-px.beginPath();
+ctx.beginPath();
 
-for(let t=0;t<=T;t+=.03){
+for(let time=0;time<=T;time+=0.03){
 
-let x=vx*t;
-let y=h+vy*t-.5*g*t*t;
+let x=vx*time;
 
-let X=sx+x*scale;
-let Y=gy-y*scale;
+let y=h+
+vy*time-
+0.5*g*time*time;
 
-if(t==0) px.moveTo(X,Y);
-else px.lineTo(X,Y);
+let X=startX+x*scale;
+let Y=ground-y*scale;
+
+if(time===0)
+ctx.moveTo(X,Y);
+else
+ctx.lineTo(X,Y);
 
 }
 
-px.strokeStyle="#e53935";
-px.lineWidth=3;
-px.stroke();
+ctx.strokeStyle="#e53935";
+ctx.lineWidth=3;
+ctx.stroke();
 
-let t=Math.min(time,T);
 
-let x=vx*t;
-let y=h+vy*t-.5*g*t*t;
+/* projectile */
 
-px.beginPath();
-px.arc(
-sx+x*scale,
-gy-y*scale,
-10,0,Math.PI*2
+let current=Math.min(t,T);
+
+let x=vx*current;
+
+let y=h+
+vy*current-
+0.5*g*current*current;
+
+ctx.beginPath();
+
+ctx.arc(
+startX+x*scale,
+ground-y*scale,
+10,
+0,
+Math.PI*2
 );
 
-px.fillStyle="#1565c0";
-px.fill();
+ctx.fillStyle="#1565c0";
+ctx.fill();
 
-px.fillStyle="#111";
-px.font="bold 17px Arial";
-px.fillText("θ = "+a+"°",60,370);
+
+ctx.fillStyle="#111";
+ctx.font="bold 17px Arial";
+
+ctx.fillText(
+"θ = "+angle+"°",
+50,
+370
+);
 
 }
+
 
 function launch(){
 
 if(running){
-
 running=false;
 return;
-
 }
 
-time=0;
+t=0;
 last=performance.now();
 running=true;
 
@@ -431,235 +596,283 @@ requestAnimationFrame(move);
 
 }
 
+
 function move(now){
 
 if(!running)return;
 
 let dt=(now-last)/1000;
+
 last=now;
 
-time+=dt;
+t+=dt;
 
-let u=+pvel.value;
-let a=+pang.value;
-let h=+phei.value;
+let u=Number(pvel.value);
+let angle=Number(pang.value);
+let h=Number(phei.value);
 
-let r=a*Math.PI/180;
+let r=angle*Math.PI/180;
+
 let vy=u*Math.sin(r);
 
 let T=(vy+Math.sqrt(vy*vy+2*g*h))/g;
 
-if(time>=T){
+if(t>=T){
 
-time=T;
+t=T;
 running=false;
 
 }
 
-drawP();
+drawProjectile();
 
 if(running)
 requestAnimationFrame(move);
 
 }
 
+
 function resetP(){
 
 running=false;
-time=0;
-drawP();
+t=0;
+
+drawProjectile();
 
 }
 
-pvel.oninput=projectile;
-pang.oninput=projectile;
-phei.oninput=projectile;
+
+pvel.oninput=projectileData;
+pang.oninput=projectileData;
+phei.oninput=projectileData;
 
 
-/* ---------- INCLINED PLANE ---------- */
+/* ===== INCLINED PLANE ===== */
 
 const ic=document.getElementById("ic");
-const ix=ic.getContext("2d");
+const ictx=ic.getContext("2d");
 
-function inclined(){
 
-let a=+iang.value;
-let m=+imas.value;
-let us=+musl.value;
-let uk=+mukl.value;
+function calculateInclined(){
 
-let r=a*Math.PI/180;
+let angle=Number(iang.value);
+let mass=Number(imas.value);
 
-let W=m*g;
+let muS=Number(musl.value);
+let muK=Number(mukl.value);
+
+let frictionOn=fric.checked;
+
+let r=angle*Math.PI/180;
+
+let W=mass*g;
+
 let N=W*Math.cos(r);
+
 let P=W*Math.sin(r);
 
-let max=us*N;
+let maxStatic=muS*N;
 
-let f,net,acc;
+let friction=0;
+let net=0;
+let acceleration=0;
 
-if(!fric.checked){
 
-f=0;
+if(!frictionOn){
+
+friction=0;
 net=P;
-acc=g*Math.sin(r);
+acceleration=g*Math.sin(r);
 
 istatus.textContent=
 "🟢 Friction OFF — Block slides freely";
 
-fon.textContent="OFF";
-
 }
 
-else if(P<=max){
+else if(P<=maxStatic){
 
-f=P;
+friction=P;
 net=0;
-acc=0;
+acceleration=0;
 
 istatus.textContent=
 "🟡 Static friction holds the block — At rest";
-
-fon.textContent="ON";
 
 }
 
 else{
 
-f=uk*N;
-net=P-f;
-acc=net/m;
+friction=muK*N;
 
-if(acc<0){
-acc=0;
-net=0;
-}
+net=P-friction;
+
+acceleration=net/mass;
 
 istatus.textContent=
 "🔴 Block is sliding — Kinetic friction active";
 
-fon.textContent="ON";
+}
+
+
+ia.textContent=angle+"°";
+im.textContent=mass+" kg";
+mus.textContent=muS.toFixed(2);
+muk.textContent=muK.toFixed(2);
+
+acc.textContent=
+acceleration.toFixed(2)+" m/s²";
+
+iw.textContent=
+W.toFixed(2)+" N";
+
+in.textContent=
+N.toFixed(2)+" N";
+
+ip.textContent=
+P.toFixed(2)+" N";
+
+iper.textContent=
+N.toFixed(2)+" N";
+
+iff.textContent=
+friction.toFixed(2)+" N";
+
+inf.textContent=
+net.toFixed(2)+" N";
+
+imsf.textContent=
+maxStatic.toFixed(2)+" N";
+
+drawInclined(angle,mass);
 
 }
 
-ia.textContent=a+"°";
-im.textContent=m+" kg";
-mus.textContent=us.toFixed(2);
-muk.textContent=uk.toFixed(2);
 
-document.getElementById("acc").textContent=
-acc.toFixed(2)+" m/s²";
+/* ===== DRAW INCLINED PLANE ===== */
 
-iw.textContent=W.toFixed(2)+" N";
-in.textContent=N.toFixed(2)+" N";
-ip.textContent=P.toFixed(2)+" N";
-iper.textContent=N.toFixed(2)+" N";
-iff.textContent=f.toFixed(2)+" N";
-inf.textContent=net.toFixed(2)+" N";
-imsf.textContent=max.toFixed(2)+" N";
+function drawInclined(angle,mass){
 
-drawI();
+let r=angle*Math.PI/180;
 
-}
+ictx.clearRect(
+0,0,900,450
+);
 
-function drawI(){
+ictx.fillStyle="#eef6ff";
+ictx.fillRect(
+0,0,900,450
+);
 
-let a=+iang.value;
-let m=+imas.value;
-let r=a*Math.PI/180;
-
-ix.clearRect(0,0,900,450);
-
-ix.fillStyle="#eef6ff";
-ix.fillRect(0,0,900,450);
 
 /* plane */
 
-let sx=130;
+let sx=120;
 let sy=380;
 let L=650;
 
-let ex=sx+L*Math.cos(r);
-let ey=sy-L*Math.sin(r);
+let ex=sx+
+L*Math.cos(r);
 
-ix.strokeStyle="#444";
-ix.lineWidth=14;
+let ey=sy-
+L*Math.sin(r);
 
-ix.beginPath();
-ix.moveTo(sx,sy);
-ix.lineTo(ex,ey);
-ix.stroke();
+ictx.strokeStyle="#444";
+ictx.lineWidth=14;
+
+ictx.beginPath();
+
+ictx.moveTo(sx,sy);
+ictx.lineTo(ex,ey);
+
+ictx.stroke();
+
 
 /* ground */
 
-ix.strokeStyle="#777";
-ix.lineWidth=4;
+ictx.strokeStyle="#777";
+ictx.lineWidth=4;
 
-ix.beginPath();
-ix.moveTo(40,sy);
-ix.lineTo(860,sy);
-ix.stroke();
+ictx.beginPath();
+
+ictx.moveTo(40,sy);
+ictx.lineTo(860,sy);
+
+ictx.stroke();
+
 
 /* block */
 
 let d=300;
 
-let bx=sx+d*Math.cos(r);
-let by=sy-d*Math.sin(r);
+let bx=sx+
+d*Math.cos(r);
 
-ix.save();
+let by=sy-
+d*Math.sin(r);
 
-ix.translate(bx,by);
-ix.rotate(-r);
+ictx.save();
 
-ix.fillStyle="#1976d2";
-ix.fillRect(-27,-27,54,54);
+ictx.translate(bx,by);
 
-ix.restore();
+ictx.rotate(-r);
 
-/* label */
+ictx.fillStyle="#1976d2";
 
-ix.fillStyle="#111";
-ix.font="bold 17px Arial";
+ictx.fillRect(
+-27,-27,54,54
+);
 
-ix.fillText(
-"m = "+m+" kg",
+ictx.restore();
+
+
+/* block label */
+
+ictx.fillStyle="#111";
+ictx.font="bold 17px Arial";
+
+ictx.fillText(
+"m = "+mass+" kg",
 bx-35,
 by-45
 );
 
+
 /* weight arrow */
 
-ix.strokeStyle="#d32f2f";
-ix.fillStyle="#d32f2f";
-ix.lineWidth=4;
+ictx.strokeStyle="#d32f2f";
+ictx.fillStyle="#d32f2f";
+ictx.lineWidth=4;
 
-ix.beginPath();
-ix.moveTo(bx,by);
-ix.lineTo(bx,by+90);
-ix.stroke();
+ictx.beginPath();
 
-ix.beginPath();
-ix.moveTo(bx,by+90);
-ix.lineTo(bx-8,by+72);
-ix.lineTo(bx+8,by+72);
-ix.closePath();
-ix.fill();
+ictx.moveTo(bx,by);
+ictx.lineTo(bx,by+90);
 
-ix.fillText(
+ictx.stroke();
+
+ictx.beginPath();
+
+ictx.moveTo(bx,by+90);
+ictx.lineTo(bx-8,by+72);
+ictx.lineTo(bx+8,by+72);
+ictx.closePath();
+ictx.fill();
+
+ictx.fillText(
 "mg",
-bx+8,
+bx+10,
 by+90
 );
 
+
 /* angle */
 
-ix.strokeStyle="#1565c0";
-ix.lineWidth=3;
+ictx.strokeStyle="#1565c0";
+ictx.lineWidth=3;
 
-ix.beginPath();
+ictx.beginPath();
 
-ix.arc(
+ictx.arc(
 sx,
 sy,
 55,
@@ -667,23 +880,24 @@ sy,
 0
 );
 
-ix.stroke();
+ictx.stroke();
 
-ix.fillStyle="#1565c0";
-ix.font="bold 19px Arial";
+ictx.fillStyle="#1565c0";
+ictx.font="bold 19px Arial";
 
-ix.fillText(
-"θ = "+a+"°",
+ictx.fillText(
+"θ = "+angle+"°",
 sx+40,
 sy-12
 );
 
-/* surface text */
 
-ix.fillStyle="#1565c0";
-ix.font="bold 16px Arial";
+/* surface */
 
-ix.fillText(
+ictx.fillStyle="#1565c0";
+ictx.font="bold 16px Arial";
+
+ictx.fillText(
 fric.checked ?
 "FRICTION ON" :
 "FRICTIONLESS",
@@ -694,10 +908,19 @@ fric.checked ?
 }
 
 
-/* ---------- START ---------- */
+/* ===== LIVE CONTROLS ===== */
 
-projectile();
-inclined();
+iang.oninput=calculateInclined;
+imas.oninput=calculateInclined;
+musl.oninput=calculateInclined;
+mukl.oninput=calculateInclined;
+fric.onchange=calculateInclined;
+
+
+/* ===== START ===== */
+
+projectileData();
+calculateInclined();
 
 </script>
 
