@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kinematics | JEE Mechanics Lab</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0b0f19;
+            color: white;
+        }
+
+        header {
+            background: #111827;
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        header p {
+            color: #9ca3af;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 25px 20px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 25px;
+            color: #818cf8;
+            text-decoration: none;
+        }
+
+        .card {
+            background: #151c2c;
+            border: 1px solid #273249;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 300px;
+            background: #080c14;
+            border-radius: 12px;
+            margin: 15px 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        .value {
+            color: #818cf8;
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px;
+            background: #6366f1;
+            color: white;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .results {
+            margin-top: 20px;
+            line-height: 2;
+            color: #d1d5db;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>🚀 Kinematics Lab</h1>
+    <p>Projectile Motion Simulator</p>
+</header>
+
+<div class="container">
+
+    <a class="back" href="index.html">← Back to Mechanics Lab</a>
+
+    <div class="card">
+
+        <h2>Projectile Motion</h2>
+
+        <canvas id="canvas"></canvas>
+
+        <label>
+            Initial Velocity:
+            <span class="value" id="velocityValue">20</span> m/s
+        </label>
+
+        <input
+            type="range"
+            id="velocity"
+            min="5"
+            max="50"
+            value="20"
+        >
+
+        <label>
+            Angle:
+            <span class="value" id="angleValue">45</span>°
+        </label>
+
+        <input
+            type="range"
+            id="angle"
+            min="10"
+            max="80"
+            value="45"
+        >
+
+        <label>
+            Gravity:
+            <span class="value" id="gravityValue">9.8</span> m/s²
+        </label>
+
+        <input
+            type="range"
+            id="gravity"
+            min="1"
+            max="20"
+            step="0.1"
+            value="9.8"
+        >
+
+        <button onclick="startSimulation()">
+            ▶ START SIMULATION
+        </button>
+
+        <div class="results">
+            <div>Range: <span id="range">—</span> m</div>
+            <div>Maximum Height: <span id="height">—</span> m</div>
+            <div>Time of Flight: <span id="time">—</span> s</div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const velocity = document.getElementById("velocity");
+const angle = document.getElementById("angle");
+const gravity = document.getElementById("gravity");
+
+const velocityValue = document.getElementById("velocityValue");
+const angleValue = document.getElementById("angleValue");
+const gravityValue = document.getElementById("gravityValue");
+
+velocity.oninput = () => {
+    velocityValue.textContent = velocity.value;
+};
+
+angle.oninput = () => {
+    angleValue.textContent = angle.value;
+};
+
+gravity.oninput = () => {
+    gravityValue.textContent = gravity.value;
+};
+
+function startSimulation() {
+
+    const u = Number(velocity.value);
+    const theta = Number(angle.value) * Math.PI / 180;
+    const g = Number(gravity.value);
+
+    const timeOfFlight = (2 * u * Math.sin(theta)) / g;
+
+    const maxHeight =
+        (u * u * Math.sin(theta) * Math.sin(theta)) / (2 * g);
+
+    const range =
+        (u * u * Math.sin(2 * theta)) / g;
+
+    document.getElementById("range").textContent =
+        range.toFixed(2);
+
+    document.getElementById("height").textContent =
+        maxHeight.toFixed(2);
+
+    document.getElementById("time").textContent =
+        timeOfFlight.toFixed(2);
+
+    animate(u, theta, g, timeOfFlight, range);
+}
+
+function animate(u, theta, g, totalTime, range) {
+
+    canvas.width = canvas.clientWidth;
+    canvas.height = 300;
+
+    let startTime = null;
+
+    function draw(timestamp) {
+
+        if (!startTime) startTime = timestamp;
+
+        let elapsed = (timestamp - startTime) / 1000;
+
+        let t = Math.min(elapsed, totalTime);
+
+        let x = u * Math.cos(theta) * t;
+        let y = u * Math.sin(theta) * t
+                - 0.5 * g * t * t;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const margin = 30;
+
+        const scaleX =
+            (canvas.width - 2 * margin) / range;
+
+        const maxHeight =
+            (u * u * Math.sin(theta) * Math.sin(theta)) / (2 * g);
+
+        const scaleY =
+            (canvas.height - 50) / Math.max(maxHeight, 1);
+
+        const ground = canvas.height - 30;
+
+        ctx.beginPath();
+        ctx.moveTo(0, ground);
+        ctx.lineTo(canvas.width, ground);
+        ctx.stroke();
+
+        const px = margin + x * scaleX;
+        const py = ground - y * scaleY;
+
+        ctx.beginPath();
+        ctx.arc(px, py, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (t < totalTime) {
+            requestAnimationFrame(draw);
+        }
+    }
+
+    requestAnimationFrame(draw);
+}
+
+</script>
+
+</body>
+</html>
