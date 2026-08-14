@@ -65,7 +65,7 @@ h2 {
 
 canvas {
     width: 100%;
-    height: 320px;
+    height: 350px;
     background: #050810;
     border-radius: 12px;
     border: 1px solid #273249;
@@ -85,6 +85,40 @@ label {
 
 input[type="range"] {
     width: 100%;
+}
+
+.components-toggle {
+    margin-top: 22px;
+    padding: 15px;
+    background: #0d1320;
+    border-radius: 12px;
+    border: 1px solid #273249;
+}
+
+.components-toggle label {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: bold;
+}
+
+.components-toggle input {
+    width: 20px;
+    height: 20px;
+}
+
+.vector-info {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background: #111827;
+    border-radius: 10px;
+    line-height: 1.8;
+}
+
+.vector-value {
+    font-weight: bold;
 }
 
 .prediction {
@@ -165,20 +199,17 @@ button:active {
 
 </header>
 
-
 <div class="container">
 
 <a class="back" href="index.html">
 ← Back to Mechanics Lab
 </a>
 
-
 <div class="card">
 
 <h2>Projectile Motion</h2>
 
 <canvas id="canvas"></canvas>
-
 
 <label>
 Initial Velocity:
@@ -193,7 +224,6 @@ max="50"
 value="20"
 >
 
-
 <label>
 Angle:
 <span class="value" id="angleValue">45</span>°
@@ -206,7 +236,6 @@ min="10"
 max="80"
 value="45"
 >
-
 
 <label>
 Gravity:
@@ -223,7 +252,66 @@ value="9.8"
 >
 
 
-<!-- JEE PREDICTION MODE -->
+<!-- VELOCITY COMPONENT TOGGLE -->
+
+<div class="components-toggle">
+
+<label>
+
+<input
+type="checkbox"
+id="showComponents"
+>
+
+☑️ Show velocity components
+
+</label>
+
+<div
+class="vector-info"
+id="vectorInfo"
+>
+
+Horizontal velocity:
+
+<span
+class="vector-value"
+id="vxValue"
+>
+—
+</span>
+m/s
+
+<br>
+
+Vertical velocity:
+
+<span
+class="vector-value"
+id="vyValue"
+>
+—
+</span>
+m/s
+
+<br>
+
+Resultant velocity:
+
+<span
+class="vector-value"
+id="vValue"
+>
+—
+</span>
+m/s
+
+</div>
+
+</div>
+
+
+<!-- PREDICTION MODE -->
 
 <div class="prediction">
 
@@ -273,16 +361,12 @@ Time of Flight:
 
 </div>
 
-
 </div>
 
 </div>
 
 
 <script>
-
-
-/* GET ELEMENTS */
 
 const canvas =
 document.getElementById("canvas");
@@ -311,7 +395,23 @@ const gravityValue =
 document.getElementById("gravityValue");
 
 
-/* SLIDER VALUES */
+const showComponents =
+document.getElementById("showComponents");
+
+const vectorInfo =
+document.getElementById("vectorInfo");
+
+const vxValue =
+document.getElementById("vxValue");
+
+const vyValue =
+document.getElementById("vyValue");
+
+const vValue =
+document.getElementById("vValue");
+
+
+/* SLIDERS */
 
 velocity.addEventListener("input", function() {
 
@@ -337,7 +437,29 @@ gravity.addEventListener("input", function() {
 });
 
 
-/* CALCULATE PHYSICS */
+/* COMPONENT TOGGLE */
+
+showComponents.addEventListener(
+    "change",
+    function() {
+
+        if (showComponents.checked) {
+
+            vectorInfo.style.display =
+                "block";
+
+        } else {
+
+            vectorInfo.style.display =
+                "none";
+
+        }
+
+    }
+);
+
+
+/* PHYSICS */
 
 function calculatePhysics() {
 
@@ -370,29 +492,31 @@ function calculatePhysics() {
 
 
     return {
+
         u: u,
         theta: theta,
         g: g,
         time: timeOfFlight,
         height: maxHeight,
         range: range
+
     };
 
 }
 
 
-/* PREDICTION MODE */
+/* PREDICTION */
 
 document
 .getElementById("checkButton")
-.addEventListener("click", function() {
+.addEventListener(
+"click",
+function() {
 
-
-    const predictionField =
+    const field =
         document.getElementById(
             "predictionInput"
         );
-
 
     const result =
         document.getElementById(
@@ -401,13 +525,11 @@ document
 
 
     const prediction =
-        Number(predictionField.value);
+        Number(field.value);
 
-
-    /* CHECK EMPTY INPUT */
 
     if (
-        predictionField.value.trim() === ""
+        field.value.trim() === ""
         ||
         !Number.isFinite(prediction)
     ) {
@@ -434,7 +556,8 @@ document
     const error =
         Math.abs(
             prediction - actual
-        ) / actual * 100;
+        )
+        / actual * 100;
 
 
     let feedback;
@@ -464,7 +587,7 @@ document
     else {
 
         feedback =
-            "🔴 Your prediction is quite far. Try using the projectile-range relation.";
+            "🔴 Your prediction is quite far. Check the projectile formula.";
 
     }
 
@@ -522,12 +645,13 @@ document
 });
 
 
-/* START SIMULATION */
+/* START */
 
 document
 .getElementById("startButton")
-.addEventListener("click", function() {
-
+.addEventListener(
+"click",
+function() {
 
     const physics =
         calculatePhysics();
@@ -557,19 +681,17 @@ document
 
 function animate(physics) {
 
-
     canvas.width =
         canvas.clientWidth;
 
     canvas.height =
-        320;
+        350;
 
 
     let startTime = null;
 
 
     function draw(timestamp) {
-
 
         if (!startTime) {
 
@@ -591,6 +713,8 @@ function animate(physics) {
             );
 
 
+        /* POSITION */
+
         const x =
             physics.u *
             Math.cos(physics.theta) *
@@ -608,6 +732,45 @@ function animate(physics) {
             t;
 
 
+        /* VELOCITY COMPONENTS */
+
+        const vx =
+            physics.u *
+            Math.cos(physics.theta);
+
+
+        const vy =
+            physics.u *
+            Math.sin(physics.theta)
+            -
+            physics.g * t;
+
+
+        const resultant =
+            Math.sqrt(
+                vx * vx +
+                vy * vy
+            );
+
+
+        /* UPDATE VALUES */
+
+        if (showComponents.checked) {
+
+            vxValue.textContent =
+                vx.toFixed(2);
+
+            vyValue.textContent =
+                vy.toFixed(2);
+
+            vValue.textContent =
+                resultant.toFixed(2);
+
+        }
+
+
+        /* CLEAR */
+
         ctx.clearRect(
             0,
             0,
@@ -616,10 +779,10 @@ function animate(physics) {
         );
 
 
-        const margin = 35;
+        const margin = 40;
 
         const ground =
-            canvas.height - 35;
+            canvas.height - 45;
 
 
         const scaleX =
@@ -628,7 +791,7 @@ function animate(physics) {
 
 
         const scaleY =
-            (canvas.height - 60)
+            (canvas.height - 80)
             / Math.max(
                 physics.height,
                 1
@@ -672,7 +835,6 @@ function animate(physics) {
             time <= t;
             time += 0.02
         ) {
-
 
             const trailX =
                 physics.u *
@@ -725,7 +887,7 @@ function animate(physics) {
         ctx.stroke();
 
 
-        /* PROJECTILE */
+        /* PROJECTILE POSITION */
 
         const projectileX =
             margin +
@@ -737,9 +899,25 @@ function animate(physics) {
             y * scaleY;
 
 
+        /* VELOCITY VECTORS */
+
+        if (showComponents.checked) {
+
+            drawVectors(
+                projectileX,
+                projectileY,
+                vx,
+                vy,
+                resultant
+            );
+
+        }
+
+
+        /* PROJECTILE */
+
         ctx.fillStyle =
             "#22c55e";
-
 
         ctx.beginPath();
 
@@ -758,7 +936,6 @@ function animate(physics) {
 
         ctx.fillStyle =
             "#f59e0b";
-
 
         ctx.beginPath();
 
@@ -790,6 +967,192 @@ function animate(physics) {
 
 }
 
+
+/* DRAW ARROW */
+
+function drawArrow(
+    startX,
+    startY,
+    endX,
+    endY,
+    color
+) {
+
+    const headLength = 10;
+
+
+    const angle =
+        Math.atan2(
+            endY - startY,
+            endX - startX
+        );
+
+
+    ctx.strokeStyle =
+        color;
+
+    ctx.fillStyle =
+        color;
+
+    ctx.lineWidth = 4;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        startX,
+        startY
+    );
+
+    ctx.lineTo(
+        endX,
+        endY
+    );
+
+    ctx.stroke();
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        endX,
+        endY
+    );
+
+    ctx.lineTo(
+        endX -
+        headLength *
+        Math.cos(angle - Math.PI / 6),
+
+        endY -
+        headLength *
+        Math.sin(angle - Math.PI / 6)
+    );
+
+    ctx.lineTo(
+        endX -
+        headLength *
+        Math.cos(angle + Math.PI / 6),
+
+        endY -
+        headLength *
+        Math.sin(angle + Math.PI / 6)
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+}
+
+
+/* DRAW VELOCITY COMPONENTS */
+
+function drawVectors(
+    x,
+    y,
+    vx,
+    vy,
+    resultant
+) {
+
+
+    /*
+       We use a visual scale rather than
+       real metres so the arrows fit
+       nicely on the phone screen.
+    */
+
+    const scale = 3;
+
+
+    /* HORIZONTAL COMPONENT */
+
+    const horizontalLength =
+        vx * scale;
+
+
+    drawArrow(
+        x,
+        y,
+        x + horizontalLength,
+        y,
+        "#22c55e"
+    );
+
+
+    /* VERTICAL COMPONENT */
+
+    const verticalLength =
+        vy * scale;
+
+
+    drawArrow(
+        x,
+        y,
+        x,
+        y - verticalLength,
+        "#38bdf8"
+    );
+
+
+    /* RESULTANT VECTOR */
+
+    const resultX =
+        x + vx * scale;
+
+    const resultY =
+        y - vy * scale;
+
+
+    drawArrow(
+        x,
+        y,
+        resultX,
+        resultY,
+        "#f59e0b"
+    );
+
+
+    /* LABELS */
+
+    ctx.font =
+        "bold 13px Arial";
+
+
+    ctx.fillStyle =
+        "#22c55e";
+
+
+    ctx.fillText(
+        "vx",
+        x + horizontalLength / 2,
+        y - 8
+    );
+
+
+    ctx.fillStyle =
+        "#38bdf8";
+
+
+    ctx.fillText(
+        "vy",
+        x + 8,
+        y - verticalLength / 2
+    );
+
+
+    ctx.fillStyle =
+        "#f59e0b";
+
+
+    ctx.fillText(
+        "v",
+        resultX + 5,
+        resultY
+    );
+
+}
 
 </script>
 
