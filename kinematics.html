@@ -45,6 +45,39 @@
       border-radius: 15px;
       display: block;
     }
+
+    /* Questions section styles */
+    .jee-questions {
+      margin-top: 20px;
+      background: #0f1724;
+      padding: 18px;
+      border-radius: 12px;
+    }
+
+    .jee-questions h2 {
+      margin: 0 0 12px 0;
+      color: #ffd54f;
+    }
+
+    .jee-questions details {
+      background: #0b1220;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .jee-questions summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: #cfe8ff;
+    }
+
+    .jee-questions p.answer {
+      margin: 8px 0 0 0;
+      color: #c5ccda;
+      line-height: 1.5;
+    }
   </style>
 </head>
 
@@ -133,6 +166,48 @@
     The horizontal and vertical motions can be studied independently.
   </p>
 </div>
+
+<!-- JEE questions section -->
+<div class="jee-questions" id="jeeQuestions">
+  <h2>JEE Mains & Advanced — Sample Questions</h2>
+
+  <h3 style="color:#aab3c5; margin-top:0;">JEE Main (conceptual / short)</h3>
+
+  <details>
+    <summary>1. A ball is projected at 30 m/s at 60° above the horizontal. Ignore air resistance. What is the horizontal range?</summary>
+    <p class="answer">Range = (v^2 sin 2θ)/g. Here v=30, θ=60°, sin120°=sin60°=√3/2. Range = (900 * √3/2) / 9.8 ≈ (900*0.866)/9.8 ≈ 779.4 / 9.8 ≈ 79.53 m.</p>
+  </details>
+
+  <details>
+    <summary>2. A projectile is launched from a height h above ground. How does initial height affect time of flight?</summary>
+    <p class="answer">Increasing initial height increases time of flight. Solve y(t)=h+v_y t - (1/2) g t^2 = 0 for positive root. Time grows with √h for fixed v_y.</p>
+  </details>
+
+  <details>
+    <summary>3. For a fixed speed, at what two angles will a projectile have the same range?</summary>
+    <p class="answer">If θ gives a range R, then (90°−θ) gives the same range because sin(2θ)=sin(180°−2θ).</p>
+  </details>
+
+  <h3 style="color:#aab3c5; margin-top:8px;">JEE Advanced (challenging)</h3>
+
+  <details>
+    <summary>1. A particle is projected from point A on a plane inclined at angle α with speed u at angle β above the incline. Find the range along the incline.</summary>
+    <p class="answer">Resolve components along and perpendicular to plane and use motion equations with g component g cosα along normal and g sinα along plane. Range formula (along incline) = [2 u^2 cosβ sin(β−α)] / [g cos^2 α]. (Derivation omitted — use coordinate rotation.)</p>
+  </details>
+
+  <details>
+    <summary>2. A projectile of speed v is launched from ground at angle θ. A target at distance R and height H must be hit. Derive condition relating v, θ, R, H.</summary>
+    <p class="answer">Use parametric equations x=v cosθ t, y=v sinθ t - 1/2 g t^2. Solve for t=R/(v cosθ) and substitute to get H = R tanθ - (g R^2)/(2 v^2 cos^2 θ). Rearranged gives condition for θ existence.</p>
+  </details>
+
+  <details>
+    <summary>3. A projectile passes through two points at the same level separated by distance d. Show that the highest point is at midpoint horizontally.</summary>
+    <p class="answer">Symmetry of parabolic trajectory: horizontal motion uniform, vertical symmetric about apex. For equal heights, times t1 and t2 satisfy t1+t2 = time of flight; midpoint in time corresponds to midpoint in x.</p>
+  </details>
+
+  <p style="color:#c5ccda; margin-top:12px;">Want more JEE-style questions or full worked solutions added to this page (separate collapsible answer sheets)? Reply with "add more" or "include solutions" and I will add them.</p>
+</div>
+
 <style>
   .controls {
     margin-top: 20px;
