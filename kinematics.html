@@ -1,150 +1,430 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JEE Mechanics Lab</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Projectile Motion Lab</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #111;
+      font-family: Arial, sans-serif;
+      background: #0b1020;
       color: white;
-      font-family: Arial;
+    }
+
+    .header {
+      padding: 20px;
       text-align: center;
     }
 
-    canvas {
-      display: block;
-      margin: 20px auto;
-      background: #eaf4ff;
-      border: 2px solid white;
-      max-width: 95%;
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
     }
 
-    button, input {
-      padding: 10px;
-      margin: 5px;
-      font-size: 16px;
+    .header p {
+      color: #aab3c5;
+      margin-top: 8px;
+    }
+
+    .lab {
+      width: 95%;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    canvas {
+      width: 100%;
+      background: #eef6ff;
+      border-radius: 15px;
+      display: block;
     }
   </style>
 </head>
 
 <body>
 
-<h1>JEE Mechanics Lab ⚙️</h1>
+  <div class="header">
+    <h1>🚀 Projectile Motion Lab</h1>
+    <p>Explore projectile motion interactively</p>
+  </div>
 
-<canvas id="canvas" width="800" height="450"></canvas>
-<div>
-  <label>Mass (kg): </label>
-  <input id="mass" type="number" value="2">
+  <div class="lab">
 
-  <label>Force (N): </label>
-  <input id="force" type="number" value="10">
+    <canvas id="canvas" width="900" height="500"></canvas>
+
+<div class="controls">
+
+  <label>
+    Initial Velocity
+    <input id="velocity" type="range"
+           min="5" max="50" value="25">
+    <span id="velocityValue">25 m/s</span>
+  </label>
+
+  <label>
+    Angle
+    <input id="angle" type="range"
+           min="10" max="80" value="45">
+    <span id="angleValue">45°</span>
+  </label>
+
+  <label>
+    Height
+    <input id="height" type="range"
+           min="0" max="20" value="0">
+    <span id="heightValue">0 m</span>
+  </label>
+
+  <button id="launchButton">🚀 Launch</button>
+  <button id="resetButton">↻ Reset</button>
+
 </div>
 
-<div>
-  <button id="startButton">Start</button>
-  <button id="resetButton">Reset</button>
+<div class="stats">
+
+  <div class="stat">
+    <span>Time of Flight</span>
+    <strong id="timeValue">0.00 s</strong>
+  </div>
+
+  <div class="stat">
+    <span>Maximum Height</span>
+    <strong id="maxHeightValue">0.00 m</strong>
+  </div>
+
+  <div class="stat">
+    <span>Range</span>
+    <strong id="rangeValue">0.00 m</strong>
+  </div>
+
 </div>
 
-<p id="info">Acceleration: 0 m/s²</p>
+<div class="learn">
+  <h2>Learn More</h2>
 
+  <p>
+    Projectile motion is the motion of an object launched into the air
+    under the influence of gravity.
+  </p>
+
+  <p>
+    The horizontal and vertical motions can be studied independently.
+  </p>
+</div>
+<style>
+  .controls {
+    margin-top: 20px;
+    padding: 20px;
+    background: #151c31;
+    border-radius: 15px;
+    display: grid;
+    gap: 15px;
+  }label {
+    display: grid;
+    grid-template-columns: 140px 1fr 80px;
+    align-items: center;
+    gap: 10px;
+  }
+
+  input[type="range"] {
+    width: 100%;
+  }
+
+  button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  #launchButton {
+    background: #4f8cff;
+    color: white;
+  }
+
+  #resetButton {
+    background: #30394f;
+    color: white;
+  }
+
+  .stats {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .stat {
+    background: #151c31;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .stat span {
+    display: block;
+    color: #aab3c5;
+    margin-bottom: 8px;
+  }
+
+  .stat strong {
+    font-size: 20px;
+  }
+
+  .learn {
+    margin: 25px 0;
+    padding: 25px;
+    background: #151c31;
+    border-radius: 15px;
+  }
+
+  .learn h2 {
+    margin-top: 0;
+  }
+
+  .learn p {
+    color: #c5ccda;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 600px) {
+    label {
+      grid-template-columns: 1fr;
+    }
+    .stats {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
 <script>
+
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-const massInput = document.getElementById("mass");
-const forceInput = document.getElementById("force");
+const velocitySlider = document.getElementById("velocity");
+const angleSlider = document.getElementById("angle");
+const heightSlider = document.getElementById("height");
 
-const startButton = document.getElementById("startButton");
+const velocityValue = document.getElementById("velocityValue");
+const angleValue = document.getElementById("angleValue");
+const heightValue = document.getElementById("heightValue");
+
+const launchButton = document.getElementById("launchButton");
 const resetButton = document.getElementById("resetButton");
 
-const info = document.getElementById("info");
+const timeValue = document.getElementById("timeValue");
+const maxHeightValue = document.getElementById("maxHeightValue");
+const rangeValue = document.getElementById("rangeValue");
 
-let x = 100;
-let velocity = 0;
+const g = 9.8;
+
+let v0 = 25;
+let angle = 45;
+let h0 = 0;
+
+let projectileX = 0;
+let projectileY = 0;
+let time = 0;
+
 let running = false;
-let lastTime = 0;
-function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+function updateValues() {
+
+  v0 = Number(velocitySlider.value);
+  angle = Number(angleSlider.value);
+  h0 = Number(heightSlider.value);
+
+  velocityValue.textContent = v0 + " m/s";
+  angleValue.textContent = angle + "°";
+  heightValue.textContent = h0 + " m";
+}
+
+velocitySlider.addEventListener("input", updateValues);
+angleSlider.addEventListener("input", updateValues);
+heightSlider.addEventListener("input", updateValues);
+
+updateValues();
+function calculatePhysics() {
+
+  const theta = angle * Math.PI / 180;
+
+  const vx = v0 * Math.cos(theta);
+  const vy = v0 * Math.sin(theta);
+
+  const discriminant =
+    vy * vy + 2 * g * h0;
+
+  const flightTime =
+    (vy + Math.sqrt(discriminant)) / g;
+
+  const maxHeight =
+    h0 + (vy * vy) / (2 * g);
+
+  const range =
+    vx * flightTime;
+
+  timeValue.textContent =
+    flightTime.toFixed(2) + " s";
+
+  maxHeightValue.textContent =
+    maxHeight.toFixed(2) + " m";
+
+  rangeValue.textContent =
+    range.toFixed(2) + " m";
+}
+
+calculatePhysics();
+
+velocitySlider.addEventListener("input", calculatePhysics);
+angleSlider.addEventListener("input", calculatePhysics);
+heightSlider.addEventListener("input", calculatePhysics);
+function drawScene() {ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+// Sky
+  ctx.fillStyle = "#eef6ff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Ground
   ctx.fillStyle = "#555";
-  ctx.fillRect(0, 360, canvas.width, 5);
+  ctx.fillRect(0, 440, canvas.width, 10);
 
-  // Box
-  ctx.fillStyle = "#2196f3";
-  ctx.fillRect(x, 320, 60, 40);
+  // Starting platform
+  ctx.fillStyle = "#333";
+  ctx.fillRect(40, 390, 100, 50);
 
-  // Force arrow
+  // Projectile position
+  const theta = angle * Math.PI / 180;
+
+  const vx = v0 * Math.cos(theta);
+  const vy = v0 * Math.sin(theta);
+
+  projectileX = vx * time;
+
+  const realY =
+    h0 +
+    vy * time -
+    0.5 * g * time * time;
+
+  // Scale physics metres to pixels
+  const scale = 8;
+
+  const screenX = 90 + projectileX * scale;
+  const screenY = 390 - realY * scale;
+
+  // Trajectory
+  ctx.beginPath();
+
+  for (let t = 0; t <= time; t += 0.03) {
+
+    const px = vx * t;
+    const py =
+      h0 +
+      vy * t -
+      0.5 * g * t * t;
+
+    const sx = 90 + px * scale;
+    const sy = 390 - py * scale;
+
+    if (t === 0) {
+      ctx.moveTo(sx, sy);
+    } else {
+      ctx.lineTo(sx, sy);
+    }
+  }
+
   ctx.strokeStyle = "#e53935";
-  ctx.lineWidth = 4;
-
-  ctx.beginPath();
-  ctx.moveTo(x + 60, 340);
-  ctx.lineTo(x + 120, 340);
+  ctx.lineWidth = 3;
   ctx.stroke();
 
+  // Projectile
   ctx.beginPath();
-  ctx.moveTo(x + 120, 340);
-  ctx.lineTo(x + 105, 330);
-  ctx.moveTo(x + 120, 340);
-  ctx.lineTo(x + 105, 350);
-  ctx.stroke();
+  ctx.arc(screenX, screenY, 9, 0, Math.PI * 2);
 
+  ctx.fillStyle = "#1565c0";
+  ctx.fill();
+
+  // Launch angle
   ctx.fillStyle = "#111";
   ctx.font = "16px Arial";
-  ctx.fillText("F = " + forceInput.value + " N", x + 65, 315);
-
-  const m = Number(massInput.value);
-  const F = Number(forceInput.value);
-  const acceleration = m > 0 ? F / m : 0;
-
-  info.textContent =
-    "Acceleration: " + acceleration.toFixed(2) + " m/s²";
+  ctx.fillText(
+    "θ = " + angle + "°",
+    45,
+    375
+  );
 }
 
-draw();startButton.addEventListener("click", function() {
-  running = !running;
+drawScene();
+let lastTime = 0;
 
-  if (running) {
-    startButton.textContent = "Pause";
+function animate(currentTime) {
+
+  if (!running) return;
+
+  const delta =
+    (currentTime - lastTime) / 1000;
+
+  lastTime = currentTime;
+
+  time += delta;
+
+  const theta = angle * Math.PI / 180;
+
+  const vy = v0 * Math.sin(theta);
+
+  const flightTime =
+    (vy + Math.sqrt(
+      vy * vy + 2 * g * h0
+    )) / g;
+
+  if (time >= flightTime) {
+    time = flightTime;
+    running = false;
+    launchButton.textContent = "🚀 Launch";
+  }drawScene();
+
+  requestAnimationFrame(animate);
+}
+
+launchButton.addEventListener("click", function() {
+
+  if (!running) {
+
+    time = 0;
+    running = true;
+
+    launchButton.textContent = "⏸ Pause";
+
     lastTime = performance.now();
-    requestAnimationFrame(update);
+
+    requestAnimationFrame(animate);
+
   } else {
-    startButton.textContent = "Start";
+
+    running = false;
+
+    launchButton.textContent = "🚀 Launch";
   }
 });
 
 resetButton.addEventListener("click", function() {
+
   running = false;
-  startButton.textContent = "Start";
-  x = 100;
-  velocity = 0;
-  draw();
-});
+  time = 0;
 
-function update(time) {
-  if (!running) return;
+  launchButton.textContent = "🚀 Launch";
 
-  const dt = (time - lastTime) / 1000;
-  lastTime = time;
+  drawScene();
+});</script>
 
-  const m = Number(massInput.value);
-  const F = Number(forceInput.value);
-
-  const acceleration = m > 0 ? F / m : 0;
-
-  velocity += acceleration * dt;
-  x += velocity * dt * 30;
-
-  if (x > canvas.width - 140) {
-    x = 100;
-    velocity = 0;
-  }
-
-  draw();
-  requestAnimationFrame(update);
-}</script>
+</div>
 
 </body>
 </html>
