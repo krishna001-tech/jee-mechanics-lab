@@ -991,8 +991,581 @@ drawIncline(angle,mass);
 
 
 /* ================= DRAW INCLINE ================= */
-
 function drawIncline(angle,mass){
+
+let rad=angle*Math.PI/180;
+
+ictx.clearRect(0,0,900,450);
+
+ictx.fillStyle="#eef6ff";
+ictx.fillRect(0,0,900,450);
+
+
+/* GROUND */
+
+ictx.strokeStyle="#777";
+ictx.lineWidth=4;
+
+ictx.beginPath();
+ictx.moveTo(40,380);
+ictx.lineTo(860,380);
+ictx.stroke();
+
+
+/* INCLINED PLANE */
+
+let sx=120;
+let sy=380;
+let length=650;
+
+let ex=sx+length*Math.cos(rad);
+let ey=sy-length*Math.sin(rad);
+
+ictx.strokeStyle="#444";
+ictx.lineWidth=14;
+
+ictx.beginPath();
+ictx.moveTo(sx,sy);
+ictx.lineTo(ex,ey);
+ictx.stroke();
+
+
+/* BLOCK POSITION */
+
+let distance=300;
+
+let bx=sx+distance*Math.cos(rad);
+let by=sy-distance*Math.sin(rad);
+
+
+/* BLOCK */
+
+ictx.save();
+
+ictx.translate(bx,by);
+ictx.rotate(-rad);
+
+ictx.fillStyle="#1976d2";
+
+ictx.fillRect(
+-28,
+-28,
+56,
+56
+);
+
+ictx.restore();
+
+
+/* MASS LABEL */
+
+ictx.fillStyle="#111";
+ictx.font="bold 17px Arial";
+
+ictx.fillText(
+"m = "+mass+" kg",
+bx-38,
+by-48
+);
+
+
+/* ================= FORCE VALUES ================= */
+
+let weight=mass*9.8;
+
+let parallel=weight*Math.sin(rad);
+let normal=weight*Math.cos(rad);
+
+let muS=Number(
+document.getElementById("staticFriction").value
+);
+
+let muK=Number(
+document.getElementById("kineticFriction").value
+);
+
+let frictionOn=
+document.getElementById("frictionToggle").checked;
+
+let maxStatic=muS*normal;
+
+let friction=0;
+
+if(frictionOn){
+
+if(parallel<=maxStatic){
+friction=parallel;
+}else{
+friction=muK*normal;
+}
+
+}
+
+
+/* ================= ARROW FUNCTION ================= */
+
+function arrow(x1,y1,x2,y2,color,label){
+
+ictx.strokeStyle=color;
+ictx.fillStyle=color;
+ictx.lineWidth=4;
+
+ictx.beginPath();
+
+ictx.moveTo(x1,y1);
+ictx.lineTo(x2,y2);
+
+ictx.stroke();
+
+
+let ang=Math.atan2(y2-y1,x2-x1);
+
+let size=10;
+
+ictx.beginPath();
+
+ictx.moveTo(x2,y2);
+
+ictx.lineTo(
+x2-size*Math.cos(ang-0.5),
+y2-size*Math.sin(ang-0.5)
+);
+
+ictx.lineTo(
+x2-size*Math.cos(ang+0.5),
+y2-size*Math.sin(ang+0.5)
+);
+
+ictx.closePath();
+
+ictx.fill();
+
+
+ictx.font="bold 15px Arial";
+
+ictx.fillText(
+label,
+x2+8,
+y2+4
+);
+
+}
+
+
+/* ================= MG ================= */
+
+arrow(
+bx,
+by,
+bx,
+by+90,
+"#e53935",
+"mg"
+);
+
+
+/* ================= NORMAL FORCE ================= */
+
+/*
+
+Normal is perpendicular to the plane.
+*/
+
+let nx=Math.sin(rad);
+let ny=Math.cos(rad);
+
+arrow(
+bx,
+by,
+bx-nx*75,
+by-ny*75,
+"#2e7d32",
+"N"
+);
+
+
+/* ================= PARALLEL COMPONENT ================= */
+
+/*
+
+mg sinθ acts DOWN the plane.
+*/
+
+let px=Math.cos(rad);
+let py=-Math.sin(rad);
+
+arrow(
+bx,
+by,
+bx-px*80,
+by-py*80,
+"#1565c0",
+"mg sinθ"
+);
+
+
+/* ================= PERPENDICULAR COMPONENT ================= */
+
+arrow(
+bx,
+by,
+bx+nx*65,
+by+ny*65,
+"#7b1fa2",
+"mg cosθ"
+);
+
+
+/* ================= FRICTION ================= */
+
+if(frictionOn && friction>0){
+
+/*
+
+Friction acts UP the plane.
+*/
+
+arrow(
+bx,
+by,
+bx+px*75,
+by+py*75,
+"#ef6c00",
+"f"
+);
+
+}
+
+
+/* ================= ANGLE ================= */
+
+ictx.strokeStyle="#1565c0";
+ictx.lineWidth=3;
+
+ictx.beginPath();
+
+ictx.arc(
+sx,
+sy,
+55,
+-rad,
+0
+);
+
+ictx.stroke();
+
+ictx.fillStyle="#1565c0";
+ictx.font="bold 19px Arial";
+
+ictx.fillText(
+"θ = "+angle+"°",
+sx+40,
+sy-12
+);
+
+
+/* ================= TITLE ================= */
+
+ictx.fillStyle="#1565c0";
+ictx.font="bold 17px Arial";
+
+ictx.fillText(
+frictionOn ?
+"FRICTION ON" :
+"FRICTIONLESS",
+40,
+40
+);
+
+}
+  {
+
+let rad=angle*Math.PI/180;
+
+ictx.clearRect(0,0,900,450);
+
+ictx.fillStyle="#eef6ff";
+ictx.fillRect(0,0,900,450);
+
+
+/* GROUND */
+
+ictx.strokeStyle="#777";
+ictx.lineWidth=4;
+
+ictx.beginPath();
+ictx.moveTo(40,380);
+ictx.lineTo(860,380);
+ictx.stroke();
+
+
+/* INCLINED PLANE */
+
+let sx=120;
+let sy=380;
+let length=650;
+
+let ex=sx+length*Math.cos(rad);
+let ey=sy-length*Math.sin(rad);
+
+ictx.strokeStyle="#444";
+ictx.lineWidth=14;
+
+ictx.beginPath();
+ictx.moveTo(sx,sy);
+ictx.lineTo(ex,ey);
+ictx.stroke();
+
+
+/* BLOCK POSITION */
+
+let distance=300;
+
+let bx=sx+distance*Math.cos(rad);
+let by=sy-distance*Math.sin(rad);
+
+
+/* BLOCK */
+
+ictx.save();
+
+ictx.translate(bx,by);
+ictx.rotate(-rad);
+
+ictx.fillStyle="#1976d2";
+
+ictx.fillRect(
+-28,
+-28,
+56,
+56
+);
+
+ictx.restore();
+
+
+/* MASS LABEL */
+
+ictx.fillStyle="#111";
+ictx.font="bold 17px Arial";
+
+ictx.fillText(
+"m = "+mass+" kg",
+bx-38,
+by-48
+);
+
+
+/* ================= FORCE VALUES ================= */
+
+let weight=mass*9.8;
+
+let parallel=weight*Math.sin(rad);
+let normal=weight*Math.cos(rad);
+
+let muS=Number(
+document.getElementById("staticFriction").value
+);
+
+let muK=Number(
+document.getElementById("kineticFriction").value
+);
+
+let frictionOn=
+document.getElementById("frictionToggle").checked;
+
+let maxStatic=muS*normal;
+
+let friction=0;
+
+if(frictionOn){
+
+if(parallel<=maxStatic){
+friction=parallel;
+}else{
+friction=muK*normal;
+}
+
+}
+
+
+/* ================= ARROW FUNCTION ================= */
+
+function arrow(x1,y1,x2,y2,color,label){
+
+ictx.strokeStyle=color;
+ictx.fillStyle=color;
+ictx.lineWidth=4;
+
+ictx.beginPath();
+
+ictx.moveTo(x1,y1);
+ictx.lineTo(x2,y2);
+
+ictx.stroke();
+
+
+let ang=Math.atan2(y2-y1,x2-x1);
+
+let size=10;
+
+ictx.beginPath();
+
+ictx.moveTo(x2,y2);
+
+ictx.lineTo(
+x2-size*Math.cos(ang-0.5),
+y2-size*Math.sin(ang-0.5)
+);
+
+ictx.lineTo(
+x2-size*Math.cos(ang+0.5),
+y2-size*Math.sin(ang+0.5)
+);
+
+ictx.closePath();
+
+ictx.fill();
+
+
+ictx.font="bold 15px Arial";
+
+ictx.fillText(
+label,
+x2+8,
+y2+4
+);
+
+}
+
+
+/* ================= MG ================= */
+
+arrow(
+bx,
+by,
+bx,
+by+90,
+"#e53935",
+"mg"
+);
+
+
+/* ================= NORMAL FORCE ================= */
+
+/*
+
+Normal is perpendicular to the plane.
+*/
+
+let nx=Math.sin(rad);
+let ny=Math.cos(rad);
+
+arrow(
+bx,
+by,
+bx-nx*75,
+by-ny*75,
+"#2e7d32",
+"N"
+);
+
+
+/* ================= PARALLEL COMPONENT ================= */
+
+/*
+
+mg sinθ acts DOWN the plane.
+*/
+
+let px=Math.cos(rad);
+let py=-Math.sin(rad);
+
+arrow(
+bx,
+by,
+bx-px*80,
+by-py*80,
+"#1565c0",
+"mg sinθ"
+);
+
+
+/* ================= PERPENDICULAR COMPONENT ================= */
+
+arrow(
+bx,
+by,
+bx+nx*65,
+by+ny*65,
+"#7b1fa2",
+"mg cosθ"
+);
+
+
+/* ================= FRICTION ================= */
+
+if(frictionOn && friction>0){
+
+/*
+
+Friction acts UP the plane.
+*/
+
+arrow(
+bx,
+by,
+bx+px*75,
+by+py*75,
+"#ef6c00",
+"f"
+);
+
+}
+
+
+/* ================= ANGLE ================= */
+
+ictx.strokeStyle="#1565c0";
+ictx.lineWidth=3;
+
+ictx.beginPath();
+
+ictx.arc(
+sx,
+sy,
+55,
+-rad,
+0
+);
+
+ictx.stroke();
+
+ictx.fillStyle="#1565c0";
+ictx.font="bold 19px Arial";
+
+ictx.fillText(
+"θ = "+angle+"°",
+sx+40,
+sy-12
+);
+
+
+/* ================= TITLE ================= */
+
+ictx.fillStyle="#1565c0";
+ictx.font="bold 17px Arial";
+
+ictx.fillText(
+frictionOn ?
+"FRICTION ON" :
+"FRICTIONLESS",
+40,
+40
+);
+
+  }
+  {
 
 let rad = angle*Math.PI/180;
 
