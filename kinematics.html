@@ -157,7 +157,28 @@
             value="9.8"
         >
 
-        <button onclick="startSimulation()">
+       <div class="prediction">
+
+    <h3>🎯 JEE Prediction Mode</h3>
+
+    <p>
+        Before running the simulation, predict the
+        horizontal range of the projectile.
+    </p>
+
+    <input
+        type="number"
+        id="predictionInput"
+        placeholder="Enter your predicted range"
+    >
+
+    <button onclick="checkPrediction()">
+        CHECK MY ANSWER
+    </button>
+
+    <div id="predictionResult"></div>
+
+</div> <button onclick="startSimulation()">
             ▶ START SIMULATION
         </button>
 
