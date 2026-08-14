@@ -1,2318 +1,705 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>JEE Mechanics Lab</title>
 
 <style>
-
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:Arial;
+background:#0b1020;
+color:white;
+text-align:center
 }
-
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b1020;
-  color: white;
+h1{margin:20px 0 5px}
+p{color:#aab3c5}
+.container{width:94%;max-width:1000px;margin:auto}
+.tabs{display:flex;gap:10px;justify-content:center;margin:20px 0}
+.tabs button{
+padding:12px 20px;border:0;border-radius:10px;
+background:#202941;color:white;font-size:16px
 }
-
-header {
-  text-align: center;
-  padding: 25px 15px 15px;
+.tabs button.active{background:#287cff}
+.page{display:none}
+.page.active{display:block}
+canvas{
+width:100%;background:#eef6ff;
+border-radius:15px;margin-bottom:15px
 }
-
-header h1 {
-  margin: 0;
-  font-size: 30px;
+.panel{
+background:#151c31;padding:18px;
+border-radius:15px;margin:12px 0
 }
-
-header p {
-  color: #aeb8cc;
-  margin: 8px 0 20px;
+.row{margin:15px 0;text-align:left}
+.row label{display:flex;justify-content:space-between}
+input[type=range]{width:100%}
+button.action{
+padding:11px 18px;border:0;border-radius:9px;
+background:#287cff;color:white;font-size:15px
 }
-
-/* MODE BUTTONS */
-
-.mode-switch {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
+.cards{
+display:grid;grid-template-columns:repeat(4,1fr);
+gap:10px;margin:15px 0
 }
-
-.mode-button {
-  border: none;
-  border-radius: 12px;
-  padding: 13px 22px;
-  font-size: 16px;
-  cursor: pointer;
-  background: #202941;
-  color: white;
+.card{
+background:#202941;padding:15px;border-radius:12px
 }
-
-.mode-button.active {
-  background: #287cff;
+.card small{display:block;color:#aab3c5;margin-bottom:7px}
+.card b{font-size:18px}
+.status{
+padding:12px;background:#202941;
+border-radius:10px;margin-top:12px
 }
-
-/* MAIN */
-
-.container {
-  width: 94%;
-  max-width: 1100px;
-  margin: auto;
+.learn{
+text-align:left;background:#151c31;
+padding:20px;border-radius:15px;margin:20px 0
 }
-
-.mode {
-  display: none;
+@media(max-width:650px){
+.cards{grid-template-columns:repeat(2,1fr)}
+.tabs button{width:45%}
 }
-
-.mode.active {
-  display: block;
-}
-
-/* SIMULATION */
-
-.simulation {
-  background: #151c31;
-  border-radius: 18px;
-  padding: 15px;
-}
-
-canvas {
-  width: 100%;
-  display: block;
-  background: #eef6ff;
-  border-radius: 12px;
-}
-
-/* CONTROLS */
-
-.controls {
-  background: #151c31;
-  border-radius: 18px;
-  padding: 22px;
-  margin-top: 18px;
-}
-
-.control {
-  margin-bottom: 22px;
-}
-
-.control-top {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.control-top span:last-child {
-  font-weight: bold;
-}
-
-input[type="range"] {
-  width: 100%;
-  cursor: pointer;
-}
-
-button {
-  font-family: inherit;
-}
-
-/* TOGGLE */
-
-.toggle-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #202941;
-  padding: 15px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
-
-.switch {
-  position: relative;
-  width: 54px;
-  height: 28px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  inset: 0;
-  background: #555;
-  border-radius: 30px;
-  cursor: pointer;
-}
-
-.slider:before {
-  content: "";
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  left: 3px;
-  top: 3px;
-  background: white;
-  border-radius: 50%;
-  transition: 0.2s;
-}
-
-.switch input:checked + .slider {
-  background: #287cff;
-}
-
-.switch input:checked + .slider:before {
-  transform: translateX(26px);
-}
-
-/* ACTION BUTTONS */
-
-.action-row {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 15px;
-}
-
-.action-button {
-  border: none;
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-size: 16px;
-  cursor: pointer;
-  background: #287cff;
-  color: white;
-}
-
-.reset-button {
-  background: #30394f;
-}
-
-/* STATUS */
-
-.status {
-  padding: 14px;
-  border-radius: 10px;
-  background: #202941;
-  margin-top: 15px;
-  font-weight: bold;
-  text-align: center;
-}
-
-/* STAT CARDS */
-
-.values {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.card {
-  background: #202941;
-  border-radius: 14px;
-  padding: 18px;
-  text-align: center;
-}
-
-.card span {
-  display: block;
-  color: #aeb8cc;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.card strong {
-  font-size: 20px;
-}
-
-/* LEARN */
-
-.learn {
-  margin-top: 20px;
-  margin-bottom: 30px;
-  background: #151c31;
-  padding: 24px;
-  border-radius: 18px;
-}
-
-.learn h2 {
-  margin-top: 0;
-}
-
-.learn p {
-  color: #c5ccda;
-  line-height: 1.7;
-}
-
-/* FORMULAS */
-
-.formulas {
-  margin-top: 20px;
-  margin-bottom: 30px;
-  background: #151c31;
-  padding: 22px;
-  border-radius: 18px;
-}
-
-.formula {
-  background: #202941;
-  padding: 14px;
-  border-radius: 10px;
-  margin: 8px 0;
-}
-
-/* QUESTIONS */
-
-.question-box {
-  margin-top: 20px;
-  margin-bottom: 30px;
-  background: #151c31;
-  padding: 22px;
-  border-radius: 18px;
-}
-
-.question {
-  background: #202941;
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 10px;
-  line-height: 1.6;
-}
-
-/* MOBILE */
-
-@media(max-width: 700px) {
-
-  header h1 {
-    font-size: 24px;
-  }
-
-  .values {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .mode-button {
-    width: 100%;
-  }
-
-}
-
 </style>
 </head>
 
-
 <body>
 
-
-<header>
-
 <h1>⚙️ JEE Mechanics Lab</h1>
+<p>Interactive Physics Simulations</p>
 
-<p>Interactive simulations for JEE Physics</p>
-
-<div class="mode-switch">
-
-<button
-class="mode-button active"
-id="projectileModeButton"
-onclick="showMode('projectile')">
-
-🚀 Projectile Motion
-
+<div class="tabs">
+<button id="tabP" class="active" onclick="show('p')">
+🚀 Projectile
 </button>
-
-<button
-class="mode-button"
-id="inclinedModeButton"
-onclick="showMode('inclined')">
-
+<button id="tabI" onclick="show('i')">
 ⚙️ Inclined Plane
-
 </button>
-
 </div>
-
-</header>
-
 
 <div class="container">
 
+<section id="p" class="page active">
 
-<!-- =====================================================
-     PROJECTILE MOTION
-===================================================== -->
+<canvas id="pc" width="900" height="450"></canvas>
 
-
-<section
-id="projectileMode"
-class="mode active">
-
-
-<div class="simulation">
-
-<canvas
-id="projectileCanvas"
-width="1000"
-height="520">
-</canvas>
-
-</div>
-
-
-<div class="controls">
-
-
-<div class="control">
-
-<div class="control-top">
-
+<div class="panel">
+<div class="row">
+<label>
 <span>Initial Velocity</span>
-
-<span id="pVelocityValue">
-25 m/s
-</span>
-
+<b id="pv">25 m/s</b>
+</label>
+<input id="pvel" type="range" min="5" max="50" value="25">
 </div>
 
-<input
-id="pVelocity"
-type="range"
-min="5"
-max="50"
-value="25">
-
+<div class="row">
+<label>
+<span>Angle θ</span>
+<b id="pa">45°</b>
+</label>
+<input id="pang" type="range" min="5" max="85" value="45">
 </div>
 
-
-<div class="control">
-
-<div class="control-top">
-
-<span>Launch Angle θ</span>
-
-<span id="pAngleValue">
-45°
-</span>
-
+<div class="row">
+<label>
+<span>Height</span>
+<b id="ph">0 m</b>
+</label>
+<input id="phei" type="range" min="0" max="20" value="0">
 </div>
 
-<input
-id="pAngle"
-type="range"
-min="5"
-max="85"
-value="45">
-
-</div>
-
-
-<div class="control">
-
-<div class="control-top">
-
-<span>Initial Height</span>
-
-<span id="pHeightValue">
-0 m
-</span>
-
-</div>
-
-<input
-id="pHeight"
-type="range"
-min="0"
-max="20"
-value="0">
-
-</div>
-
-
-<div class="action-row">
-
-<button
-class="action-button"
-id="launchButton"
-onclick="launchProjectile()">
-
+<button class="action" onclick="launch()">
 🚀 Launch
-
 </button>
 
-<button
-class="action-button reset-button"
-onclick="resetProjectile()">
-
+<button class="action" onclick="resetP()">
 ↻ Reset
-
 </button>
 
 </div>
 
-</div>
-
-
-<div class="values">
+<div class="cards">
 
 <div class="card">
-
-<span>Time of Flight</span>
-
-<strong id="pTime">
-0.00 s
-</strong>
-
+<small>Time of Flight</small>
+<b id="pt">0.00 s</b>
 </div>
 
 <div class="card">
-
-<span>Maximum Height</span>
-
-<strong id="pMaxHeight">
-0.00 m
-</strong>
-
+<small>Maximum Height</small>
+<b id="pmh">0.00 m</b>
 </div>
 
 <div class="card">
-
-<span>Range</span>
-
-<strong id="pRange">
-0.00 m
-</strong>
-
+<small>Range</small>
+<b id="pr">0.00 m</b>
 </div>
 
 <div class="card">
-
-<span>Horizontal Velocity Vx</span>
-
-<strong id="pVx">
-0.00 m/s
-</strong>
-
+<small>Horizontal Velocity</small>
+<b id="pvx">0.00 m/s</b>
 </div>
 
 <div class="card">
-
-<span>Initial Vertical Velocity Vy</span>
-
-<strong id="pVy">
-0.00 m/s
-</strong>
-
+<small>Vertical Velocity</small>
+<b id="pvy">0.00 m/s</b>
 </div>
 
 <div class="card">
-
-<span>Speed</span>
-
-<strong id="pSpeed">
-25.00 m/s
-</strong>
-
+<small>Initial Speed</small>
+<b id="ps">25.00 m/s</b>
 </div>
 
 </div>
-
 
 <div class="learn">
 
 <h2>📖 Learn More</h2>
 
 <p>
-Projectile motion is the two-dimensional motion of an object
-launched into the air under the influence of gravity.
+Projectile motion is two-dimensional motion under gravity.
+Horizontal acceleration is zero while vertical acceleration
+is g downward.
 </p>
 
 <p>
-The horizontal and vertical motions can be treated independently.
-Horizontal acceleration is zero while vertical acceleration is
-equal to g downward.
-</p>
-
-<p>
-The initial velocity can be resolved into two components:
-<b>Vx = V₀ cos θ</b> and
-<b>Vy = V₀ sin θ</b>.
+Velocity components:
+<b>Vx = u cosθ</b> and
+<b>Vy = u sinθ</b>.
 </p>
 
 </div>
-
-
-<div class="formulas">
-
-<h2>📚 Important Formulae</h2>
-
-<div class="formula">
-Time of flight:
-<b>T = [u sinθ + √((u sinθ)² + 2gh)] / g</b>
-</div>
-
-<div class="formula">
-Maximum height:
-<b>H = h + (u² sin²θ)/(2g)</b>
-</div>
-
-<div class="formula">
-Horizontal range:
-<b>R = u cosθ × T</b>
-</div>
-
-</div>
-
-
-<div class="question-box">
-
-<h2>🎯 JEE Practice</h2>
-
-<div class="question">
-
-<b>JEE Main:</b><br>
-A projectile is launched with initial velocity u at an angle θ.
-Use the simulation to investigate how changing θ affects its range.
-
-</div>
-
-<div class="question">
-
-<b>JEE Advanced:</b><br>
-For a projectile launched from a height h, investigate the
-relationship between maximum height, time of flight and horizontal
-range.
-
-</div>
-
-</div>
-
 
 </section>
+<section id="i" class="page">
 
+<canvas id="ic" width="900" height="450"></canvas>
 
+<div class="panel">
 
-<!-- =====================================================
-     INCLINED PLANE
-===================================================== -->
-
-
-<section
-id="inclinedMode"
-class="mode">
-
-
-<div class="simulation">
-
-<canvas
-id="inclinedCanvas"
-width="1000"
-height="520">
-</canvas>
-
+<div class="row">
+<label>
+<span>Angle θ</span>
+<b id="ia">30°</b>
+</label>
+<input id="iang" type="range" min="0" max="60" value="30">
 </div>
 
+<div class="row">
+<label>
+<span>Mass</span>
+<b id="im">5 kg</b>
+</label>
+<input id="imas" type="range" min="1" max="20" step=".5" value="5">
+</div>
 
-<div class="controls">
+<div class="row">
+<label>
+<span>Static Friction μₛ</span>
+<b id="mus">0.50</b>
+</label>
+<input id="musl" type="range" min="0" max="1" step=".01" value=".50">
+</div>
 
+<div class="row">
+<label>
+<span>Kinetic Friction μₖ</span>
+<b id="muk">0.30</b>
+</label>
+<input id="mukl" type="range" min="0" max="1" step=".01" value=".30">
+</div>
 
-<div class="toggle-row">
-
-<span>
-🔥 Enable Friction
-</span>
-
-<label class="switch">
-
-<input
-id="frictionToggle"
-type="checkbox"
-onchange="calculateInclined()">
-
-<span class="slider"></span>
-
+<div class="row">
+<label>
+<span>Friction</span>
+<b id="fon">ON</b>
 </label>
 
+<input id="fric" type="checkbox" checked>
 </div>
 
-
-<div class="control">
-
-<div class="control-top">
-
-<span>
-Inclination Angle θ
-</span>
-
-<span id="iAngleValue">
-30°
-</span>
-
-</div>
-
-<input
-id="iAngle"
-type="range"
-min="0"
-max="60"
-value="30"
-oninput="calculateInclined()">
-
-</div>
-
-
-<div class="control">
-
-<div class="control-top">
-
-<span>
-Mass
-</span>
-
-<span id="iMassValue">
-5 kg
-</span>
-
-</div>
-
-<input
-id="iMass"
-type="range"
-min="1"
-max="20"
-step="0.5"
-value="5"
-oninput="calculateInclined()">
-
-</div>
-
-
-<div
-id="frictionControls">
-
-
-<div class="control">
-
-<div class="control-top">
-
-<span>
-Static Friction μₛ
-</span>
-
-<span id="staticValue">
-0.50
-</span>
-
-</div>
-
-<input
-id="staticFriction"
-type="range"
-min="0"
-max="1"
-step="0.01"
-value="0.50"
-oninput="calculateInclined()">
-
-</div>
-
-
-<div class="control">
-
-<div class="control-top">
-
-<span>
-Kinetic Friction μₖ
-</span>
-
-<span id="kineticValue">
-0.30
-</span>
-
-</div>
-
-<input
-id="kineticFriction"
-type="range"
-min="0"
-max="1"
-step="0.01"
-value="0.30"
-oninput="calculateInclined()">
-
-</div>
-
-
-</div>
-
-
-<div
-class="status"
-id="inclinedStatus">
-
+<div class="status" id="istatus">
 🟡 Block is at rest
+</div>
 
 </div>
 
-
-</div>
-
-
-<div class="values">
-
+<div class="cards">
 
 <div class="card">
-
-<span>Acceleration</span>
-
-<strong id="iAcceleration">
-0.00 m/s²
-</strong>
-
+<small>Acceleration</small>
+<b id="acc">0.00 m/s²</b>
 </div>
-
 
 <div class="card">
-
-<span>Weight mg</span>
-
-<strong id="iWeight">
-49.00 N
-</strong>
-
+<small>Weight mg</small>
+<b id="iw">0.00 N</b>
 </div>
-
 
 <div class="card">
-
-<span>Normal Force</span>
-
-<strong id="iNormal">
-42.44 N
-</strong>
-
+<small>Normal Force</small>
+<b id="in">0.00 N</b>
 </div>
-
 
 <div class="card">
-
-<span>Parallel Component</span>
-
-<strong id="iParallel">
-24.50 N
-</strong>
-
+<small>mg sinθ</small>
+<b id="ip">0.00 N</b>
 </div>
-
 
 <div class="card">
-
-<span>Perpendicular Component</span>
-
-<strong id="iPerpendicular">
-42.44 N
-</strong>
-
+<small>mg cosθ</small>
+<b id="iper">0.00 N</b>
 </div>
-
 
 <div class="card">
-
-<span>Friction Force</span>
-
-<strong id="iFriction">
-24.50 N
-</strong>
-
+<small>Friction</small>
+<b id="iff">0.00 N</b>
 </div>
-
 
 <div class="card">
-
-<span>Net Force</span>
-
-<strong id="iNetForce">
-0.00 N
-</strong>
-
+<small>Net Force</small>
+<b id="inf">0.00 N</b>
 </div>
-
 
 <div class="card">
-
-<span>Maximum Static Friction</span>
-
-<strong id="iFrictionLimit">
-21.22 N
-</strong>
-
+<small>Max Static Friction</small>
+<b id="imsf">0.00 N</b>
 </div>
 
-
 </div>
-
 
 <div class="learn">
 
 <h2>📖 Learn More</h2>
 
 <p>
-An inclined plane is a surface making an angle θ with the horizontal.
-The weight of the block acts vertically downward.
+On an inclined plane, the weight of the block is resolved
+into components parallel and perpendicular to the plane.
 </p>
 
 <p>
-The weight can be resolved into two components:
-<b>mg sinθ</b> along the plane and
-<b>mg cosθ</b> perpendicular to the plane.
+<b>mg sinθ</b> acts down the plane and
+<b>mg cosθ</b> acts perpendicular to it.
 </p>
 
 <p>
-Static friction prevents motion until the component of gravity
-along the plane exceeds the maximum available static friction.
-</p>
-
-<p>
-Once the block starts moving, kinetic friction acts opposite to
-the direction of motion.
+Static friction prevents motion until its maximum value is
+exceeded. Once the block moves, kinetic friction acts.
 </p>
 
 </div>
-
-
-<div class="formulas">
-
-<h2>📚 Important Formulae</h2>
-
-<div class="formula">
-Weight:
-<b>W = mg</b>
-</div>
-
-<div class="formula">
-Normal force:
-<b>N = mg cosθ</b>
-</div>
-
-<div class="formula">
-Parallel component:
-<b>W∥ = mg sinθ</b>
-</div>
-
-<div class="formula">
-Maximum static friction:
-<b>fₛ(max) = μₛN</b>
-</div>
-
-<div class="formula">
-Kinetic friction:
-<b>fₖ = μₖN</b>
-</div>
-
-<div class="formula">
-Acceleration while sliding:
-<b>a = g(sinθ − μₖcosθ)</b>
-</div>
-
-<div class="formula">
-Angle of repose:
-<b>tanθ = μₛ</b>
-</div>
-
-</div>
-
-
-<div class="question-box">
-
-<h2>🎯 JEE Practice</h2>
-
-<div class="question">
-
-<b>JEE Main:</b><br>
-Increase θ slowly while friction is enabled. Find the angle at
-which the block just begins to slide.
-
-</div>
-
-<div class="question">
-
-<b>JEE Advanced:</b><br>
-Investigate how changing μₛ and μₖ affects the transition from
-static to kinetic friction and the subsequent acceleration.
-
-</div>
-
-</div>
-
 
 </section>
 
-
 </div>
-
-
 <script>
 
-/* =========================================================
-   MODE SWITCHING
-========================================================= */
+const g=9.8;
 
+/* ---------- SWITCH ---------- */
 
-function showMode(mode) {
+function show(x){
 
+document.getElementById("p").classList.toggle("active",x=="p");
+document.getElementById("i").classList.toggle("active",x=="i");
 
-const projectile =
-document.getElementById(
-  "projectileMode"
-);
+document.getElementById("tabP").classList.toggle("active",x=="p");
+document.getElementById("tabI").classList.toggle("active",x=="i");
 
-const inclined =
-document.getElementById(
-  "inclinedMode"
-);
-
-const projectileButton =
-document.getElementById(
-  "projectileModeButton"
-);
-
-const inclinedButton =
-document.getElementById(
-  "inclinedModeButton"
-);
-
-
-if (mode === "projectile") {
-
-  projectile.classList.add(
-    "active"
-  );
-
-  inclined.classList.remove(
-    "active"
-  );
-
-  projectileButton.classList.add(
-    "active"
-  );
-
-  inclinedButton.classList.remove(
-    "active"
-  );
-
-  drawProjectile();
-
-}
-
-else {
-
-  inclined.classList.add(
-    "active"
-  );
-
-  projectile.classList.remove(
-    "active"
-  );
-
-  projectileButton.classList.remove(
-    "active"
-  );
-
-  inclinedButton.classList.add(
-    "active"
-  );
-
-  calculateInclined();
-
-}
+if(x=="p") drawP();
+else drawI();
 
 }
 
 
-/* =========================================================
-   PROJECTILE MOTION
-========================================================= */
+/* ---------- PROJECTILE ---------- */
 
+const pc=document.getElementById("pc");
+const px=pc.getContext("2d");
 
-const pCanvas =
-document.getElementById(
-  "projectileCanvas"
-);
+let running=false;
+let time=0;
+let last=0;
 
-const pCtx =
-pCanvas.getContext(
-  "2d"
-);
+function projectile(){
 
+let u=+pvel.value;
+let a=+pang.value;
+let h=+phei.value;
+let r=a*Math.PI/180;
 
-const pVelocity =
-document.getElementById(
-  "pVelocity"
-);
+let vx=u*Math.cos(r);
+let vy=u*Math.sin(r);
 
-const pAngle =
-document.getElementById(
-  "pAngle"
-);
+let T=(vy+Math.sqrt(vy*vy+2*g*h))/g;
+let H=h+vy*vy/(2*g);
+let R=vx*T;
 
-const pHeight =
-document.getElementById(
-  "pHeight"
-);
+pv.textContent=u+" m/s";
+pa.textContent=a+"°";
+ph.textContent=h+" m";
 
+pt.textContent=T.toFixed(2)+" s";
+pmh.textContent=H.toFixed(2)+" m";
+pr.textContent=R.toFixed(2)+" m";
+pvx.textContent=vx.toFixed(2)+" m/s";
+pvy.textContent=vy.toFixed(2)+" m/s";
+ps.textContent=u.toFixed(2)+" m/s";
 
-let projectileRunning =
-false;
+drawP();
+}
 
-let projectileTime =
-0;
+function drawP(){
 
-let projectileLastTime =
-0;
+let u=+pvel.value;
+let a=+pang.value;
+let h=+phei.value;
+let r=a*Math.PI/180;
 
+let vx=u*Math.cos(r);
+let vy=u*Math.sin(r);
 
-function calculateProjectile() {
+let T=(vy+Math.sqrt(vy*vy+2*g*h))/g;
 
+px.clearRect(0,0,900,450);
 
-const u =
-Number(
-  pVelocity.value
-);
+px.fillStyle="#eef6ff";
+px.fillRect(0,0,900,450);
 
-const theta =
-Number(
-  pAngle.value
-);
+px.fillStyle="#777";
+px.fillRect(30,400,840,6);
 
-const h =
-Number(
-  pHeight.value
-);
+let scale=7;
+let sx=100;
+let gy=400;
 
-const radians =
-theta *
-Math.PI /
-180;
+px.beginPath();
 
+for(let t=0;t<=T;t+=.03){
 
-const vx =
-u *
-Math.cos(
-  radians
-);
+let x=vx*t;
+let y=h+vy*t-.5*g*t*t;
 
-const vy =
-u *
-Math.sin(
-  radians
-);
+let X=sx+x*scale;
+let Y=gy-y*scale;
 
-
-const flightTime =
-(
-  vy +
-  Math.sqrt(
-    vy * vy +
-    2 * 9.8 * h
-  )
-) / 9.8;
-
-
-const maxHeight =
-h +
-(
-  vy * vy
-) /
-(
-  2 * 9.8
-);
-
-
-const range =
-vx *
-flightTime;
-
-
-document.getElementById(
-  "pVelocityValue"
-).textContent =
-u.toFixed(0) +
-" m/s";
-
-
-document.getElementById(
-  "pAngleValue"
-).textContent =
-theta +
-"°";
-
-
-document.getElementById(
-  "pHeightValue"
-).textContent =
-h +
-" m";
-
-
-document.getElementById(
-  "pTime"
-).textContent =
-flightTime.toFixed(2) +
-" s";
-
-
-document.getElementById(
-  "pMaxHeight"
-).textContent =
-maxHeight.toFixed(2) +
-" m";
-
-
-document.getElementById(
-  "pRange"
-).textContent =
-range.toFixed(2) +
-" m";
-
-
-document.getElementById(
-  "pVx"
-).textContent =
-vx.toFixed(2) +
-" m/s";
-
-
-document.getElementById(
-  "pVy"
-).textContent =
-vy.toFixed(2) +
-" m/s";
-
-
-document.getElementById(
-  "pSpeed"
-).textContent =
-u.toFixed(2) +
-" m/s";
-
-
-drawProjectile();
+if(t==0) px.moveTo(X,Y);
+else px.lineTo(X,Y);
 
 }
 
+px.strokeStyle="#e53935";
+px.lineWidth=3;
+px.stroke();
 
-function drawProjectile() {
+let t=Math.min(time,T);
 
+let x=vx*t;
+let y=h+vy*t-.5*g*t*t;
 
-const u =
-Number(
-  pVelocity.value
+px.beginPath();
+px.arc(
+sx+x*scale,
+gy-y*scale,
+10,0,Math.PI*2
 );
 
-const theta =
-Number(
-  pAngle.value
-);
+px.fillStyle="#1565c0";
+px.fill();
 
-const h =
-Number(
-  pHeight.value
-);
-
-const radians =
-theta *
-Math.PI /
-180;
-
-
-const vx =
-u *
-Math.cos(
-  radians
-);
-
-const vy =
-u *
-Math.sin(
-  radians
-);
-
-
-const flightTime =
-(
-  vy +
-  Math.sqrt(
-    vy * vy +
-    2 * 9.8 * h
-  )
-) / 9.8;
-
-
-pCtx.clearRect(
-  0,
-  0,
-  pCanvas.width,
-  pCanvas.height
-);
-
-
-/* Sky */
-
-pCtx.fillStyle =
-"#eef6ff";
-
-pCtx.fillRect(
-  0,
-  0,
-  pCanvas.width,
-  pCanvas.height
-);
-
-
-/* Ground */
-
-pCtx.fillStyle =
-"#777";
-
-pCtx.fillRect(
-  40,
-  450,
-  920,
-  8
-);
-
-
-/* Launch platform */
-
-pCtx.fillStyle =
-"#444";
-
-pCtx.fillRect(
-  80,
-  390 -
-  h * 8,
-  80,
-  60 +
-  h * 8
-);
-
-
-/* Scaling */
-
-const scale = 9;
-
-const startX = 120;
-
-const groundY = 390;
-
-
-/* Trajectory */
-
-pCtx.beginPath();
-
-for (
-  let t = 0;
-  t <= flightTime;
-  t += 0.03
-) {
-
-  const x =
-    vx * t;
-
-  const y =
-    h +
-    vy * t -
-    0.5 *
-    9.8 *
-    t *
-    t;
-
-  const sx =
-    startX +
-    x * scale;
-
-  const sy =
-    groundY -
-    y * scale;
-
-  if (t === 0) {
-
-    pCtx.moveTo(
-      sx,
-      sy
-    );
-
-  }
-
-  else {
-
-    pCtx.lineTo(
-      sx,
-      sy
-    );
-
-  }
+px.fillStyle="#111";
+px.font="bold 17px Arial";
+px.fillText("θ = "+a+"°",60,370);
 
 }
 
-pCtx.strokeStyle =
-"#e53935";
+function launch(){
 
-pCtx.lineWidth =
-3;
+if(running){
 
-pCtx.stroke();
+running=false;
+return;
+
+}
+
+time=0;
+last=performance.now();
+running=true;
+
+requestAnimationFrame(move);
+
+}
+
+function move(now){
+
+if(!running)return;
+
+let dt=(now-last)/1000;
+last=now;
+
+time+=dt;
+
+let u=+pvel.value;
+let a=+pang.value;
+let h=+phei.value;
+
+let r=a*Math.PI/180;
+let vy=u*Math.sin(r);
+
+let T=(vy+Math.sqrt(vy*vy+2*g*h))/g;
+
+if(time>=T){
+
+time=T;
+running=false;
+
+}
+
+drawP();
+
+if(running)
+requestAnimationFrame(move);
+
+}
+
+function resetP(){
+
+running=false;
+time=0;
+drawP();
+
+}
+
+pvel.oninput=projectile;
+pang.oninput=projectile;
+phei.oninput=projectile;
 
 
-/* Current projectile */
+/* ---------- INCLINED PLANE ---------- */
 
-const currentX =
-vx *
-projectileTime;
+const ic=document.getElementById("ic");
+const ix=ic.getContext("2d");
 
-const currentY =
-h +
-vy *
-projectileTime -
-0.5 *
-9.8 *
-projectileTime *
-projectileTime;
+function inclined(){
 
+let a=+iang.value;
+let m=+imas.value;
+let us=+musl.value;
+let uk=+mukl.value;
 
-const ballX =
-startX +
-currentX *
-scale;
+let r=a*Math.PI/180;
 
-const ballY =
-groundY -
-currentY *
-scale;
+let W=m*g;
+let N=W*Math.cos(r);
+let P=W*Math.sin(r);
 
+let max=us*N;
 
-pCtx.beginPath();
+let f,net,acc;
 
-pCtx.arc(
-  ballX,
-  ballY,
-  10,
-  0,
-  Math.PI * 2
+if(!fric.checked){
+
+f=0;
+net=P;
+acc=g*Math.sin(r);
+
+istatus.textContent=
+"🟢 Friction OFF — Block slides freely";
+
+fon.textContent="OFF";
+
+}
+
+else if(P<=max){
+
+f=P;
+net=0;
+acc=0;
+
+istatus.textContent=
+"🟡 Static friction holds the block — At rest";
+
+fon.textContent="ON";
+
+}
+
+else{
+
+f=uk*N;
+net=P-f;
+acc=net/m;
+
+if(acc<0){
+acc=0;
+net=0;
+}
+
+istatus.textContent=
+"🔴 Block is sliding — Kinetic friction active";
+
+fon.textContent="ON";
+
+}
+
+ia.textContent=a+"°";
+im.textContent=m+" kg";
+mus.textContent=us.toFixed(2);
+muk.textContent=uk.toFixed(2);
+
+document.getElementById("acc").textContent=
+acc.toFixed(2)+" m/s²";
+
+iw.textContent=W.toFixed(2)+" N";
+in.textContent=N.toFixed(2)+" N";
+ip.textContent=P.toFixed(2)+" N";
+iper.textContent=N.toFixed(2)+" N";
+iff.textContent=f.toFixed(2)+" N";
+inf.textContent=net.toFixed(2)+" N";
+imsf.textContent=max.toFixed(2)+" N";
+
+drawI();
+
+}
+
+function drawI(){
+
+let a=+iang.value;
+let m=+imas.value;
+let r=a*Math.PI/180;
+
+ix.clearRect(0,0,900,450);
+
+ix.fillStyle="#eef6ff";
+ix.fillRect(0,0,900,450);
+
+/* plane */
+
+let sx=130;
+let sy=380;
+let L=650;
+
+let ex=sx+L*Math.cos(r);
+let ey=sy-L*Math.sin(r);
+
+ix.strokeStyle="#444";
+ix.lineWidth=14;
+
+ix.beginPath();
+ix.moveTo(sx,sy);
+ix.lineTo(ex,ey);
+ix.stroke();
+
+/* ground */
+
+ix.strokeStyle="#777";
+ix.lineWidth=4;
+
+ix.beginPath();
+ix.moveTo(40,sy);
+ix.lineTo(860,sy);
+ix.stroke();
+
+/* block */
+
+let d=300;
+
+let bx=sx+d*Math.cos(r);
+let by=sy-d*Math.sin(r);
+
+ix.save();
+
+ix.translate(bx,by);
+ix.rotate(-r);
+
+ix.fillStyle="#1976d2";
+ix.fillRect(-27,-27,54,54);
+
+ix.restore();
+
+/* label */
+
+ix.fillStyle="#111";
+ix.font="bold 17px Arial";
+
+ix.fillText(
+"m = "+m+" kg",
+bx-35,
+by-45
 );
 
-pCtx.fillStyle =
-"#1565c0";
+/* weight arrow */
 
-pCtx.fill();
+ix.strokeStyle="#d32f2f";
+ix.fillStyle="#d32f2f";
+ix.lineWidth=4;
 
+ix.beginPath();
+ix.moveTo(bx,by);
+ix.lineTo(bx,by+90);
+ix.stroke();
 
-/* Angle */
+ix.beginPath();
+ix.moveTo(bx,by+90);
+ix.lineTo(bx-8,by+72);
+ix.lineTo(bx+8,by+72);
+ix.closePath();
+ix.fill();
 
-pCtx.fillStyle =
-"#111";
+ix.fillText(
+"mg",
+bx+8,
+by+90
+);
 
-pCtx.font =
-"bold 17px Arial";
+/* angle */
 
-pCtx.fillText(
-  "θ = " +
-  theta +
-  "°",
-  75,
-  375 -
-  h * 8
+ix.strokeStyle="#1565c0";
+ix.lineWidth=3;
+
+ix.beginPath();
+
+ix.arc(
+sx,
+sy,
+55,
+-r,
+0
+);
+
+ix.stroke();
+
+ix.fillStyle="#1565c0";
+ix.font="bold 19px Arial";
+
+ix.fillText(
+"θ = "+a+"°",
+sx+40,
+sy-12
+);
+
+/* surface text */
+
+ix.fillStyle="#1565c0";
+ix.font="bold 16px Arial";
+
+ix.fillText(
+fric.checked ?
+"FRICTION ON" :
+"FRICTIONLESS",
+40,
+40
 );
 
 }
 
 
-function launchProjectile() {
+/* ---------- START ---------- */
 
-
-if (
-  projectileRunning
-) {
-
-  projectileRunning =
-    false;
-
-  document.getElementById(
-    "launchButton"
-  ).textContent =
-    "🚀 Launch";
-
-  return;
-
-}
-
-
-projectileTime =
-0;
-
-projectileRunning =
-true;
-
-document.getElementById(
-  "launchButton"
-).textContent =
-"⏸ Pause";
-
-projectileLastTime =
-performance.now();
-
-requestAnimationFrame(
-  projectileAnimation
-);
-
-}
-
-
-function projectileAnimation(
-  currentTime
-) {
-
-
-if (
-  !projectileRunning
-) return;
-
-
-const dt =
-(
-  currentTime -
-  projectileLastTime
-) /
-1000;
-
-
-projectileLastTime =
-currentTime;
-
-
-projectileTime +=
-dt;
-
-
-const u =
-Number(
-  pVelocity.value
-);
-
-const theta =
-Number(
-  pAngle.value
-);
-
-const h =
-Number(
-  pHeight.value
-);
-
-const radians =
-theta *
-Math.PI /
-180;
-
-
-const vy =
-u *
-Math.sin(
-  radians
-);
-
-
-const flightTime =
-(
-  vy +
-  Math.sqrt(
-    vy * vy +
-    2 * 9.8 * h
-  )
-) / 9.8;
-
-
-if (
-  projectileTime >=
-  flightTime
-) {
-
-  projectileTime =
-  flightTime;
-
-  projectileRunning =
-  false;
-
-  document.getElementById(
-    "launchButton"
-  ).textContent =
-  "🚀 Launch";
-
-}
-
-
-drawProjectile();
-
-
-if (
-  projectileRunning
-) {
-
-  requestAnimationFrame(
-    projectileAnimation
-  );
-
-}
-
-}
-
-
-function resetProjectile() {
-
-  projectileRunning =
-    false;
-
-  projectileTime =
-    0;
-
-  document.getElementById(
-    "launchButton"
-  ).textContent =
-  "🚀 Launch";
-
-  drawProjectile();
-
-}
-
-
-/* Projectile live sliders */
-
-pVelocity.addEventListener(
-  "input",
-  calculateProjectile
-);
-
-pAngle.addEventListener(
-  "input",
-  calculateProjectile
-);
-
-pHeight.addEventListener(
-  "input",
-  calculateProjectile
-);
-
-
-/* =========================================================
-   INCLINED PLANE + FRICTION
-========================================================= */
-
-
-const iCanvas =
-document.getElementById(
-  "inclinedCanvas"
-);
-
-const iCtx =
-iCanvas.getContext(
-  "2d"
-);
-
-
-function calculateInclined() {
-
-
-const theta =
-Number(
-  document.getElementById(
-    "iAngle"
-  ).value
-);
-
-
-const mass =
-Number(
-  document.getElementById(
-    "iMass"
-  ).value
-);
-
-
-const muS =
-Number(
-  document.getElementById(
-    "staticFriction"
-  ).value
-);
-
-
-const muK =
-Number(
-  document.getElementById(
-    "kineticFriction"
-  ).value
-);
-
-
-const frictionEnabled =
-document.getElementById(
-  "frictionToggle"
-).checked;
-
-
-const radians =
-theta *
-Math.PI /
-180;
-
-
-const weight =
-mass *
-9.8;
-
-
-const normal =
-weight *
-Math.cos(
-  radians
-);
-
-
-const parallel =
-weight *
-Math.sin(
-  radians
-);
-
-
-const maximumStatic =
-muS *
-normal;
-
-
-let friction = 0;
-
-let netForce = 0;
-
-let acceleration = 0;
-
-
-if (
-  !frictionEnabled
-) {
-
-  friction =
-    0;
-
-  netForce =
-    parallel;
-
-  acceleration =
-    9.8 *
-    Math.sin(
-      radians
-    );
-
-  document.getElementById(
-    "inclinedStatus"
-  ).textContent =
-  "🟢 Friction OFF — Frictionless surface";
-
-}
-
-
-else if (
-  parallel <=
-  maximumStatic
-) {
-
-  friction =
-    parallel;
-
-  netForce =
-    0;
-
-  acceleration =
-    0;
-
-  document.getElementById(
-    "inclinedStatus"
-  ).textContent =
-  "🟡 Static friction holds the block — Block is at rest";
-
-}
-
-
-else {
-
-  friction =
-    muK *
-    normal;
-
-  netForce =
-    parallel -
-    friction;
-
-  acceleration =
-    netForce /
-    mass;
-
-
-  if (
-    acceleration < 0
-  ) {
-
-    acceleration =
-      0;
-
-    netForce =
-      0;
-
-  }
-
-
-  document.getElementById(
-    "inclinedStatus"
-  ).textContent =
-  "🔴 Block is sliding — Kinetic friction active";
-
-}
-
-
-/* Display values */
-
-document.getElementById(
-  "iAngleValue"
-).textContent =
-theta +
-"°";
-
-
-document.getElementById(
-  "iMassValue"
-).textContent =
-mass +
-" kg";
-
-
-document.getElementById(
-  "staticValue"
-).textContent =
-muS.toFixed(2);
-
-
-document.getElementById(
-  "kineticValue"
-).textContent =
-muK.toFixed(2);
-
-
-document.getElementById(
-  "iAcceleration"
-).textContent =
-acceleration.toFixed(2) +
-" m/s²";
-
-
-document.getElementById(
-  "iWeight"
-).textContent =
-weight.toFixed(2) +
-" N";
-
-
-document.getElementById(
-  "iNormal"
-).textContent =
-normal.toFixed(2) +
-" N";
-
-
-document.getElementById(
-  "iParallel"
-).textContent =
-parallel.toFixed(2) +
-" N";
-
-
-document.getElementById(
-  "iPerpendicular"
-).textContent =
-normal.toFixed(2) +
-" N";
-
-
-document.getElementById(
-  "iFriction"
-).textContent =
-friction.toFixed(2) +
-" N";
-
-
-document.getElementById(
-  "iNetForce"
-).textContent =
-netForce.toFixed(2) +
-" N";
-
-
-document.getElementById(
-  "iFrictionLimit"
-).textContent =
-maximumStatic.toFixed(2) +
-" N";
-
-
-drawInclined(
-  theta,
-  mass,
-  weight,
-  parallel,
-  normal,
-  friction,
-  frictionEnabled
-);
-
-}
-
-
-function drawInclined(
-  theta,
-  mass,
-  weight,
-  parallel,
-  normal,
-  friction,
-  frictionEnabled
-) {
-
-
-iCtx.clearRect(
-  0,
-  0,
-  iCanvas.width,
-  iCanvas.height
-);
-
-
-const radians =
-theta *
-Math.PI /
-180;
-
-
-/* Sky */
-
-iCtx.fillStyle =
-"#eef6ff";
-
-iCtx.fillRect(
-  0,
-  0,
-  iCanvas.width,
-  iCanvas.height
-);
-
-
-/* Plane */
-
-const startX =
-170;
-
-const startY =
-410;
-
-const length =
-650;
-
-
-const endX =
-startX +
-length *
-Math.cos(
-  radians
-);
-
-const endY =
-startY -
-length *
-Math.sin(
-  radians
-);
-
-
-iCtx.strokeStyle =
-"#444";
-
-iCtx.lineWidth =
-14;
-
-iCtx.beginPath();
-
-iCtx.moveTo(
-  startX,
-  startY
-);
-
-iCtx.lineTo(
-  endX,
-  endY
-);
-
-iCtx.stroke();
-
-
-/* Ground */
-
-iCtx.strokeStyle =
-"#777";
-
-iCtx.lineWidth =
-4;
-
-iCtx.beginPath();
-
-iCtx.moveTo(
-  60,
-  startY
-);
-
-iCtx.lineTo(
-  920,
-  startY
-);
-
-iCtx.stroke();
-
-
-/* Block */
-
-const distance =
-300;
-
-
-const bx =
-startX +
-distance *
-Math.cos(
-  radians
-);
-
-const by =
-startY -
-distance *
-Math.sin(
-  radians
-);
-
-
-const size =
-55;
-
-
-iCtx.save();
-
-iCtx.translate(
-  bx,
-  by
-);
-
-iCtx.rotate(
-  -radians
-);
-
-iCtx.fillStyle =
-"#1976d2";
-
-iCtx.fillRect(
-  -size / 2,
-  -size / 2,
-  size,
-  size
-);
-
-iCtx.restore();
-
-
-/* Label */
-
-iCtx.fillStyle =
-"#111";
-
-iCtx.font =
-"bold 17px Arial";
-
-iCtx.fillText(
-  "m = " +
-  mass +
-  " kg",
-  bx - 40,
-  by - 48
-);
-
-
-/* Arrow function */
-
-function arrow(
-  x1,
-  y1,
-  x2,
-  y2,
-  label,
-  frictionArrow
-) {
-
-
-iCtx.strokeStyle =
-frictionArrow
-  ? "#f57c00"
-  : "#d32f2f";
-
-iCtx.fillStyle =
-frictionArrow
-  ? "#f57c00"
-  : "#d32f2f";
-
-iCtx.lineWidth =
-4;
-
-
-iCtx.beginPath();
-
-iCtx.moveTo(
-  x1,
-  y1
-);
-
-iCtx.lineTo(
-  x2,
-  y2
-);
-
-iCtx.stroke();
-
-
-const a =
-Math.atan2(
-  y2 - y1,
-  x2 - x1
-);
-
-
-iCtx.beginPath();
-
-iCtx.moveTo(
-  x2,
-  y2
-);
-
-iCtx.lineTo(
-  x2 -
-  13 *
-  Math.cos(
-    a - 0.5
-  ),
-  y2 -
-  13 *
-  Math.sin(
-    a - 0.5
-  )
-);
-
-iCtx.lineTo(
-  x2 -
-  13 *
-  Math.cos(
-    a + 0.5
-  ),
-  y2 -
-  13 *
-  Math.sin(
-    a + 0.5
-  )
-);
-
-iCtx.closePath();
-
-iCtx.fill();
-
-
-iCtx.font =
-"bold 14px Arial";
-
-iCtx.fillText(
-  label,
-  x2 + 8,
-  y2
-);
-
-}
-
-
-/* Weight */
-
-arrow(
-  bx,
-  by,
-  bx,
-  by + 100,
-  "mg = " +
-  weight.toFixed(1) +
-  " N",
-  false
-);
-
-
-/* Parallel component */
-
-const parallelLength =
-100 *
-parallel /
-weight;
-
-
-arrow(
-  bx,
-  by,
-
-  bx +
-  parallelLength *
-  Math.cos(
-    radians
-  ),
-
-  by +
-  parallelLength *
-  Math.sin(
-    radians
-  ),
-
-  "mg sinθ = " +
-  parallel.toFixed(1) +
-  " N",
-
-  false
-);
-
-
-/* Friction */
-
-if (
-  frictionEnabled &&
-  friction > 0
-) {
-
-
-const frictionLength =
-100 *
-friction /
-weight;
-
-
-arrow(
-  bx,
-  by,
-
-  bx -
-  frictionLength *
-  Math.cos(
-    radians
-  ),
-
-  by -
-  frictionLength *
-  Math.sin(
-    radians
-  ),
-
-  "f = " +
-  friction.toFixed(1) +
-  " N",
-
-  true
-);
-
-}
-
-
-/* Angle */
-
-iCtx.strokeStyle =
-"#1565c0";
-
-iCtx.lineWidth =
-3;
-
-iCtx.beginPath();
-
-iCtx.arc(
-  startX,
-  startY,
-  60,
-  -radians,
-  0
-);
-
-iCtx.stroke();
-
-
-iCtx.fillStyle =
-"#1565c0";
-
-iCtx.font =
-"bold 20px Arial";
-
-iCtx.fillText(
-  "θ = " +
-  theta +
-  "°",
-  startX + 45,
-  startY - 15
-);
-
-
-/* Surface label */
-
-iCtx.fillStyle =
-frictionEnabled
-  ? "#e65100"
-  : "#1565c0";
-
-iCtx.font =
-"bold 16px Arial";
-
-iCtx.fillText(
-
-  frictionEnabled
-    ? "FRICTION ENABLED"
-    : "FRICTIONLESS SURFACE",
-
-  40,
-  40
-
-);
-
-}
-
-
-/* =========================================================
-   INITIALIZE
-========================================================= */
-
-calculateProjectile();
-
-calculateInclined();
+projectile();
+inclined();
 
 </script>
 
-
 </body>
-</html> 
+</html>
