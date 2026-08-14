@@ -358,7 +358,85 @@ ctx.stroke(););
     requestAnimationFrame(draw);
 }
 
-</script>
+function checkPrediction() {
+
+    const u = Number(velocity.value);
+
+    const theta =
+        Number(angle.value) * Math.PI / 180;
+
+    const g = Number(gravity.value);
+
+    const prediction =
+        Number(
+            document.getElementById(
+                "predictionInput"
+            ).value
+        );
+
+    if (!prediction) {
+
+        document.getElementById(
+            "predictionResult"
+        ).textContent =
+            "⚠️ Enter your prediction first.";
+
+        return;
+    }
+
+    const actualRange =
+        (u * u * Math.sin(2 * theta)) / g;
+
+    const error =
+        Math.abs(prediction - actualRange)
+        / actualRange * 100;
+
+    let message = "";
+
+    if (error <= 2) {
+
+        message =
+            "🔥 Excellent! Your prediction was very close.";
+
+    } else if (error <= 5) {
+
+        message =
+            "🟢 Very good! Your physics intuition is strong.";
+
+    } else if (error <= 10) {
+
+        message =
+            "🟡 Not bad. Try calculating before guessing.";
+
+    } else {
+
+        message =
+            "🔴 Quite far. Check the projectile-range relation.";
+    }
+
+    document.getElementById(
+        "predictionResult"
+    ).innerHTML =
+
+        message +
+        "<br><br>" +
+
+        "Your prediction: " +
+        prediction.toFixed(2) +
+        " m" +
+
+        "<br>" +
+
+        "Actual range: " +
+        actualRange.toFixed(2) +
+        " m" +
+
+        "<br>" +
+
+        "Error: " +
+        error.toFixed(1) +
+        "%";
+}</script>
 
 </body>
 </html>
