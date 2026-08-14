@@ -7,6 +7,7 @@
 <title>Kinematics Lab | JEE Mechanics</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -20,92 +21,85 @@ body {
 
 .header {
     background: #11182a;
-    padding: 40px 20px;
+    padding: 35px 20px;
     text-align: center;
 }
 
 .header h1 {
     margin: 0;
-    font-size: 42px;
+    font-size: 40px;
 }
 
 .header p {
     color: #9da5bb;
-    font-size: 20px;
-    margin-top: 12px;
+    font-size: 18px;
 }
 
 .container {
     max-width: 900px;
     margin: auto;
-    padding: 30px 18px;
+    padding: 25px 18px;
 }
 
 .back {
     display: inline-block;
     color: #8b87ff;
     text-decoration: none;
-    font-size: 20px;
-    margin-bottom: 25px;
+    font-size: 18px;
+    margin-bottom: 20px;
 }
 
 .card {
     background: #151d30;
     border: 1px solid #273249;
-    border-radius: 22px;
-    padding: 25px;
-    margin-bottom: 25px;
+    border-radius: 20px;
+    padding: 22px;
 }
 
 h2 {
-    font-size: 32px;
+    font-size: 30px;
     margin-top: 0;
-}
-
-h3 {
-    font-size: 25px;
 }
 
 canvas {
     width: 100%;
-    height: 420px;
+    height: 400px;
     display: block;
     background: #050810;
-    border-radius: 18px;
-    border: 1px solid #202a40;
-    margin: 20px 0 30px;
+    border: 1px solid #273249;
+    border-radius: 15px;
+    margin: 20px 0 25px;
 }
 
 .control {
-    margin: 25px 0;
+    margin: 22px 0;
 }
 
 .control label {
     display: block;
-    font-size: 21px;
-    margin-bottom: 12px;
+    font-size: 19px;
+    margin-bottom: 10px;
 }
 
 .value {
-    color: #8580ff;
+    color: #8b87ff;
     font-weight: bold;
 }
 
 input[type="range"] {
     width: 100%;
-    height: 8px;
     accent-color: #7069ff;
 }
 
 button {
     width: 100%;
+    padding: 16px;
     border: none;
-    border-radius: 15px;
-    padding: 18px;
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
+    border-radius: 13px;
     background: #6861ed;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
     margin-top: 15px;
 }
@@ -114,117 +108,107 @@ button:active {
     transform: scale(0.98);
 }
 
-.prediction {
-    background: #0d1320;
-    border: 1px solid #273249;
-    border-radius: 18px;
-    padding: 25px;
-    margin-top: 30px;
-}
-
-.prediction h3 {
-    color: #ffae00;
-}
-
-.prediction p {
+.height-note {
     color: #aeb5c8;
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: 14px;
+    margin-top: 8px;
 }
 
-.prediction input {
-    width: 100%;
-    padding: 17px;
-    border-radius: 14px;
-    border: 1px solid #34405a;
-    background: #121a2a;
-    color: white;
-    font-size: 20px;
-    outline: none;
-}
-
-.result {
-    margin-top: 20px;
-    padding: 18px;
-    border-radius: 14px;
-    background: #101827;
-    font-size: 18px;
-    line-height: 1.8;
-}
-
-.success {
-    color: #20d56a;
-}
-
-.warning {
-    color: #ffb020;
-}
-
-.components {
+.components,
+.why,
+.prediction,
+.stats {
     background: #0d1320;
     border: 1px solid #273249;
-    border-radius: 18px;
+    border-radius: 16px;
     padding: 20px;
-    margin-top: 25px;
-}
-
-.components h3 {
-    color: #ffffff;
+    margin-top: 22px;
 }
 
 .checkbox-row {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 20px;
-    margin-bottom: 20px;
+    gap: 10px;
+    font-size: 18px;
 }
 
 .checkbox-row input {
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     accent-color: #7069ff;
 }
 
 .component-values {
+    display: none;
+    margin-top: 15px;
     background: #111827;
-    border-radius: 14px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 15px;
     line-height: 2;
-    font-size: 18px;
 }
 
-.why {
-    margin-top: 25px;
+.green {
+    color: #22d56a;
+    font-weight: bold;
+}
+
+.blue {
+    color: #20bfff;
+    font-weight: bold;
+}
+
+.orange {
+    color: #ffae00;
+    font-weight: bold;
 }
 
 .why-content {
     display: none;
-    margin-top: 18px;
-    padding: 20px;
+    margin-top: 15px;
+    padding: 18px;
     background: #111827;
-    border-radius: 15px;
+    border-radius: 12px;
     line-height: 1.7;
     color: #c2c8d8;
 }
 
 .formula {
     text-align: center;
-    padding: 15px;
-    margin: 15px 0;
-    background: #0b0f19;
-    border-radius: 12px;
+    background: #080b14;
+    padding: 14px;
+    margin: 14px 0;
+    border-radius: 10px;
     color: #a5b4fc;
-    font-size: 20px;
+    font-size: 19px;
+}
+
+.prediction p {
+    color: #aeb5c8;
+    line-height: 1.5;
+}
+
+.prediction input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #34405a;
+    background: #111827;
+    color: white;
+    font-size: 18px;
+}
+
+.prediction-result {
+    display: none;
+    margin-top: 15px;
+    padding: 15px;
+    background: #111827;
+    border-radius: 12px;
+    line-height: 1.8;
 }
 
 .stats {
-    background: #0d1320;
-    border-radius: 18px;
-    padding: 25px;
-    margin-top: 25px;
-    font-size: 20px;
-    line-height: 2;
+    line-height: 2.1;
+    font-size: 18px;
 }
 
 .stats span {
@@ -235,15 +219,7 @@ button:active {
 @media (max-width: 600px) {
 
     .header h1 {
-        font-size: 32px;
-    }
-
-    .header p {
-        font-size: 17px;
-    }
-
-    h2 {
-        font-size: 27px;
+        font-size: 31px;
     }
 
     canvas {
@@ -251,28 +227,40 @@ button:active {
     }
 
     .card {
-        padding: 18px;
+        padding: 16px;
     }
+
+    h2 {
+        font-size: 26px;
+    }
+
 }
+
 </style>
+
 </head>
 
 <body>
 
 <header class="header">
-    <h1>🚀 Kinematics Lab</h1>
-    <p>Projectile Motion Simulator</p>
+
+<h1>🚀 Kinematics Lab</h1>
+
+<p>Projectile Motion Simulator</p>
+
 </header>
 
 <main class="container">
 
-<a href="../" class="back">← Back to Mechanics Lab</a>
+<a href="../" class="back">
+← Back to Mechanics Lab
+</a>
 
 <section class="card">
 
-<h2>Projectile Motion</h2>
+<h2>🏹 Projectile Motion</h2>
 
-<canvas id="simulationCanvas"></canvas>
+<canvas id="canvas"></canvas>
 
 <div class="control">
 
@@ -295,7 +283,7 @@ step="1"
 <div class="control">
 
 <label>
-Angle:
+Launch Angle:
 <span class="value" id="angleValue">45</span>°
 </label>
 
@@ -328,6 +316,27 @@ step="0.1"
 
 </div>
 
+<div class="control">
+
+<label>
+🏔️ Launch Height:
+<span class="value" id="heightInputValue">0</span> m
+</label>
+
+<input
+type="range"
+id="launchHeight"
+min="0"
+max="100"
+value="0"
+step="1"
+>
+
+<div class="height-note">
+0 m = ground level. Increase it to simulate a cliff.
+</div>
+
+</div> 
 <div class="components">
 
 <div class="checkbox-row">
@@ -346,119 +355,127 @@ Show velocity components
 <div
 class="component-values"
 id="componentInfo"
-style="display:none;"
 >
 
 Horizontal velocity:
-<span id="vxValue">—</span> m/s
+<span class="green" id="vxValue">—</span> m/s
 
 <br>
 
 Vertical velocity:
-<span id="vyValue">—</span> m/s
+<span class="blue" id="vyValue">—</span> m/s
 
 <br>
 
 Resultant velocity:
-<span id="resultantValue">—</span> m/s
+<span class="orange" id="resultantValue">—</span> m/s
 
 </div>
 
 </div>
+
 
 <div class="why">
 
 <button id="whyButton">
-🧠 WHY? — Maximum Height
+🧠 WHY? — Projectile From Height
 </button>
 
 <div
-id="whyContent"
 class="why-content"
+id="whyContent"
 >
 
-<h3>🧠 Why does the projectile reach maximum height?</h3>
+<h3>🧠 Why is the time of flight different?</h3>
 
 <p>
-At the highest point of the projectile, its vertical velocity becomes
-zero.
+When a projectile is launched from a height,
+it does not land at the same vertical level
+from which it was launched.
 </p>
 
 <div class="formula">
-vᵧ = u sinθ − gt
+
+y = h + u sinθ · t − ½gt²
+
 </div>
 
 <p>
-At maximum height:
+At the ground, y = 0.
+Therefore the positive solution is:
 </p>
 
 <div class="formula">
-vᵧ = 0
+
+t =
+[u sinθ + √((u sinθ)² + 2gh)] / g
+
 </div>
 
 <p>
-Therefore:
-</p>
-
-<div class="formula">
-t = u sinθ / g
-</div>
-
-<p>
-The projectile keeps moving horizontally because its horizontal velocity
-remains constant (when air resistance is ignored).
+💡 Increasing the launch height gives the projectile
+more time before it reaches the ground.
 </p>
 
 </div>
 
 </div>
+
 
 <button id="startButton">
+
 ▶ START SIMULATION
+
 </button>
+
 
 <div class="stats">
 
-Range:
+Horizontal Distance to Ground:
 <span id="rangeValue">—</span> m
 
 <br>
 
-Maximum Height:
-<span id="heightValue">—</span> m
+Maximum Height Above Ground:
+<span id="maxHeightValue">—</span> m
 
 <br>
 
-Time of Flight:
+Time to Hit Ground:
 <span id="timeValue">—</span> s
+
+<br>
+
+Final Vertical Velocity:
+<span id="finalVyValue">—</span> m/s
 
 </div>
 
-<!-- PREDICTION MODE -->
 
 <div class="prediction">
 
 <h3>🎯 JEE Prediction Mode</h3>
 
 <p>
-Before running the simulation, predict the horizontal range of the
-projectile.
+Predict the horizontal distance from the launch point
+to where the projectile will hit the ground.
 </p>
 
 <input
 type="number"
 id="predictionInput"
-placeholder="Enter your predicted range in metres"
+placeholder="Your predicted distance in metres"
 >
 
 <button id="checkButton">
+
 CHECK MY ANSWER
+
 </button>
 
 <div
+class="prediction-result"
 id="predictionResult"
-class="result"
-style="display:none;"
 ></div>
 
 </div>
@@ -467,664 +484,67 @@ style="display:none;"
 
 </main>
 
-<script>
 
-const canvas = document.getElementById("simulationCanvas");
+<script>
+const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-const velocitySlider = document.getElementById("velocity");
-const angleSlider = document.getElementById("angle");
-const gravitySlider = document.getElementById("gravity");
-
-const velocityValue = document.getElementById("velocityValue");
-const angleValue = document.getElementById("angleValue");
-const gravityValue = document.getElementById("gravityValue");
-
-const startButton = document.getElementById("startButton");
-
-const showComponents =
-    document.getElementById("showComponents");
-
-const componentInfo =
-    document.getElementById("componentInfo");
-
-const vxValue =
-    document.getElementById("vxValue");
-
-const vyValue =
-    document.getElementById("vyValue");
-
-const resultantValue =
-    document.getElementById("resultantValue");
-
-const rangeValue =
-    document.getElementById("rangeValue");
-
-const heightValue =
-    document.getElementById("heightValue");
-
-const timeValue =
-    document.getElementById("timeValue");
-
-const whyButton =
-    document.getElementById("whyButton");
-
-const whyContent =
-    document.getElementById("whyContent");
-
-const predictionInput =
-    document.getElementById("predictionInput");
-
-const checkButton =
-    document.getElementById("checkButton");
-
-const predictionResult =
-    document.getElementById("predictionResult");
-
-
-/* -------------------------
-   CANVAS
-------------------------- */
-
-function resizeCanvas() {
-
-    const rect = canvas.getBoundingClientRect();
-
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-
-}
-
-resizeCanvas();
-
-window.addEventListener("resize", resizeCanvas);
-
-
-/* -------------------------
-   VALUES
-------------------------- */
-
-function getValues() {
-
-    const u = Number(velocitySlider.value);
-
-    const angle =
-        Number(angleSlider.value) *
-        Math.PI / 180;
-
-    const g = Number(gravitySlider.value);
-
-    return { u, angle, g };
-
-}
-
-
-function calculate() {
-
-    const { u, angle, g } = getValues();
-
-    const vx = u * Math.cos(angle);
-
-    const vy = u * Math.sin(angle);
-
-    const time =
-        (2 * u * Math.sin(angle)) / g;
-
-    const range =
-        (u * u * Math.sin(2 * angle)) / g;
-
-    const height =
-        (u * u * Math.sin(angle) ** 2) /
-        (2 * g);
-
-    return {
-        u,
-        angle,
-        g,
-        vx,
-        vy,
-        time,
-        range,
-        height
-    };
-
-}
-
-
-/* -------------------------
-   UPDATE SLIDERS
-------------------------- */
-
-function updateValues() {
-
-    velocityValue.textContent =
-        velocitySlider.value;
-
-    angleValue.textContent =
-        angleSlider.value;
-
-    gravityValue.textContent =
-        Number(gravitySlider.value).toFixed(1);
-
-    updateComponents();
-
-    drawStatic();
-
-}
-
-
-velocitySlider.addEventListener(
-    "input",
-    updateValues
-);
-
-angleSlider.addEventListener(
-    "input",
-    updateValues
-);
-
-gravitySlider.addEventListener(
-    "input",
-    updateValues
-);
-
-
-/* -------------------------
-   COMPONENTS
-------------------------- */
-
-function updateComponents() {
-
-    const data = calculate();
-
-    if (showComponents.checked) {
-
-        componentInfo.style.display = "block";
-
-        vxValue.textContent =
-            data.vx.toFixed(2);
-
-        vyValue.textContent =
-            data.vy.toFixed(2);
-
-        resultantValue.textContent =
-            data.u.toFixed(2);
-
-    } else {
-
-        componentInfo.style.display = "none";
-
-    }
-
-}
-
-
-showComponents.addEventListener(
-    "change",
-    updateComponents
-);
-
-
-/* -------------------------
-   DRAW PROJECTILE
-------------------------- */
-
-function drawStatic() {
-
-    const data = calculate();
-
-    ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
-
-    const padding = 35;
-
-    const groundY =
-        canvas.height - padding;
-
-    const startX = padding;
-
-    const availableWidth =
-        canvas.width - padding * 2;
-
-    const maxHeight =
-        Math.max(data.height, 1);
-
-    ctx.strokeStyle = "#65708a";
-    ctx.lineWidth = 2;
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        startX,
-        groundY
-    );
-
-    ctx.lineTo(
-        canvas.width - padding,
-        groundY
-    );
-
-    ctx.stroke();
-
-
-    /* trajectory */
-
-    ctx.strokeStyle = "#756cff";
-    ctx.lineWidth = 5;
-
-    ctx.beginPath();
-
-    for (let i = 0; i <= 100; i++) {
-
-        const fraction = i / 100;
-
-        const x =
-            data.range * fraction;
-
-        const y =
-            x * Math.tan(data.angle) -
-            (data.g * x * x) /
-            (2 * data.u * data.u *
-            Math.cos(data.angle) ** 2);
-
-        const screenX =
-            startX +
-            fraction * availableWidth;
-
-        const screenY =
-            groundY -
-            (y / maxHeight) *
-            (canvas.height - 80);
-
-        if (i === 0) {
-
-            ctx.moveTo(
-                screenX,
-                screenY
-            );
-
-        } else {
-
-            ctx.lineTo(
-                screenX,
-                screenY
-            );
-
-        }
-
-    }
-
-    ctx.stroke();
-
-
-    /* start point */
-
-    ctx.fillStyle = "#ff9f00";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        startX,
-        groundY,
-        9,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-
-    /* end point */
-
-    ctx.fillStyle = "#22d56a";
-
-    ctx.beginPath();
-
-    ctx.arc(
-        canvas.width - padding,
-        groundY,
-        12,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
-}
-
-
-drawStatic();
-
-
-/* -------------------------
-   SIMULATION
-------------------------- */
-
-let animationFrame = null;
-
-function startSimulation() {
-
-    if (animationFrame) {
-
-        cancelAnimationFrame(animationFrame);
-
-    }
-
-    const data = calculate();
-
-    rangeValue.textContent =
-        data.range.toFixed(2);
-
-    heightValue.textContent =
-        data.height.toFixed(2);
-
-    timeValue.textContent =
-        data.time.toFixed(2);
-
-    const startTime =
-        performance.now();
-
-    function animate(now) {
-
-        const elapsed =
-            (now - startTime) / 1000;
-
-        const t =
-            Math.min(elapsed, data.time);
-
-        const x =
-            data.vx * t;
-
-        const y =
-            data.vy * t -
-            0.5 * data.g * t * t;
-
-        drawStatic();
-
-        const padding = 35;
-
-        const groundY =
-            canvas.height - padding;
-
-        const screenX =
-            padding +
-            (x / data.range) *
-            (canvas.width - padding * 2);
-
-        const screenY =
-            groundY -
-            (y / data.height) *
-            (canvas.height - 80);
-
-        /* projectile */
-
-        ctx.fillStyle = "#ff9f00";
-
-        ctx.beginPath();
-
-        ctx.arc(
-            screenX,
-            screenY,
-            9,
-            0,
-            Math.PI * 2
-        );
-
-        ctx.fill();
-
-
-        /* velocity components */
-
-        if (showComponents.checked) {
-
-            const scale = 3;
-
-            const vx =
-                data.vx;
-
-            const currentVy =
-                data.vy -
-                data.g * t;
-
-            ctx.lineWidth = 4;
-
-            /* horizontal */
-
-            ctx.strokeStyle = "#20d56a";
-
-            ctx.beginPath();
-
-            ctx.moveTo(
-                screenX,
-                screenY
-            );
-
-            ctx.lineTo(
-                screenX + vx * scale,
-                screenY
-            );
-
-            ctx.stroke();
-
-
-            /* vertical */
-
-            ctx.strokeStyle = "#20bfff";
-
-            ctx.beginPath();
-
-            ctx.moveTo(
-                screenX,
-                screenY
-            );
-
-            ctx.lineTo(
-                screenX,
-                screenY - currentVy * scale
-            );
-
-            ctx.stroke();
-
-
-            /* labels */
-
-            ctx.fillStyle = "#20d56a";
-
-            ctx.font = "bold 15px Arial";
-
-            ctx.fillText(
-                "Vx",
-                screenX + vx * scale + 5,
-                screenY - 5
-            );
-
-            ctx.fillStyle = "#20bfff";
-
-            ctx.fillText(
-                "Vy",
-                screenX + 5,
-                screenY - currentVy * scale - 5
-            );
-
-        }
-
-
-        if (t < data.time) {
-
-            animationFrame =
-                requestAnimationFrame(animate);
-
-        } else {
-
-            animationFrame = null;
-
-        }
-
-    }
-
-    animationFrame =
-        requestAnimationFrame(animate);
-
-}
-
-
-startButton.addEventListener(
-    "click",
-    startSimulation
-);
-
-
-/* -------------------------
-   WHY BUTTON
-------------------------- */
-
-whyButton.addEventListener(
-    "click",
-    function () {
-
-        if (
-            whyContent.style.display ===
-            "block"
-        ) {
-
-            whyContent.style.display =
-                "none";
-
-            whyButton.textContent =
-                "🧠 WHY? — Maximum Height";
-
-        } else {
-
-            whyContent.style.display =
-                "block";
-
-            whyButton.textContent =
-                "🧠 HIDE EXPLANATION";
-
-        }
-
-    }
-);
-
-
-/* -------------------------
-   PREDICTION MODE
-------------------------- */
-
-checkButton.addEventListener(
-    "click",
-    function () {
-
-        const prediction =
-            Number(predictionInput.value);
-
-        if (
-            predictionInput.value.trim() ===
-            ""
-        ) {
-
-            predictionResult.style.display =
-                "block";
-
-            predictionResult.className =
-                "result warning";
-
-            predictionResult.innerHTML =
-                "⚠️ Please enter your predicted range.";
-
-            return;
-
-        }
-
-        const actual =
-            calculate().range;
-
-        const error =
-            Math.abs(
-                prediction - actual
-            ) / actual * 100;
-
-
-        predictionResult.style.display =
-            "block";
-
-
-        let message = "";
-
-        if (error <= 2) {
-
-            predictionResult.className =
-                "result success";
-
-            message =
-                "🔥 Excellent! Your prediction is extremely close.";
-
-        } else if (error <= 5) {
-
-            predictionResult.className =
-                "result success";
-
-            message =
-                "👏 Great prediction! Very close.";
-
-        } else if (error <= 10) {
-
-            predictionResult.className =
-                "result warning";
-
-            message =
-                "👍 Good attempt! Try to improve your estimation.";
-
-        } else {
-
-            predictionResult.className =
-                "result warning";
-
-            message =
-                "💡 Not quite there. Check the projectile range formula.";
-
-        }
-
-
-        predictionResult.innerHTML =
-
-            "<strong>" +
-            message +
-            "</strong>" +
-
-            "<br><br>" +
-
-            "Your prediction: " +
-            prediction.toFixed(2) +
-            " m" +
-
-            "<br>" +
-
-            "Actual range: " +
-            actual.toFixed(2) +
-            " m" +
-
-            "<br>" +
-
-            "Error: " +
-            error.toFixed(1) +
-            "%";
-
-    }
-);
-
-
-/* -------------------------
-   INITIAL SETUP
-------------------------- */
-
-updateValues();
-
-</script>
-
-</body>
-</html>
+const velocity = document.getElementById("velocity");
+const angle = document.getElementById("angle");
+const gravity = document.getElementById("gravity");
+const launchHeight = document.getElementById("launchHeight");
+
+const velocityValue =
+document.getElementById("velocityValue");
+
+const angleValue =
+document.getElementById("angleValue");
+
+const gravityValue =
+document.getElementById("gravityValue");
+
+const heightInputValue =
+document.getElementById("heightInputValue");// ===== PART 3B =====
+
+function drawQuestion() {
+  ctx.fillStyle = "#ffffff";
+  ctx.font = "bold 18px Arial";
+  ctx.fillText("JEE Mechanics Challenge", 20, 35);
+
+  ctx.font = "16px Arial";
+  ctx.fillText(questionText, 20, 65);
+
+  ctx.fillStyle = "#333";
+  ctx.fillRect(20, 90, canvas.width - 40, 45);
+
+  ctx.fillStyle = "#fff";
+  ctx.font = "16px Arial";
+  ctx.fillText("Answer:", 35, 119);
+
+  ctx.fillStyle = "#222";
+  ctx.font = "bold 18px Arial";
+  ctx.fillText(
+    answerInput.value || "_",
+    115,
+    119
+  );
+}// ===== PART 3C =====
+
+function checkAnswer() {
+  const userAnswer = Number(answerInput.value);
+
+  if (Math.abs(userAnswer - correctAnswer) < 0.01) {
+    resultText.textContent = "✅ Correct! Great job!";
+  } else {
+    resultText.textContent =
+      "❌ Not quite. Try again!";
+  }
+}// ===== PART 3D =====
+
+checkButton.addEventListener("click", checkAnswer);
+
+answerInput.addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    checkAnswer();
+  }
+});
