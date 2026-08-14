@@ -481,6 +481,11 @@ class="status">
 🟡 Block is at rest
 
 </div>
+<button
+class="action"
+onclick="toggleInclineAnimation()">
+▶️ Start / Stop Animation
+</button>
 
 </div>
 
@@ -853,7 +858,10 @@ calculateProjectile;
 
 const ic = document.getElementById("inclineCanvas");
 const ictx = ic.getContext("2d");
-
+let inclineDistance = 300;
+let inclineAnimating = false;
+let inclineVelocity = 0;
+let inclineLastTime = 0;
 
 function calculateIncline(){
 
@@ -1041,7 +1049,7 @@ ictx.stroke();
 
 /* BLOCK POSITION */
 
-let distance=300;
+let distance=inclineDistance;
 
 let bx=sx+distance*Math.cos(rad);
 let by=sy-distance*Math.sin(rad);
@@ -1744,7 +1752,63 @@ document.getElementById("frictionToggle").checked
 
 }
 
+function toggleInclineAnimation(){
 
+inclineAnimating=!inclineAnimating;
+
+if(inclineAnimating){
+inclineLastTime=performance.now();
+requestAnimationFrame(animateIncline);
+}
+
+}
+
+function animateIncline(now){
+
+if(!inclineAnimating)return;
+
+let dt=(now-inclineLastTime)/1000;
+inclineLastTime=now;
+
+let angle=Number(document.getElementById("inclineAngle").value);
+let mass=Number(document.getElementById("mass").value);
+
+let muS=Number(document.getElementById("staticFriction").value);
+let muK=Number(document.getElementById("kineticFriction").value);
+
+let rad=angle*Math.PI/180;
+
+let normal=mass*g*Math.cos(rad);
+let parallel=mass*g*Math.sin(rad);
+let maxStatic=muS*normal;
+
+let a=0;
+
+if(!document.getElementById("frictionToggle").checked){
+a=g*Math.sin(rad);
+}else if(parallel>maxStatic){
+a=(parallel-muK*normal)/mass;
+}else{
+a=0;
+}
+
+if(a>0){
+
+inclineVelocity+=a*dt*25;
+inclineDistance-=inclineVelocity*dt;
+
+}
+
+if(inclineDistance<70){
+inclineDistance=300;
+inclineVelocity=0;
+}
+
+drawIncline(angle,mass);
+
+requestAnimationFrame(animateIncline);
+
+}
 /* ================= CONTROLS ================= */
 
 document.getElementById("inclineAngle").oninput =
