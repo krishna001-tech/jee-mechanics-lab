@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JEE Question Bank</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#080d20;
+    color:white;
+}
+
+.header{
+    text-align:center;
+    padding:30px 15px;
+}
+
+.header h1{
+    font-size:32px;
+    margin:10px 0;
+}
+
+.header p{
+    color:#aeb7d0;
+    font-size:16px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:#151c35;
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:20px;
+}
+
+.card h2{
+    margin-top:0;
+}
+
+.chapter{
+    display:block;
+    width:100%;
+    padding:16px;
+    margin:10px 0;
+    border:0;
+    border-radius:12px;
+    background:#202943;
+    color:white;
+    font-size:16px;
+    text-align:left;
+}
+
+.chapter.selected{
+    background:#287df5;
+}
+
+.difficulty{
+    display:block;
+    width:100%;
+    padding:16px;
+    margin:10px 0;
+    border:0;
+    border-radius:12px;
+    background:#202943;
+    color:white;
+    font-size:16px;
+}
+
+.difficulty.selected{
+    background:#287df5;
+}
+
+.start{
+    width:100%;
+    padding:17px;
+    border:0;
+    border-radius:14px;
+    background:#287df5;
+    color:white;
+    font-size:18px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+.start:active{
+    transform:scale(0.98);
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>📝 JEE Question Bank</h1>
+
+<p>
+Practice JEE Physics with randomly generated questions
+</p>
+
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h2>📚 Choose Chapter</h2>
+
+<button class="chapter" onclick="selectChapter(this,'Kinematics')">
+Kinematics
+</button>
+
+<button class="chapter" onclick="selectChapter(this,'Laws of Motion')">
+Laws of Motion
+</button>
+
+<button class="chapter" onclick="selectChapter(this,'Work, Power & Energy')">
+Work, Power & Energy
+</button>
+
+<button class="chapter" onclick="selectChapter(this,'Circular Motion')">
+Circular Motion
+</button>
+
+<button class="chapter" onclick="selectChapter(this,'Centre of Mass')">
+Centre of Mass
+</button>
+
+<button class="chapter" onclick="selectChapter(this,'Momentum & Collision')">
+Momentum & Collision
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>🎯 Choose Difficulty</h2>
+
+<button class="difficulty"
+onclick="selectDifficulty(this,'JEE Main')">
+🟢 JEE Main
+</button>
+
+<button class="difficulty"
+onclick="selectDifficulty(this,'JEE Main Tough')">
+🟡 JEE Main Tough
+</button>
+
+<button class="difficulty"
+onclick="selectDifficulty(this,'JEE Advanced')">
+🟠 JEE Advanced
+</button>
+
+<button class="difficulty"
+onclick="selectDifficulty(this,'JEE Advanced Tough')">
+🔴 JEE Advanced Tough
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>⚙️ Number of Questions</h2>
+
+<button class="number"
+onclick="selectNumber(this,5)">
+5 Questions
+</button>
+
+<button class="number"
+onclick="selectNumber(this,10)">
+10 Questions
+</button>
+
+<button class="number"
+onclick="selectNumber(this,20)">
+20 Questions
+</button>
+
+</div>
+
+<button class="start" onclick="startQuiz()">
+🚀 Start Practice
+</button>
+
+</div>
+
+<script>
+
+let selectedChapter = "";
+let selectedDifficulty = "";
+let selectedNumber = 5;
+
+function selectChapter(button, chapter){
+
+    selectedChapter = chapter;
+
+    document.querySelectorAll(".chapter")
+    .forEach(btn => btn.classList.remove("selected"));
+
+    button.classList.add("selected");
+}
+
+function selectDifficulty(button, difficulty){
+
+    selectedDifficulty = difficulty;
+
+    document.querySelectorAll(".difficulty")
+    .forEach(btn => btn.classList.remove("selected"));
+
+    button.classList.add("selected");
+}
+
+function selectNumber(button, number){
+
+    selectedNumber = number;
+
+    document.querySelectorAll(".number")
+    .forEach(btn => btn.classList.remove("selected"));
+
+    button.classList.add("selected");
+}
+
+function startQuiz(){
+
+    if(selectedChapter === ""){
+        alert("Please select a chapter!");
+        return;
+    }
+
+    if(selectedDifficulty === ""){
+        alert("Please select difficulty!");
+        return;
+    }
+
+    alert(
+        "Starting Practice!\n\n" +
+        "Chapter: " + selectedChapter +
+        "\nDifficulty: " + selectedDifficulty +
+        "\nQuestions: " + selectedNumber
+    );
+}
+
+</script>
+
+</body>
+</html>
