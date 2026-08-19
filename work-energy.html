@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Work, Energy & Power</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#020617,#0f172a,#020617);
+    color:white;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.header{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.header h1{
+    font-size:36px;
+    margin-bottom:8px;
+    background:linear-gradient(90deg,#22d3ee,#a78bfa,#fbbf24);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.header p{
+    color:#94a3b8;
+}
+
+.tabs{
+    display:flex;
+    gap:10px;
+    overflow-x:auto;
+    margin-bottom:20px;
+}
+
+.tab{
+    border:0;
+    padding:13px 18px;
+    border-radius:10px;
+    background:#1e293b;
+    color:#cbd5e1;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.tab.active{
+    background:#7c3aed;
+    color:white;
+}
+
+.panel{
+    display:none;
+}
+
+.panel.active{
+    display:block;
+}
+
+.card{
+    background:#0f172a;
+    border:1px solid #334155;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.card h2{
+    margin-top:0;
+}
+
+.controls{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
+}
+
+label{
+    display:block;
+    color:#cbd5e1;
+    margin-bottom:8px;
+}
+
+input[type="range"]{
+    width:100%;
+}
+
+.value{
+    color:#22d3ee;
+    font-weight:bold;
+}
+
+button{
+    cursor:pointer;
+}
+
+.action{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:10px;
+    background:#7c3aed;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.result{
+    background:#1e293b;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.big{
+    font-size:28px;
+    font-weight:bold;
+    color:#22d3ee;
+}
+
+canvas{
+    width:100%;
+    background:#020617;
+    border-radius:10px;
+}
+
+.footer{
+    text-align:center;
+    color:#64748b;
+    font-size:12px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+
+    .header h1{
+        font-size:28px;
+    }
+
+    .container{
+        padding:12px;
+    }
+
+}
+
+</style>
+
+</head><body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>Work, Energy & Power</h1>
+
+<p>Interactive JEE Physics Simulations</p>
+
+</div>
+
+
+<div class="tabs">
+
+<button class="tab active"
+onclick="showPanel('work',this)">
+📊 Variable Forces
+</button>
+
+<button class="tab"
+onclick="showPanel('spring',this)">
+🔄 Spring Energy
+</button>
+
+<button class="tab"
+onclick="showPanel('circular',this)">
+⭕ Circular Motion
+</button>
+
+</div>
+
+
+<div id="work" class="panel active">
+
+<div class="card">
+
+<h2>📊 Work by Variable Force</h2>
+
+<p>
+Adjust the force and displacement.
+The area under the F-x graph represents work.
+</p>
+
+<div class="controls">
+
+<div>
+
+<label>
+Force:
+<span id="forceValue" class="value">10 N</span>
+</label>
+
+<input
+type="range"
+id="force"
+min="1"
+max="30"
+step="1"
+value="10"
+oninput="updateWork()">
+
+</div>
+
+
+<div>
+
+<label>
+Displacement:
+<span id="distanceValue" class="value">5 m</span>
+</label>
+
+<input
+type="range"
+id="distance"
+min="1"
+max="20"
+step="1"
+value="5"
+oninput="updateWork()">
+
+</div>
+
+
+<div class="result">
+
+<div>Total Work</div>
+
+<div id="workValue" class="big">
+50 J
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<canvas id="workGraph"
+height="300">
+</canvas>
+
+</div>
+
+</div><div id="spring" class="panel">
+
+<div class="card">
+
+<h2>🔄 Spring Potential Energy</h2>
+
+<p>
+Explore how spring compression changes potential energy.
+</p>
+
+<div class="controls">
+
+<div>
+
+<label>
+Spring Constant:
+<span id="springKValue" class="value">100 N/m</span>
+</label>
+
+<input
+type="range"
+id="springK"
+min="20"
+max="300"
+step="10"
+value="100"
+oninput="updateSpring()">
+
+</div>
+
+
+<div>
+
+<label>
+Compression:
+<span id="compressionValue" class="value">0.30 m</span>
+</label>
+
+<input
+type="range"
+id="compression"
+min="0"
+max="1"
+step="0.05"
+value="0.30"
+oninput="updateSpring()">
+
+</div>
+
+
+<div>
+
+<label>
+Mass:
+<span id="springMassValue" class="value">1 kg</span>
+</label>
+
+<input
+type="range"
+id="springMass"
+min="0.5"
+max="5"
+step="0.5"
+value="1"
+oninput="updateSpring()">
+
+</div>
+
+</div>
+
+
+<br>
+
+
+<div class="result">
+
+<div>Elastic Potential Energy</div>
+
+<div id="springEnergy" class="big">
+4.50 J
+</div>
+
+<div style="color:#94a3b8">
+U = ½kx²
+</div>
+
+</div>
+
+
+<br>
+
+
+<canvas
+id="springGraph"
+height="300">
+</canvas>
+
+</div>
+
+</div><div id="circular" class="panel">
+
+<div class="card">
+
+<h2>⭕ Vertical Circular Motion</h2>
+
+<p>
+Check whether an object has enough speed to complete a vertical loop.
+</p>
+
+<div class="controls">
+
+<div>
+
+<label>
+Radius:
+<span id="radiusValue" class="value">2.00 m</span>
+</label>
+
+<input
+type="range"
+id="radius"
+min="0.5"
+max="5"
+step="0.25"
+value="2"
+oninput="updateCircular()">
+
+</div>
+
+
+<div>
+
+<label>
+Speed at Bottom:
+<span id="bottomSpeedValue" class="value">10.00 m/s</span>
+</label>
+
+<input
+type="range"
+id="bottomSpeed"
+min="1"
+max="20"
+step="0.5"
+value="10"
+oninput="updateCircular()">
+
+</div>
+
+</div>
+
+<br>
+
+
+<div class="result">
+
+<div>Critical Speed at Bottom</div>
+
+<div id="criticalSpeed" class="big">
+9.90 m/s
+</div>
+
+<div id="loopStatus">
+Checking...
+</div>
+
+</div>
+
+<br>
+
+
+<canvas
+id="circularCanvas"
+width="600"
+height="400">
+</canvas>
+
+<br><br>
+
+<button
+class="action"
+onclick="toggleCircularAnimation()">
+
+▶ Animate
+
+</button>
+
+</div>
+
+</div><script>
+
+function showPanel(panelId,button){
+
+    document.querySelectorAll(".panel")
+    .forEach(panel=>{
+        panel.classList.remove("active");
+    });
+
+    document.getElementById(panelId)
+    .classList.add("active");
+
+    document.querySelectorAll(".tab")
+    .forEach(tab=>{
+        tab.classList.remove("active");
+    });
+
+    button.classList.add("active");
+}
+
+
+/* =========================
+   WORK
+========================= */
+
+function updateWork(){
+
+    const force =
+        Number(document.getElementById("force").value);
+
+    const distance =
+        Number(document.getElementById("distance").value);
+
+    const work = force * distance;
+
+    document.getElementById("forceValue")
+    .textContent = force + " N";
+
+    document.getElementById("distanceValue")
+    .textContent = distance + " m";
+
+    document.getElementById("workValue")
+    .textContent = work.toFixed(2) + " J";
+
+    drawWorkGraph(force,distance);
+}
+
+
+function drawWorkGraph(force,distance){
+
+    const canvas =
+        document.getElementById("workGraph");
+
+    const ctx = canvas.getContext("2d");
+
+    const width = canvas.width =
+        canvas.clientWidth * window.devicePixelRatio;
+
+    const height = canvas.height =
+        300 * window.devicePixelRatio;
+
+    ctx.clearRect(0,0,width,height);
+
+    ctx.scale(
+        window.devicePixelRatio,
+        window.devicePixelRatio
+    );
+
+    const w = canvas.clientWidth;
+    const h = 300;
+
+    const left = 50;
+    const bottom = 250;
+
+    const graphWidth = w - 80;
+    const graphHeight = 200;
+
+    /* axes */
+
+    ctx.strokeStyle = "#64748b";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+
+    ctx.moveTo(left,40);
+    ctx.lineTo(left,bottom);
+    ctx.lineTo(w-20,bottom);
+
+    ctx.stroke();
+
+    /* force line */
+
+    const topY = bottom -
+        (force / 30) * graphHeight;
+
+    const endX = left +
+        (distance / 20) * graphWidth;
+
+    ctx.strokeStyle = "#22d3ee";
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+
+    ctx.moveTo(left,topY);
+    ctx.lineTo(endX,topY);
+
+    ctx.stroke();
+
+    /* work area */
+
+    ctx.fillStyle = "rgba(34,211,238,0.25)";
+
+    ctx.fillRect(
+        left,
+        topY,
+        endX-left,
+        bottom-topY
+    );
+
+    /* labels */
+
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "14px Arial";
+
+    ctx.fillText("Force (N)",10,35);
+
+    ctx.fillText(
+        "Displacement (m)",
+        w-140,
+        285
+    );
+
+    ctx.fillText(
+        "W = Area = F × x",
+        left+10,
+        60
+    );
+}
+
+
+/* =========================
+   SPRING
+========================= */
+
+function updateSpring(){
+
+    const k =
+        Number(document.getElementById("springK").value);
+
+    const x =
+        Number(document.getElementById("compression").value);
+
+    const mass =
+        Number(document.getElementById("springMass").value);
+
+    const energy =
+        0.5 * k * x * x;
+
+    document.getElementById("springKValue")
+    .textContent = k + " N/m";
+
+    document.getElementById("compressionValue")
+    .textContent = x.toFixed(2) + " m";
+
+    document.getElementById("springMassValue")
+    .textContent = mass.toFixed(1) + " kg";
+
+    document.getElementById("springEnergy")
+    .textContent = energy.toFixed(2) + " J";
+
+    drawSpringGraph(k,x);
+}
+
+
+function drawSpringGraph(k,currentX){
+
+    const canvas =
+        document.getElementById("springGraph");
+
+    const ctx = canvas.getContext("2d");
+
+    const width = canvas.width =
+        canvas.clientWidth * window.devicePixelRatio;
+
+    const height = canvas.height =
+        300 * window.devicePixelRatio;
+
+    ctx.clearRect(0,0,width,height);
+
+    ctx.scale(
+        window.devicePixelRatio,
+        window.devicePixelRatio
+    );
+
+    const w = canvas.clientWidth;
+    const h = 300;
+
+    const left = 50;
+    const bottom = 250;
+
+    const graphWidth = w - 80;
+    const graphHeight = 200;
+
+    ctx.strokeStyle = "#64748b";
+    ctx.lineWidth = 2;
+
+    ctx.beginPath();
+
+    ctx.moveTo(left,40);
+    ctx.lineTo(left,bottom);
+    ctx.lineTo(w-20,bottom);
+
+    ctx.stroke();
+
+    /* PE curve */
+
+    ctx.strokeStyle = "#fbbf24";
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+
+    for(let i=0;i<=100;i++){
+
+        const x =
+            i / 100;
+
+        const energy =
+            0.5*k*x*x;
+
+        const px =
+            left + x*graphWidth;
+
+        const py =
+            bottom -
+            (energy/(0.5*k))*graphHeight;
+
+        if(i===0){
+            ctx.moveTo(px,py);
+        }else{
+            ctx.lineTo(px,py);
+        }
+    }
+
+    ctx.stroke();
+
+    /* current point */
+
+    const currentEnergy =
+        0.5*k*currentX*currentX;
+
+    const px =
+        left + currentX*graphWidth;
+
+    const py =
+        bottom -
+        (currentEnergy/(0.5*k))*graphHeight;
+
+    ctx.fillStyle = "#22d3ee";
+
+    ctx.beginPath();
+    ctx.arc(px,py,7,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "14px Arial";
+
+    ctx.fillText(
+        "Displacement (m)",
+        w-140,
+        285
+    );
+
+    ctx.fillText(
+        "U = ½kx²",
+        left+10,
+        60
+    );
+}
+
+
+/* =========================
+   CIRCULAR MOTION
+========================= */
+
+let circularAngle = 0;
+let circularAnimating = false;
+let animationFrame;
+
+
+function updateCircular(){
+
+    const radius =
+        Number(document.getElementById("radius").value);
+
+    const speed =
+        Number(document.getElementById("bottomSpeed").value);
+
+    const g = 9.8;
+
+    const critical =
+        Math.sqrt(5*g*radius);
+
+    document.getElementById("radiusValue")
+    .textContent =
+        radius.toFixed(2) + " m";
+
+    document.getElementById("bottomSpeedValue")
+    .textContent =
+        speed.toFixed(2) + " m/s";
+
+    document.getElementById("criticalSpeed")
+    .textContent =
+        critical.toFixed(2) + " m/s";
+
+    const status =
+        document.getElementById("loopStatus");
+
+    if(speed >= critical){
+
+        status.textContent =
+            "✅ The object can complete the loop";
+
+        status.style.color =
+            "#4ade80";
+
+    }else{
+
+        status.textContent =
+            "❌ Speed is insufficient";
+
+        status.style.color =
+            "#f87171";
+    }
+
+    drawCircular();
+}
+
+
+function drawCircular(){
+
+    const canvas =
+        document.getElementById("circularCanvas");
+
+    const ctx =
+        canvas.getContext("2d");
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    const radius =
+        Number(document.getElementById("radius").value);
+
+    const speed =
+        Number(document.getElementById("bottomSpeed").value);
+
+    const cx = 300;
+    const cy = 200;
+
+    const r = radius * 55;
+
+    /* loop */
+
+    ctx.strokeStyle = "#8b5cf6";
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cx,
+        cy,
+        r,
+        0,
+        Math.PI*2
+    );
+
+    ctx.stroke();
+
+    /* center */
+
+    ctx.fillStyle = "#94a3b8";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cx,
+        cy,
+        4,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    /* object position */
+
+    const angle =
+        circularAngle * Math.PI / 180;
+
+    const x =
+        cx + r*Math.sin(angle);
+
+    const y =
+        cy - r*Math.cos(angle);
+
+    ctx.fillStyle = "#ec4899";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        x,
+        y,
+        10,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+    /* velocity */
+
+    ctx.strokeStyle = "#22d3ee";
+    ctx.lineWidth = 3;
+
+    ctx.beginPath();
+
+    ctx.moveTo(x,y);
+
+    ctx.lineTo(
+        x + 45*Math.cos(angle),
+        y + 45*Math.sin(angle)
+    );
+
+    ctx.stroke();
+
+    /* angle */
+
+    ctx.fillStyle = "#c4b5fd";
+    ctx.font = "16px Arial";
+
+    ctx.fillText(
+        "θ = " + circularAngle.toFixed(0) + "°",
+        20,
+        30
+    );
+}
+
+
+function toggleCircularAnimation(){
+
+    circularAnimating =
+        !circularAnimating;
+
+    const button =
+        document.querySelector(
+            "#circular .action"
+        );
+
+    if(circularAnimating){
+
+        button.textContent =
+            "⏸ Pause";
+
+        animateCircular();
+
+    }else{
+
+        button.textContent =
+            "▶ Animate";
+
+        cancelAnimationFrame(
+            animationFrame
+        );
+    }
+}
+
+
+function animateCircular(){
+
+    if(!circularAnimating)
+        return;
+
+    circularAngle += 2;
+
+    if(circularAngle >= 360){
+        circularAngle = 0;
+    }
+
+    drawCircular();
+
+    animationFrame =
+        requestAnimationFrame(
+            animateCircular
+        );
+}
+
+
+/* =========================
+   START
+========================= */
+
+updateWork();
+updateSpring();
+updateCircular();
+
+</script>
+</body>
+</html>
